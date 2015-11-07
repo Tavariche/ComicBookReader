@@ -1,5 +1,7 @@
 #C++
 
+[TOC]
+
 ##INCLUDES
 * `iostream` -> Fonctionnalités de base (affichage, ...)
 * `string` -> Chaînes de caractères
