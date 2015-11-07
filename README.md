@@ -10,4 +10,4 @@ Une liseuse de documents ComicBooks par Baptiste Studer et Gabriel Busnot
 
 ##Idées en vrac
 
-* Passer le mémo C++ en MarkDown
+* ~~Passer le mémo C++ en MarkDown~~
