@@ -22,6 +22,8 @@
 
 **Strong** __Strong__
 
+~~Rayé~~
+
 ## Citations
 
 > Level one
