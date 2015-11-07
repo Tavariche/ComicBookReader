@@ -1,12 +1,13 @@
 #C++
 
+[TOC]
+
 ##INCLUDES
 * `iostream` -> Fonctionnalités de base (affichage, ...)
 * `string` -> Chaînes de caractères
 * `cmath`	-> Fonctions de math
 * `vector` -> Tableaux dynamiques
 * `fstream` -> Fichiers
-* `Qt` -> Affichage graphique
 * `using namespace std;` -> Utilise l'espace de noms std par défaut
 
 
@@ -122,3 +123,71 @@
 * `getline(cin, x)` -> Stocke la ligne lue complète dans `x`
 * `std::cin.ignore()` -> A placer entre un `cin >>` et un `getline`
 * `int const x` -> Constante `x`
+
+----------------
+
+#Qt
+
+##Code minimal
+
+	#include <QApplication>
+	 
+	int main(int argc, char *argv[])
+	{
+	    QApplication app(argc, argv);
+	    return app.exec();
+	}
+
+Ajouter au fichier .pro la ligne `QT += widgets`
+
+##Généralités
+
+* `#include <QtWidgets>` -> Pour être tranquille
+* `Element.show()` -> Afficher un élément
+* `element.attribut()` -> Accesseur de lecture d'attribut
+* `element.setAttribut()` -> Accesseur d'écriture d'attribut
+* `QCoreApplication::applicationDirPath() + "/chemin"` -> chemin relatif universel
+
+
+##Quelques elements courants
+
+###QFont
+
+* `QFont maPolice("police", ~taille, ~gras(0..99), ~italic(true/false))` -> Objet de police de texte
+
+
+###QPushButton
+
+* `QPushButton bouton("nomBoutton", &Parent)` -> Créer un bouton contenu par parent
+* `bouton.setToolTip("monInfobulle")` -> Renseigner l'infobulle
+* `bouton.setFont(QFont)` -> Changer la police
+* `bouton.setCursor(Curseur)` -> Changer le curseur lors du survol ([liste](http://qt-project.org/doc/qt.html#CursorShape-enum))
+* `bouton.setIcon(QIcon("Chemin"))` -> Changer l'icône du bouton
+* `bouton.shortcut(RaccourciClavier)` -> Définit le raccourci clavier correspondant au bouton
+* `bouton.move(x, y)` : Déplacer le bouton
+* `bouton.setGeometry(x, y, l, h)` -> Définit la position et les dimentions du bouton
+
+
+##Création d'une fenêtre
+
+**Héritage obligatoire !**
+
+	class MaFenetre : public QWidget
+	{}
+
+Les éléments de la fenêtre sont pointés et alloués dans le constructeur
+
+La destruction des éléments d'un widget est automatique dans Qt
+
+##Evenements et slots
+
+Utiliser la méthode statique suivante :
+
+	QObject::connect(*emetteur, SIGNAL(signal()), *recepteur, SLOT(slot())
+
+* `qApp` -> Pointeur vers l'application principale créé automatiquement
+* `public slots:` -> Environnement des slots personnalisés d'un objet
+* `signals:` -> Environnement des signals personnalisés d'un objet
+	* On implémente pas un signal
+	* un signal renvoit toujours void et passe ses arguments au slot connecté
+	* écrire `emit monSignal()` là où le signal doit être émis
