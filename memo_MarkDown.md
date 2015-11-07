@@ -1,4 +1,9 @@
 # MarkDown
+<<<<<<< HEAD
+=======
+
+[TOC]
+>>>>>>> 51f3c5afb6a72f5d419affde4185c4e0dfd0532b
 
 ## listes
 
