@@ -1,7 +1,5 @@
 # Git et GitHub
 
-[TOC]
-
 ## Commit
 
 * `git init` : Initialiser un répertoire Git

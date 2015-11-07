@@ -1,7 +1,5 @@
 # MarkDown
 
-[TOC]
-
 ## listes
 
 ### A puces
