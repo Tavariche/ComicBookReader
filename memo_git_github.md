@@ -7,7 +7,7 @@
 * `git add fichier.txt` : Ajoute fichier.txt à l'index (avant un commit)
 * `git commit -m "Mon message" ` : Effectuer un commit (màj) associé à son message descriptif obligatoire
 	* `-am` si déjà ajouté une fois à l'index, évite de répéter `git add`
-	* `--amend` pour amender le dernier commit
+	* `--amend` pour amender le dernier commit. **Ne Jamais amender un commit présent sur github ! Pose des problèmes au moment du push.**
 * Mettre dans le fichier `.gitignore` la liste des fichiers à ignorer
 
 ##historique
