@@ -126,8 +126,12 @@
 
 #Qt
 
-##Code minimal
+##Les bases
 
+##Généralités
+
+###[La doc en ligne](http://qt-project.org/doc)
+###Le code minimal
 	#include <QApplication>
 	 
 	int main(int argc, char *argv[])
@@ -138,33 +142,11 @@
 
 Ajouter au fichier .pro la ligne `QT += widgets`
 
-##Généralités
-
 * `#include <QtWidgets>` -> Pour être tranquille
 * `Element.show()` -> Afficher un élément
 * `element.attribut()` -> Accesseur de lecture d'attribut
 * `element.setAttribut()` -> Accesseur d'écriture d'attribut
 * `QCoreApplication::applicationDirPath() + "/chemin"` -> chemin relatif universel
-
-
-##Quelques elements courants
-
-###QFont
-
-* `QFont maPolice("police", ~taille, ~gras(0..99), ~italic(true/false))` -> Objet de police de texte
-
-
-###QPushButton
-
-* `QPushButton bouton("nomBoutton", &Parent)` -> Créer un bouton contenu par parent
-* `bouton.setToolTip("monInfobulle")` -> Renseigner l'infobulle
-* `bouton.setFont(QFont)` -> Changer la police
-* `bouton.setCursor(Curseur)` -> Changer le curseur lors du survol ([liste](http://qt-project.org/doc/qt.html#CursorShape-enum))
-* `bouton.setIcon(QIcon("Chemin"))` -> Changer l'icône du bouton
-* `bouton.shortcut(RaccourciClavier)` -> Définit le raccourci clavier correspondant au bouton
-* `bouton.move(x, y)` : Déplacer le bouton
-* `bouton.setGeometry(x, y, l, h)` -> Définit la position et les dimentions du bouton
-
 
 ##Création d'une fenêtre
 
@@ -189,3 +171,74 @@ Utiliser la méthode statique suivante :
 	* On implémente pas un signal
 	* un signal renvoit toujours void et passe ses arguments au slot connecté
 	* écrire `emit monSignal()` là où le signal doit être émis
+
+##Positionnement grace aux layouts
+
+* `QVBoxLayout *layout = new QVBoxLayout` -> Layout vertical
+	* QHBoxLayout -> Layout horizontal
+	* `layout->addWidget(unWidget)` -> Ajouter un widget au layout
+* `fenetre.setLayout(layout)` -> Appliquer un layout
+* `QGridLayout::addWidget(widget, i, j, rowSpan, colSpan)` -> Layout grille avec coordonnées matricielles
+* `QFormLayout` -> Layout Formulaire
+
+##Des widgets et leurs propriétés
+
+* `class QWidget`
+	* `prop cursor` -> Curseur au survol
+	* `prop enabled` -> Widget utilisable ou non
+	* `prop height, width, size` -> Dimensions
+	* `prop visible` -> Visibilité
+	* Fenêtres seulement :
+		* `class QMainWindow` -> Fenêtre principale
+		* `class QDialog` -> Boîte de dialogue de base (personnalisable)
+* Conteneurs
+	* `class QTabWidget` -> Conteneur à onglets
+		* Un seul widget par onglet (QWidget qui contient les autres)
+		* ` meth addTab(&unQWidget)` -> Ajout d'un onglet
+		* 
+* `class QAbstractButton`
+	* `class QPushButton` -> Bouton standard
+	* `classQRadioButton` -> Bouton radio pour fair eun choix
+	* `class QCheckBox` -> Case à cocher
+		* `sig stateChanged(bool)` -> Siganl de changement d'état
+		* `meth isChecked()` -> True ssi cochée
+	* `calss QGroupBox` -> Regroupe des cases à cocher ou des boutons radio
+* Afficheurs
+	* `class QLabel` -> Boîte de dialogue
+	* `class QProgressBar` -> Barre de progression
+		* `prop maximum` -> Définir le max
+		* `prop minimum` -> Définir le min
+		* `prop value` -> Valeur actuelle
+		* `sig valueChanged(int)` -> Signal de changement de valeur
+* Champs
+	* `class QLineEdit` -> Champ de texte à une ligne
+		* `prop text` -> Texte contenu
+		* `prop alignment` -> Alignement du texte
+		* `prop echoMode` -> Mode d'affichage du contenu
+		* `prop inputMask` -> Masque de saisie
+		* `prop maxLength` -> Longueur maximale
+		* `prop readOnly` -> Lecture seule
+		* `sig returnPressed()` -> Entrée pressé
+		* `sig textChanged()` -> Text changé
+	* `class QTextEdit` -> Champ de texte à plusieurs lignes avec mise en forme
+		* `prop plainText` -> Contenu en texte brut
+		* `prop html` -> Contenu enrichi HTML
+	* `class QSpinBox` -> Champ de saisie de nombre entier
+		* `prop value` -> Valeur contenue
+		* `prop accelerated` -> Accélération du défilement autorisée
+		* `prop minimum maximum` -> Fixe le min et le max
+		* `prop singleStep` -> Pas de varitaion
+		* `prop prefix suffix` -> Texte avant et après le nombre
+	* `class QDoubleSpinBox` -> Champ de saisie de double
+		* Même prop que `QSpinBox`
+		* `prop decimals ` -> Nombre de décimales à afficher
+	* `class QSlider` -> Curseur
+		* Prop communes avec `QSpinBox`
+		* `prop orientation` -> Orientation V ou H
+		* 
+	* `class QComboBox` -> Liste déroulante
+		* `prop count` -> Nb d'éléments dans la liste
+		* `prop currentIndex` -> Index sélectionné
+		* `prop editable` -> Autorise l'ajout de valeurs personnalisées
+		* `sig currentIndexChanged()` -> Indique que l'index a changé
+		* `sig highlighted()` -> Element survolé

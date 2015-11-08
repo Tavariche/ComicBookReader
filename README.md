@@ -37,3 +37,11 @@ Une liseuse de documents ComicBooks par Baptiste Studer et Gabriel Busnot
 * ~~Passer le mémo C++ en MarkDown~~
 * Conception logiciel en UML ???
 * Design interface
+
+##Notes diverses
+
+* [ImageMagic (Magick++)](http://www.imagemagick.org/Magick++/) : une bibliothèque de traitement d'images qui utilise parfois le GPU... A préciser
+* Qt propose tout ce dont on peut avoir besoin en dehors de l'aspect GPU, et encore.
+	* QtConcurrent::run() pour le parallélisme
+	* QImage pour tous les formats à supporter
+	* qUncompress pour la décompression
