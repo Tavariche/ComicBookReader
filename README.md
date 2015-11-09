@@ -45,3 +45,6 @@ Une liseuse de documents ComicBooks par Baptiste Studer et Gabriel Busnot
 	* QtConcurrent::run() pour le parallélisme
 	* QImage pour tous les formats à supporter
 	* qUncompress pour la décompression
+	* 
+	
+test
