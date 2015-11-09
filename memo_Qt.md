@@ -73,7 +73,6 @@ L'ajout de & devant un caractère dans le nom d'un widget en fait un raccourci c
 	* `meth addWidget()` -> Ajouter un widget quelconque
 	* `meth addSeparator()` -> Ajouter un séparateur
 
-
 ###Autre widgets courants
 
 * `class QWidget` -> Fenêtre de base
