@@ -35,7 +35,7 @@
 * `git branch` : Affiche les branches du projet ; * devant celle en cours
 * `git branch maNouvelleBranche` : Crée une nouvelle branche ; option `-d` pour effacer la branche mentionnée
 * `git checkout uneBranche` : Change de branche ; option `-b` pour la créer si inexistante
-* `git merge uneBranhce` : Fusionne uneBranche avec la branche courrante
+* `git merge uneBranche` : Fusionne uneBranche avec la branche courrante
 	* En cas de conflit, ouvrir le fichier resposable du conflit et résoudre manuellement les problèmes puis commit.
 * `git stash` : Mettre de côté le taravil en cours ; retour au dernier commit effectué
 	* `git stash pop` : Rétablir le travail en cours en le refusionnant à la branche
