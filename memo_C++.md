@@ -1,16 +1,19 @@
 #C++
 
-##INCLUDES
+[Une bonne doc de la SL](http://www.cplusplus.com/reference/)
+
+##Bibliothèques
 * `iostream` -> Fonctionnalités de base (affichage, ...)
 * `string` -> Chaînes de caractères
 * `cmath`	-> Fonctions de math
-* `vector` -> Tableaux dynamiques
 * `fstream` -> Fichiers
-* `using namespace std;` -> Utilise l'espace de noms std par défaut
+* `cctype` -> Manipulation de caractères
+* `ctime` et `cstdlib` -> Surtout pour rand() et srand(time(0))
 
 
 
-##STRUCTURES DE CONTROLE
+
+##Structures de controle
 * `if(cond) {} else if (cond) {} else {}`	-> Condition si
 * `switch(i){case n:...; break;}` -> Switch suivant les valeurs de i
 * `while (cond) {}` -> Boucle "tant que cond vrai"
@@ -19,7 +22,7 @@
 
 
 
-##FONCTIONS
+##Fonctions
 * `void myFunction(int& i)` -> L'argument est reçu par référence (modifiable)
 * `void myFunction(int const& i)`	-> Passage par ref constante (pas de modif possible)
 * `void myfunction(int i, int j = 42)` -> Dernier argument facultatif, valeur par defaut 42
@@ -28,7 +31,7 @@
 
 
 
-##TABLEAUX
+##Tableaux
 * `int t[3] = {1, 2, 3}` -> Tableau de 3 cases initialisé
 * `vector<int> t(3,0)` -> Tableau dynamique de 3 cases init à 0 (0 case possible)
 * `tab.push_back(x)` -> Insère x à la fin de tab
@@ -39,7 +42,7 @@
 
 
 
-##FICHIERS
+##Fichiers
 * `ofstream monFlux("chemin rel/abs")` -> ouverture de fichier en écriture, créé si inexistant
 * `ofstream ............", ios::app)` -> Ouverture en mode d'ajout en fin de fichier
 * `ifstream monFlux("chemin")` -> Ouverture de fichier en lecture
@@ -57,7 +60,7 @@
 
 
 
-##POINTEURS
+##Pointeurs
 * `int* p` -> Pointeur sur int
 * `*p` -> Valeur stockée dans la case pointée
 * `&i` -> Adresse de i
@@ -66,7 +69,7 @@
 
 
 
-##CHAINES
+##Chaines
 * `string chaine("init")` -> Crée un objet chaîne de caractères
 * `chaine1 + chaine2` -> Renvoie la concaténation des deux chaînes
 * `== / !=` -> Tests d'égalité entre chaînes
@@ -80,7 +83,7 @@
 
 
 
-##CLASSES
+##Classes
 * `class MaClasse {};` -> Déclaration d'une classe (attributs + méthodes)
 * `private :` -> Accessible depuis l'objet seulement
 * `public :` -> Accessible par tous
@@ -110,9 +113,50 @@
 * `friend function()` -> Fonction amie ayant accès à tout ce que contient l'objet dans lequel est mis le prototype
 
 
+##Conteneurs
 
+###liste des conteneurs standards
 
-##DIVERS
+`#include` le nom du conteneur pour s'en servir
+
+* `vector` -> Tableaux dynamiques
+* `deque` -> Comme `vector` avec ajouts au début possible
+* `stack` -> Pile donc accès seulement en haut
+* `queue` -> Structure FIFO
+* `priority_queue` -> Stockage d'éléments classables (`operator<` requis)
+* `map<indice, element>` -> Table Associative dont les éléments sont indexées par des variables de type indice
+	* `multimap` -> Chaque clé peut exister plusieurs fois
+* `set` -> Comme map mais clé = élément
+	* `multiset` -> Chaque clé peut exister plusieurs fois
+
+**Choix du conteneur**
+![Schéma de choix du conteneur](https://user.oc-static.com/files/313001_314000/313596.png)
+
+###Méthodes communes quand possible
+
+* `size()` -> Taille du conteneur
+* `empty()` -> Indique si le conteneur est vide
+* `clear()` -> Vider le conteneur
+* `swap()` -> Echanger le contenu de deux conteneurs (même types)
+* Séquences :
+	* `push_back()` -> Ajout à la fin
+	* `pop_back()` -> Retrait à la fin
+	* `push_front()` -> Ajout au début
+	* `pop_front()` -> Retrait au début
+	* `assign(val)` -> Remplir la séquence avec val
+	* `push(), pop(), top()` -> Ajouter, retirer ou consulter le haut d'une pile ou queue avec priorité
+
+###Accesseurs
+
+* `typeConteneur::iterator` -> Déclaration itérateur
+* `conteneur.begin()` -> Itérateur sur le premier élément
+* `conteneur.end()` -> Itérateur sur le dernier élément + 1
+* `conteneur.insert(iterateur, element)` -> Ajout de `element` avec `iterateur`
+* `conteneur.erase(iterateur)` -> Supprime l'élément itéré
+
+##Divers
+
+* `using namespace std;` -> Utilise l'espace de noms std par défaut
 * `std::cout <<` -> Affichage
 * `<< std::endl` -> Fin de ligne
 * `bool`, `char`, `int`, `unsigned`, `double`, `string` -> Types courants
