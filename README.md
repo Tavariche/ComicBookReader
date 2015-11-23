@@ -68,6 +68,7 @@ Une liseuse de documents ComicBooks par Baptiste Studer et Gabriel Busnot
 	* Redimensionnement et filtrage
 	* Traitement CPU
 	* Décompression (externe à Qt)
+* Refaire Maquette
 
 ##Implémentation de quelques fonctionnalités (idées)
 
