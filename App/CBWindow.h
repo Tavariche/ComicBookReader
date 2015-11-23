@@ -2,6 +2,9 @@
 #define CBWINDOW_H
 
 #include <QMainWindow>
+#include <QtWidgets>
+#include <QtSvg>
+
 
 class CBWindow : public QMainWindow
 {

@@ -1,4 +1,6 @@
-QT += widgets
+QT += \
+    widgets \
+    svg
 
 HEADERS += \
     CBWindow.h
