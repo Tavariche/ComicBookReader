@@ -26,20 +26,40 @@ CBWindow::CBWindow(QWidget *parent) :
 
     ///Le dock miniatures
     QDockWidget *dockMiniatures = new QDockWidget("Miniatures", this);
+    dockMiniatures->setMinimumWidth(130);
     //Petite image pour le remplir un peu
     QLabel *wolverineMiniature = new QLabel("Wolverine", this);
     wolverineMiniature->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-    wolverineMiniature->setPixmap(QPixmap("/home/gabriel/Code/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(90, Qt::SmoothTransformation));
+    wolverineMiniature->setPixmap(QPixmap("/home/gabriel/Code/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(120, Qt::SmoothTransformation));
     dockMiniatures->setWidget(wolverineMiniature);
     addDockWidget(Qt::LeftDockWidgetArea, dockMiniatures);
 
     ///La zone d'affichage principale
-    QLabel *wolverine = new QLabel("Wolverine", this);
+    QScrollArea *displayArea = new QScrollArea(this);
+    displayArea->setBackgroundRole(QPalette::Dark);
+    displayArea->setWidgetResizable(true);
+    QLabel *wolverine = new QLabel("Wolverine", displayArea);
     wolverine->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter	);
+    //wolverine->setSizePolicy(QSizePolicy::Preferred	, QSizePolicy::Preferred	);
     wolverine->setPixmap(QPixmap("/home/gabriel/Code/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(400, Qt::SmoothTransformation));
-    QTabWidget* displayArea = new QTabWidget(this);
-    displayArea->addTab(wolverine, "Wolverine");
-    setCentralWidget(displayArea);
+    displayArea->setWidget(wolverine);
+    QTabWidget* tab = new QTabWidget(this);
+    tab->addTab(displayArea, "Wolverine");
+    setCentralWidget(tab);
+
+    ///La statusbar
+    QStatusBar *statusBar = new QStatusBar(this);
+    statusBar->setSizeGripEnabled(false);
+    QSlider *slider = new QSlider(Qt::Horizontal, statusBar);
+    slider->setFixedWidth(150);
+    QLCDNumber *valZoom = new QLCDNumber(statusBar);
+    //QPushButton *test2 = new QPushButton("Test2",statusBar);
+
+    statusBar->addPermanentWidget(slider);
+    statusBar->insertPermanentWidget(0, valZoom);
+    setStatusBar(statusBar);
+
+    QObject::connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
 }
 
 CBWindow::~CBWindow()
