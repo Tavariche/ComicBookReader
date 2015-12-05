@@ -3,8 +3,10 @@ QT += \
     svg
 
 HEADERS += \
-    CBWindow.h
+    CBWindow.h \
+    pageLabel.h
 
 SOURCES += \
     main.cpp \
-    CBWindow.cpp
+    CBWindow.cpp \
+    pageLabel.cpp
