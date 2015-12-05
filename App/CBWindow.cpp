@@ -1,4 +1,6 @@
 #include "CBWindow.h"
+#include "pagelabel.h"
+
 
 CBWindow::CBWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -9,7 +11,7 @@ CBWindow::CBWindow(QWidget *parent) :
     ///Les actions
     //Quitter
     QAction *actQuitter = new QAction("&Quitter", this);
-    actQuitter->setIcon(QIcon("/home/gabriel/Code/ComicBookReader/App/images/blackCross.svg"));
+    actQuitter->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/ComicBookReader/App/images/blackCross.svg"));
     connect(actQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 
     ///Les menus
@@ -26,20 +28,42 @@ CBWindow::CBWindow(QWidget *parent) :
 
     ///Le dock miniatures
     QDockWidget *dockMiniatures = new QDockWidget("Miniatures", this);
+    dockMiniatures->setMinimumWidth(130);
     //Petite image pour le remplir un peu
     QLabel *wolverineMiniature = new QLabel("Wolverine", this);
     wolverineMiniature->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
-    wolverineMiniature->setPixmap(QPixmap("/home/gabriel/Code/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(90, Qt::SmoothTransformation));
+    wolverineMiniature->setPixmap(QPixmap("D:/Documents/Gabriel/Documents/ENSTA/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(120, Qt::SmoothTransformation));
     dockMiniatures->setWidget(wolverineMiniature);
     addDockWidget(Qt::LeftDockWidgetArea, dockMiniatures);
 
     ///La zone d'affichage principale
-    QLabel *wolverine = new QLabel("Wolverine", this);
+    QScrollArea *displayArea = new QScrollArea(this);
+    displayArea->setBackgroundRole(QPalette::Dark);
+    displayArea->setWidgetResizable(true);
+    pageLabel *wolverine = new pageLabel("Wolverine", "D:/Documents/Gabriel/Documents/ENSTA/ComicBookReader/App/images/wolverine.jpg", displayArea);
     wolverine->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter	);
-    wolverine->setPixmap(QPixmap("/home/gabriel/Code/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(400, Qt::SmoothTransformation));
-    QTabWidget* displayArea = new QTabWidget(this);
-    displayArea->addTab(wolverine, "Wolverine");
-    setCentralWidget(displayArea);
+    wolverine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    //wolverine->setPixmap(QPixmap("D:/Documents/Gabriel/Documents/ENSTA/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(400, Qt::SmoothTransformation));
+    displayArea->setWidget(wolverine);
+    QTabWidget* tab = new QTabWidget(this);
+    tab->addTab(displayArea, "Wolverine");
+    setCentralWidget(tab);
+
+    ///La statusbar
+    QStatusBar *statusBar = new QStatusBar(this);
+    statusBar->setSizeGripEnabled(false);
+    QSlider *slider = new QSlider(Qt::Horizontal, statusBar);
+    slider->setFixedWidth(150);
+    QLCDNumber *valZoom = new QLCDNumber(statusBar);
+    valZoom->setSegmentStyle(QLCDNumber::Outline);
+    //QPushButton *test2 = new QPushButton("Test2",statusBar);
+
+    statusBar->addPermanentWidget(slider);
+    statusBar->insertPermanentWidget(0, valZoom);
+    setStatusBar(statusBar);
+
+    QObject::connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
+    QObject::connect(slider, SIGNAL(valueChanged(int)), wolverine, SLOT(scalePage(int)));
 }
 
 CBWindow::~CBWindow()
