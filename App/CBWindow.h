@@ -1,9 +1,11 @@
 #ifndef CBWINDOW_H
 #define CBWINDOW_H
 
-#include <QMainWindow>
 #include <QtWidgets>
 #include <QtSvg>
+#include "PagesContainerSingle.h"
+#include "PagesContainerDouble.h"
+#include "CBScrollArea.h"
 
 
 class CBWindow : public QMainWindow

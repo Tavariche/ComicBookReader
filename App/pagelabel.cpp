@@ -1,6 +1,6 @@
-#include "pageLabel.h"
+#include "PageLabel.h"
 
-pageLabel::pageLabel(const QString &text, const QString &pagePath, QWidget* parent) : QLabel(text, parent)
+PageLabel::PageLabel(const QString &text, const QString &pagePath, QWidget* parent) : QLabel(text, parent)
 {
     //La question du dimensionnement initial reste en suspens...
     originalPixmap = QPixmap(pagePath);
@@ -10,7 +10,7 @@ pageLabel::pageLabel(const QString &text, const QString &pagePath, QWidget* pare
 
 
 
-void pageLabel::scalePage(int value)
+void PageLabel::scalePage(int value)
 {
     unsigned newWidth(ZOOMING_MIN + value * ZOOMING_FACTOR);
     QSize newSize(pixmap()->size() * newWidth / pixmap()->width());
