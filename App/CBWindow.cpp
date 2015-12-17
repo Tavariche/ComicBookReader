@@ -11,19 +11,23 @@ CBWindow::CBWindow(QWidget *parent) :
     QAction *actQuitter = new QAction("&Quitter", this);
     actQuitter->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/blackCross.svg"));
     connect(actQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
+
     //Groupe des actions de dimensionnement
-    QActionGroup* dimActGroup = new QActionGroup(this);
+    UncheckableActionGroup* dimActGroup = new UncheckableActionGroup(this);
     QAction *actFitHeight = new QAction("Ajuster à la &Hauteur", this);
     actFitHeight->setCheckable(true);
     actFitHeight->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/fitHeight.svg"));
     dimActGroup->addAction(actFitHeight);
+
     QAction *actFitWidth = new QAction("Ajuster à la largeur", this);
     actFitWidth->setCheckable(true);
     actFitWidth->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/fitWidth.svg"));
     dimActGroup->addAction(actFitWidth);
-    QAction *actFitScreen = new QAction("Ajuster à l'écran", this);
+
+    QAction *actFitScreen = new QAction("actFitWidth", this);
     actFitScreen->setCheckable(true);
     actFitScreen->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/fitScreen.svg"));
+    actFitScreen->setChecked(true);
     dimActGroup->addAction(actFitScreen);
 
     ///Les menus
@@ -41,6 +45,7 @@ CBWindow::CBWindow(QWidget *parent) :
     QToolBar *RightToolBar = new QToolBar("RightToolBar", this);
     addToolBar(Qt::RightToolBarArea, RightToolBar);
     RightToolBar->addAction(actQuitter);
+    RightToolBar->addSeparator();
     RightToolBar->addAction(actFitHeight);
     RightToolBar->addAction(actFitWidth);
     RightToolBar->addAction(actFitScreen);
@@ -65,8 +70,10 @@ CBWindow::CBWindow(QWidget *parent) :
 
     QPixmap* wolverinePixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg");
     *wolverinePixmap = wolverinePixmap->scaledToWidth(400, Qt::SmoothTransformation);
-    PagesContainerSingle* pagesContainerSingle = new PagesContainerSingle(wolverinePixmap, displayArea);
-    displayArea->setWidget(pagesContainerSingle);
+    QPixmap* wolverineBisPixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverineBis.jpg");
+    *wolverineBisPixmap = wolverineBisPixmap->scaledToWidth(400, Qt::SmoothTransformation);
+    PagesContainerDouble* pagesContainerDouble = new PagesContainerDouble(wolverinePixmap, wolverineBisPixmap, displayArea);
+    displayArea->setWidget(pagesContainerDouble);
 
     /*
     pageLabel *wolverine = new pageLabel("Wolverine", "D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg", displayArea);
@@ -97,12 +104,15 @@ CBWindow::CBWindow(QWidget *parent) :
     setStatusBar(statusBar);
 
     connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
-    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerSingle, SLOT(setPolicyPersonnal(int)));
-    connect(actFitHeight, SIGNAL(triggered(bool)), pagesContainerSingle, SLOT(setPolicyFitHeight()));
-    connect(actFitWidth, SIGNAL(triggered(bool)), pagesContainerSingle, SLOT(setPolicyFitWidth()));
-    connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainerSingle, SLOT(setPolicyFitScreen()));
-    connect(pagesContainerSingle, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
-    connect(displayArea, SIGNAL(resized()), pagesContainerSingle, SLOT(applyResizePolicy()));
+    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerDouble, SLOT(setPolicyPersonnal(int)));
+    connect(pagesContainerDouble, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
+    connect(slider, SIGNAL(sliderMoved(int)), dimActGroup, SLOT(uncheckActions()));
+
+    connect(actFitHeight, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitHeight()));
+    connect(actFitWidth, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitWidth()));
+    connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitScreen()));
+
+    connect(displayArea, SIGNAL(resized()), pagesContainerDouble, SLOT(applyResizePolicy()));
 
 }
 

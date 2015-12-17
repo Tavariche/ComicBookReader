@@ -1,7 +1,14 @@
 #include "PagesContainerSingle.h"
 
+PagesContainerSingle::PagesContainerSingle(QWidget *parent) : PagesContainer(parent)
+{}
 
-PagesContainerSingle::PagesContainerSingle(QPixmap* pagePixmap,QWidget* parent) :
+/** PagesContainerSingle::PagesContainerSingle(const vector<PageManager*> pages, const QWidget* parent) :
+ **     PagesContainer(pages, parent)
+ ** {}
+ **/
+
+PagesContainerSingle::PagesContainerSingle(QPixmap* pagePixmap, QWidget* parent) :
     PagesContainer(parent)
 {
     m_originalPagePixmap = pagePixmap;
@@ -12,25 +19,26 @@ PagesContainerSingle::PagesContainerSingle(QPixmap* pagePixmap,QWidget* parent) 
     m_layout = new QHBoxLayout(this);
     m_layout->addWidget(m_pageLabel);
     m_layout->setAlignment(m_pageLabel, Qt::AlignCenter);
-    m_layout->setMargin(0);
+    m_layout->setContentsMargins(0, 0, 0, 0);
     setLayout(m_layout);
 
     //Initialisation de la politique de redimensionnement et du curseur
-    setResizePolicy(ResizePolicy::fitScreen);
     emit pagesSizeChanged(m_pageLabel->size().width());
 }
 
 void PagesContainerSingle::cursorResizePages(const int width)
 {
-    if (width == 0) return;
+    if (width <= 0) return;
 
     *m_redimPagePixmap = m_originalPagePixmap->scaledToWidth(width);
     m_pageLabel->setPixmap(*m_redimPagePixmap);
 }
 
-void PagesContainerSingle::scaleToHeight(int newHeight)
+void PagesContainerSingle::scaleToHeight(const int newHeight)
 {
-    *m_redimPagePixmap = m_originalPagePixmap->scaledToHeight(newHeight, Qt::FastTransformation);
+    if(newHeight == m_redimPagePixmap->height()) {refresh(); return;}
+
+    *m_redimPagePixmap = m_originalPagePixmap->scaledToHeight(newHeight, Qt::SmoothTransformation);
     m_pageLabel->setPixmap(*m_redimPagePixmap);
 
     //Calcul de la nouvelle largeur pour signal de redimensionnement
@@ -38,9 +46,11 @@ void PagesContainerSingle::scaleToHeight(int newHeight)
     emit pagesSizeChanged(newWidth);
 }
 
-void PagesContainerSingle::scaleToWidth(int newWidth)
+void PagesContainerSingle::scaleToWidth(const int newWidth)
 {
-    *m_redimPagePixmap = m_originalPagePixmap->scaledToWidth(newWidth, Qt::FastTransformation);
+    if(newWidth == m_redimPagePixmap->width()) {refresh(); return;}
+
+    *m_redimPagePixmap = m_originalPagePixmap->scaledToWidth(newWidth, Qt::SmoothTransformation);
     m_pageLabel->setPixmap(*m_redimPagePixmap);
 
     emit pagesSizeChanged(newWidth);
@@ -96,9 +106,9 @@ void PagesContainerSingle::fitScreen()
     else fitHeight();
 }
 
-
-
-void PagesContainerSingle::changePages(std::vector<QPixmap> newPage)
+void PagesContainerSingle::refresh() const
 {
-
+    //Rien trouvé de mieux pour rafraichir l'affichage ><
+    m_pageLabel->hide();
+    m_pageLabel->show();
 }

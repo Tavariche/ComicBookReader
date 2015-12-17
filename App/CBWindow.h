@@ -6,6 +6,7 @@
 #include "PagesContainerSingle.h"
 #include "PagesContainerDouble.h"
 #include "CBScrollArea.h"
+#include "UncheckableActionGroup.h"
 
 
 class CBWindow : public QMainWindow

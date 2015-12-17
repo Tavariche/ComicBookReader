@@ -1,14 +1,23 @@
 #include "PagesContainer.h"
 
 PagesContainer::PagesContainer(QWidget* parent) : QWidget(parent)
-{}
+{
+    setResizePolicy(ResizePolicy::fitScreen);
+}
 
-void PagesContainer::setResizePolicy(ResizePolicy resizePolicy)
+/** PagesContainer(const vector<PageManager*> pages, const QWidget* parent) : QWidget(parent)
+ ** {
+ **     m_pages = pages;
+ **     setResizePolicy(ResizePolicy::fitScreen);
+ ** }
+ **/
+
+void PagesContainer::setResizePolicy(const ResizePolicy resizePolicy)
 {
     m_resizePolicy = resizePolicy;
 }
 
-ResizePolicy PagesContainer::getResizePolicy()
+ResizePolicy PagesContainer::getResizePolicy() const
 {
     return m_resizePolicy;
 }
@@ -21,12 +30,15 @@ void PagesContainer::applyResizePolicy()
         fitHeight();
     else if (m_resizePolicy & ResizePolicy::fitScreen)
         fitScreen();
+    else
+        refresh();
 }
 
-void PagesContainer::setPolicyPersonnal(int newWidth)
+void PagesContainer::setPolicyPersonnal(const int newWidth)
 {
     setResizePolicy(ResizePolicy::personal);
-    scaleToWidth(newWidth);
+    scaleToWidth(1, newWidth);
+    scaleToWidth(2, newWidth);
 }
 
 void PagesContainer::setPolicyFitWidth()
@@ -46,3 +58,9 @@ void PagesContainer::setPolicyFitScreen()
     setResizePolicy(ResizePolicy::fitScreen);
     applyResizePolicy();
 }
+
+/** void changePages(const std::vector<PagesManager*> newPages)
+ ** {
+ **     m_pages = newPages;
+ ** }
+ **/

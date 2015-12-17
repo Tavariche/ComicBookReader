@@ -7,7 +7,8 @@ HEADERS += \
     PagesContainer.h \
     PagesContainerSingle.h \
     PagesContainerDouble.h \
-    CBScrollArea.h
+    CBScrollArea.h \
+    UncheckableActionGroup.h
 
 SOURCES += \
     main.cpp \
@@ -15,4 +16,5 @@ SOURCES += \
     PagesContainer.cpp \
     PagesContainerSingle.cpp \
     PagesContainerDouble.cpp \
-    CBScrollArea.cpp
+    CBScrollArea.cpp \
+    UncheckableActionGroup.cpp

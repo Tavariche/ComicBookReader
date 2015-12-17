@@ -10,32 +10,32 @@ class PagesContainerSingle : public PagesContainer
     Q_OBJECT
 
 private:
-    //Le layout à une cellule pour contenir le QLabel de la page
-    QHBoxLayout* m_layout;
     //Contient un pointeur vers l'original de l'image de la page à afficher
+    //tempoiraire, à remplacer par le vector de pageManager
     QPixmap* m_originalPagePixmap;
     QPixmap* m_redimPagePixmap;
     //Affiche la page redimentionnée (m_redimPagePixmap)
     QLabel* m_pageLabel;
 
 public:
+    //COnstructeurs
+    PagesContainerSingle(QWidget* parent);
     PagesContainerSingle(QPixmap* pagePixmap,QWidget* parent);
+    ///PagesContainerSingle(const vector<PageManager*> pages, const QWidget* parent);
+
     //Redimentionnements naïfs
-    virtual void scaleToHeight(int newHeight);
-    virtual void scaleToWidth(int newWidth);
+    virtual void scaleToHeight(const int newHeight);
+    virtual void scaleToWidth(const int newWidth);
 
 
 public slots:
-    //redimentionne la page à la largeur width en préservant le ratio depuis l'appel du curseur
+    //Les 4 slots de redimentionnement
     virtual void cursorResizePages(const int width);
-    //redimensionne la page pour qu'elle occupe toute la hauteur
     virtual void fitHeight();
-    //redimensionne la page pour qu'elle occupe toute la largeur
     virtual void fitWidth();
-    //redimensionne la page pour qu'elle s'ajuste à l'écran
     virtual void fitScreen();
-    //remplace la page par la newPage fournie
-    virtual void changePages(std::vector<QPixmap> newPage);
+    //Rafraîchissement manuel de l'affichage parfois nécessaire
+    virtual void refresh() const;
 };
 
 

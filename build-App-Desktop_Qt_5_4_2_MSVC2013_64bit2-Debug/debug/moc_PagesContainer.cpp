@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PagesContainer_t {
-    QByteArrayData data[17];
-    char stringdata[230];
+    QByteArrayData data[15];
+    char stringdata[196];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,23 +37,21 @@ QT_MOC_LITERAL(4, 39, 17), // "cursorResizePages"
 QT_MOC_LITERAL(5, 57, 9), // "fitHeight"
 QT_MOC_LITERAL(6, 67, 8), // "fitWidth"
 QT_MOC_LITERAL(7, 76, 9), // "fitScreen"
-QT_MOC_LITERAL(8, 86, 11), // "changePages"
-QT_MOC_LITERAL(9, 98, 20), // "std::vector<QPixmap>"
-QT_MOC_LITERAL(10, 119, 8), // "newPages"
-QT_MOC_LITERAL(11, 128, 18), // "setPolicyPersonnal"
-QT_MOC_LITERAL(12, 147, 8), // "newWidth"
-QT_MOC_LITERAL(13, 156, 17), // "setPolicyFitWidth"
-QT_MOC_LITERAL(14, 174, 18), // "setPolicyFitHeight"
-QT_MOC_LITERAL(15, 193, 18), // "setPolicyFitScreen"
-QT_MOC_LITERAL(16, 212, 17) // "applyResizePolicy"
+QT_MOC_LITERAL(8, 86, 7), // "refresh"
+QT_MOC_LITERAL(9, 94, 18), // "setPolicyPersonnal"
+QT_MOC_LITERAL(10, 113, 8), // "newWidth"
+QT_MOC_LITERAL(11, 122, 17), // "setPolicyFitWidth"
+QT_MOC_LITERAL(12, 140, 18), // "setPolicyFitHeight"
+QT_MOC_LITERAL(13, 159, 18), // "setPolicyFitScreen"
+QT_MOC_LITERAL(14, 178, 17) // "applyResizePolicy"
 
     },
     "PagesContainer\0pagesSizeChanged\0\0width\0"
     "cursorResizePages\0fitHeight\0fitWidth\0"
-    "fitScreen\0changePages\0std::vector<QPixmap>\0"
-    "newPages\0setPolicyPersonnal\0newWidth\0"
-    "setPolicyFitWidth\0setPolicyFitHeight\0"
-    "setPolicyFitScreen\0applyResizePolicy"
+    "fitScreen\0refresh\0setPolicyPersonnal\0"
+    "newWidth\0setPolicyFitWidth\0"
+    "setPolicyFitHeight\0setPolicyFitScreen\0"
+    "applyResizePolicy"
 };
 #undef QT_MOC_LITERAL
 
@@ -78,12 +76,12 @@ static const uint qt_meta_data_PagesContainer[] = {
        5,    0,   75,    2, 0x0a /* Public */,
        6,    0,   76,    2, 0x0a /* Public */,
        7,    0,   77,    2, 0x0a /* Public */,
-       8,    1,   78,    2, 0x0a /* Public */,
-      11,    1,   81,    2, 0x0a /* Public */,
+       8,    0,   78,    2, 0x0a /* Public */,
+       9,    1,   79,    2, 0x0a /* Public */,
+      11,    0,   82,    2, 0x0a /* Public */,
+      12,    0,   83,    2, 0x0a /* Public */,
       13,    0,   84,    2, 0x0a /* Public */,
       14,    0,   85,    2, 0x0a /* Public */,
-      15,    0,   86,    2, 0x0a /* Public */,
-      16,    0,   87,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -93,8 +91,8 @@ static const uint qt_meta_data_PagesContainer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 9,   10,
-    QMetaType::Void, QMetaType::Int,   12,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   10,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -108,13 +106,13 @@ void PagesContainer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
     if (_c == QMetaObject::InvokeMetaMethod) {
         PagesContainer *_t = static_cast<PagesContainer *>(_o);
         switch (_id) {
-        case 0: _t->pagesSizeChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 0: _t->pagesSizeChanged((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 1: _t->cursorResizePages((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 2: _t->fitHeight(); break;
         case 3: _t->fitWidth(); break;
         case 4: _t->fitScreen(); break;
-        case 5: _t->changePages((*reinterpret_cast< std::vector<QPixmap>(*)>(_a[1]))); break;
-        case 6: _t->setPolicyPersonnal((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 5: _t->refresh(); break;
+        case 6: _t->setPolicyPersonnal((*reinterpret_cast< const int(*)>(_a[1]))); break;
         case 7: _t->setPolicyFitWidth(); break;
         case 8: _t->setPolicyFitHeight(); break;
         case 9: _t->setPolicyFitScreen(); break;
@@ -125,7 +123,7 @@ void PagesContainer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (PagesContainer::*_t)(int );
+            typedef void (PagesContainer::*_t)(const int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&PagesContainer::pagesSizeChanged)) {
                 *result = 0;
             }
@@ -170,7 +168,7 @@ int PagesContainer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void PagesContainer::pagesSizeChanged(int _t1)
+void PagesContainer::pagesSizeChanged(const int _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

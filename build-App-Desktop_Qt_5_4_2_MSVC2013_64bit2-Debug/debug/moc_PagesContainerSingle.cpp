@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PagesContainerSingle_t {
-    QByteArrayData data[10];
-    char stringdata[116];
+    QByteArrayData data[8];
+    char stringdata[83];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,15 +36,12 @@ QT_MOC_LITERAL(3, 40, 5), // "width"
 QT_MOC_LITERAL(4, 46, 9), // "fitHeight"
 QT_MOC_LITERAL(5, 56, 8), // "fitWidth"
 QT_MOC_LITERAL(6, 65, 9), // "fitScreen"
-QT_MOC_LITERAL(7, 75, 11), // "changePages"
-QT_MOC_LITERAL(8, 87, 20), // "std::vector<QPixmap>"
-QT_MOC_LITERAL(9, 108, 7) // "newPage"
+QT_MOC_LITERAL(7, 75, 7) // "refresh"
 
     },
     "PagesContainerSingle\0cursorResizePages\0"
     "\0width\0fitHeight\0fitWidth\0fitScreen\0"
-    "changePages\0std::vector<QPixmap>\0"
-    "newPage"
+    "refresh"
 };
 #undef QT_MOC_LITERAL
 
@@ -66,14 +63,14 @@ static const uint qt_meta_data_PagesContainerSingle[] = {
        4,    0,   42,    2, 0x0a /* Public */,
        5,    0,   43,    2, 0x0a /* Public */,
        6,    0,   44,    2, 0x0a /* Public */,
-       7,    1,   45,    2, 0x0a /* Public */,
+       7,    0,   45,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 8,    9,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -87,7 +84,7 @@ void PagesContainerSingle::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         case 1: _t->fitHeight(); break;
         case 2: _t->fitWidth(); break;
         case 3: _t->fitScreen(); break;
-        case 4: _t->changePages((*reinterpret_cast< std::vector<QPixmap>(*)>(_a[1]))); break;
+        case 4: _t->refresh(); break;
         default: ;
         }
     }
