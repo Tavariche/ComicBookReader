@@ -201,6 +201,7 @@ Makefile: ..\App\App.pro D:\Qt\5.4\msvc2013_64\mkspecs\win32-msvc2013\qmake.conf
 		D:/Qt/5.4/msvc2013_64/lib/Qt5Svg.prl \
 		D:/Qt/5.4/msvc2013_64/lib/Qt5Widgets.prl \
 		D:/Qt/5.4/msvc2013_64/lib/Qt5Gui.prl \
+		D:/Qt/5.4/msvc2013_64/lib/Qt5Concurrent.prl \
 		D:/Qt/5.4/msvc2013_64/lib/Qt5Core.prl
 	$(QMAKE) -spec win32-msvc2013 CONFIG+=debug -o Makefile ..\App\App.pro
 D:\Qt\5.4\msvc2013_64\mkspecs\features\spec_pre.prf:
@@ -331,6 +332,7 @@ D:/Qt/5.4/msvc2013_64/lib/Qt5Cored.prl:
 D:/Qt/5.4/msvc2013_64/lib/Qt5Svg.prl:
 D:/Qt/5.4/msvc2013_64/lib/Qt5Widgets.prl:
 D:/Qt/5.4/msvc2013_64/lib/Qt5Gui.prl:
+D:/Qt/5.4/msvc2013_64/lib/Qt5Concurrent.prl:
 D:/Qt/5.4/msvc2013_64/lib/Qt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec win32-msvc2013 CONFIG+=debug -o Makefile ..\App\App.pro

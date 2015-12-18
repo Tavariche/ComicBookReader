@@ -69,10 +69,10 @@ CBWindow::CBWindow(QWidget *parent) :
     displayArea->setWidgetResizable(true); //Permet au PagesContainer de s'étendre
 
     QPixmap* wolverinePixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg");
-    *wolverinePixmap = wolverinePixmap->scaledToWidth(400, Qt::SmoothTransformation);
+    QPixmap* wolverinePixmap1 = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg");
     QPixmap* wolverineBisPixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverineBis.jpg");
-    *wolverineBisPixmap = wolverineBisPixmap->scaledToWidth(400, Qt::SmoothTransformation);
-    PagesContainerDouble* pagesContainerDouble = new PagesContainerDouble(wolverinePixmap, wolverineBisPixmap, displayArea);
+    QPixmap* wolverineBisPixmap1 = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverineBis.jpg");
+    PagesContainer* pagesContainerDouble = new PagesContainer(QVector<QPixmap*>({wolverinePixmap, wolverineBisPixmap, wolverinePixmap1, wolverineBisPixmap1, wolverinePixmap, wolverineBisPixmap, wolverinePixmap1, wolverineBisPixmap1}), displayArea);
     displayArea->setWidget(pagesContainerDouble);
 
     /*
@@ -104,10 +104,10 @@ CBWindow::CBWindow(QWidget *parent) :
     setStatusBar(statusBar);
 
     connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
-    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerDouble, SLOT(setPolicyPersonnal(int)));
     connect(pagesContainerDouble, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
     connect(slider, SIGNAL(sliderMoved(int)), dimActGroup, SLOT(uncheckActions()));
 
+    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerDouble, SLOT(setPolicyPersonnal(int)));
     connect(actFitHeight, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitHeight()));
     connect(actFitWidth, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitWidth()));
     connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitScreen()));

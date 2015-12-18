@@ -1,6 +1,7 @@
 QT += \
     widgets \
-    svg
+    svg \
+    concurrent
 
 HEADERS += \
     CBWindow.h \
