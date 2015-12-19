@@ -47,11 +47,13 @@ private:
     //Contient pour chaque page le rapport de la hauteur de la première page sur la sienne
     QVector<int> m_equivalentWidth;
     int m_globalEquivalentWidth;
+    double m_globalPagesRatio;
 
     //Redimensionnement sans vrifications à la dimension souhaitée toutes les pages
     virtual void scaleToHeight(const int newHeight);
     virtual void scaleToWidth(const int newWidth);
     virtual void scale(const int newMaxWidth, const int newMaxHeight);
+    bool alreadyScaled(const int index, const int newMaxWidth, const int newMaxHeight);
 
     //Layout d'affichage côte à côté
     QHBoxLayout* m_layout;

@@ -72,7 +72,7 @@ CBWindow::CBWindow(QWidget *parent) :
     QPixmap* wolverinePixmap1 = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg");
     QPixmap* wolverineBisPixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverineBis.jpg");
     QPixmap* wolverineBisPixmap1 = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverineBis.jpg");
-    PagesContainer* pagesContainerDouble = new PagesContainer(QVector<QPixmap*>({wolverinePixmap, wolverineBisPixmap, wolverinePixmap1, wolverineBisPixmap1, wolverinePixmap, wolverineBisPixmap, wolverinePixmap1, wolverineBisPixmap1}), displayArea);
+    PagesContainer* pagesContainerDouble = new PagesContainer(QVector<QPixmap*>({wolverinePixmap, wolverineBisPixmap/*, wolverinePixmap1, wolverineBisPixmap1, wolverinePixmap, wolverineBisPixmap, wolverinePixmap1, wolverineBisPixmap1*/}), displayArea);
     displayArea->setWidget(pagesContainerDouble);
 
     /*
