@@ -27,11 +27,14 @@ class ComicBook:
 
     //  Nombre de page à afficher simultanément.
     unsigned int m_number_of_pages_displayed ;
+
+    //  Liste contenant les extensions des images ouvrables par le comic book.
+    QStringList m_extension_filter ;
     
     public slots:
         //  Descr:  charge la page index_page ainsi que les adjacentes.
         //  Param:  * index_page:   index de la page à charger.
-        void loadPages (unsigned int index_page, bool reload_first_and_last = false) ;
+        void loadPages (unsigned int index_page, bool reload_first_and_last) ;
 
         
     signals:
@@ -46,6 +49,10 @@ class ComicBook:
         ComicBook () ;
         explicit ComicBook (QString path_to_cb) ;
         ~ComicBook () ;
+
+        //  Descr:  Initialise les PageManager en leur indiquant leur nom. Nécessite que m_path_to_cb
+        //          soit spécifié.
+        void initialise () ;
         
         //  Descr:  Spécifie le chemin vers le dossier contenant les images du comic book.
         //  Param:  * path: chemin vers le dossier contenant l'ensemble des images du comic book.

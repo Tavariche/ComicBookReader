@@ -600,18 +600,6 @@ release/moc_CBWindow.cpp: ../../../../Qt/5.4/mingw491_32/include/QtWidgets/QtWid
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbox.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbutton.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtwidgetsversion.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvg \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvgDepends \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qgraphicssvgitem.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgglobal.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvggenerator.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvgrenderer.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvgwidget.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgversion.h \
-		../App/PagesContainer.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
-		../App/CBScrollArea.h \
-		../App/UncheckableActionGroup.h \
 		../App/CBWindow.h
 	E:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IE:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IE:/documents/CodeBlocks/ComicBookReader/App -IE:/Qt/5.4/mingw491_32/include -IE:/Qt/5.4/mingw491_32/include/QtSvg -IE:/Qt/5.4/mingw491_32/include/QtWidgets -IE:/Qt/5.4/mingw491_32/include/QtGui -IE:/Qt/5.4/mingw491_32/include/QtConcurrent -IE:/Qt/5.4/mingw491_32/include/QtCore -I. ..\App\CBWindow.h -o release\moc_CBWindow.cpp
 
@@ -2785,24 +2773,11 @@ release/main.o: ../App/main.cpp ../App/CBWindow.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbox.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbutton.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtwidgetsversion.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvg \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvgDepends \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qgraphicssvgitem.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgglobal.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvggenerator.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvgrenderer.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvgwidget.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgversion.h \
-		../App/PagesContainer.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
-		../App/CBScrollArea.h \
-		../App/UncheckableActionGroup.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\App\main.cpp
 
-release/CBWindow.o: ../App/CBWindow.cpp ../App/CBWindow.h \
-		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QtWidgets \
-		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QtWidgetsDepends \
+release/CBWindow.o: ../App/CBWindow.cpp ../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvg \
+		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvgDepends \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QtCore \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QtCoreDepends \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qabstractanimation.h \
@@ -3107,6 +3082,8 @@ release/CBWindow.o: ../App/CBWindow.cpp ../App/CBWindow.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qdesktopservices.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qvalidator.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qtguiversion.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QtWidgets \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QtWidgetsDepends \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/complexwidgets.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qaccessiblewidget.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qabstractitemview.h \
@@ -3251,16 +3228,19 @@ release/CBWindow.o: ../App/CBWindow.cpp ../App/CBWindow.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbox.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbutton.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtwidgetsversion.h \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvg \
-		../../../../Qt/5.4/mingw491_32/include/QtSvg/QtSvgDepends \
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qgraphicssvgitem.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgglobal.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvggenerator.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvgrenderer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qsvgwidget.h \
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgversion.h \
-		../App/PagesContainer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
+		../App/CBWindow.h \
+		../App/PagesContainer.h \
+		../App/ComicBook.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../App/PageManager.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
 		../App/CBScrollArea.h \
 		../App/UncheckableActionGroup.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\CBWindow.o ..\App\CBWindow.cpp
@@ -4643,11 +4623,10 @@ release/UncheckableActionGroup.o: ../App/UncheckableActionGroup.cpp ../App/Unche
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtwidgetsversion.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\UncheckableActionGroup.o ..\App\UncheckableActionGroup.cpp
 
-release/ComicBook.o: ../App/ComicBook.cpp ../App/ComicBook.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qnamespace.h \
+release/ComicBook.o: ../App/ComicBook.cpp ../../../../Qt/5.4/mingw491_32/include/QtCore/QDir \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdir.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qchar.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobal.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qconfig.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qfeatures.h \
@@ -4676,13 +4655,18 @@ release/ComicBook.o: ../App/ComicBook.cpp ../App/ComicBook.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qglobalstatic.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qmutex.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qnumeric.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs_impl.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qstring.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qchar.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qbytearray.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qrefcount.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qnamespace.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qarraydata.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringbuilder.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfileinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qiodevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qobjectdefs_impl.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qlist.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qalgorithms.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qiterator.h \
@@ -4694,39 +4678,65 @@ release/ComicBook.o: ../App/ComicBook.cpp ../App/ComicBook.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontainerfwd.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qisenum.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qobject_impl.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
-		../App/PageManager.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixmap.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qpaintdevice.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qwindowdefs.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qwindowdefs_win.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qrect.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qmargins.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qsize.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qcolor.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qrgb.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringlist.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qdatastream.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qiodevice.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qpair.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qregexp.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringmatcher.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qsharedpointer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qshareddata.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qhash.h \
-		../../../../Qt/5.4/mingw491_32/include/QtCore/qsharedpointer_impl.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qimage.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qtransform.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpair.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringlist.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdatastream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qregexp.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qstringmatcher.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QFileInfo \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QMessageBox \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qmessagebox.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qdialog.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qwindowdefs.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qwindowdefs_win.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmargins.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpaintdevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qrect.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsize.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcolor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qrgb.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qmatrix.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpolygon.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qregion.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtransform.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qimage.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsharedpointer.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qsharedpointer_impl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h \
+		../App/ComicBook.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../App/PageManager.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\ComicBook.o ..\App\ComicBook.cpp
 
 release/NavigationManager.o: ../App/NavigationManager.cpp ../App/NavigationManager.h \

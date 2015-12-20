@@ -1,14 +1,8 @@
 #ifndef CBWINDOW_H
 #define CBWINDOW_H
 
+
 #include <QtWidgets>
-#include <QtSvg>
-#include <vector>
-//#include "PagesContainerSingle.h"
-//#include "PagesContainerDouble.h"
-#include "PagesContainer.h"
-#include "CBScrollArea.h"
-#include "UncheckableActionGroup.h"
 
 
 class CBWindow : public QMainWindow
@@ -17,7 +11,6 @@ class CBWindow : public QMainWindow
 
 public:
     explicit CBWindow(QWidget *parent = 0);
-
     ~CBWindow();
 
 private:

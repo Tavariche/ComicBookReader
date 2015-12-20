@@ -34,6 +34,9 @@ class PagesBuffer:
         void bufferUpdated () ;
         
     public slots:
+        //  Descr:  met à jour le tableau de pointeurs du PagesBuffer.
+        //  Param:  * buffer:   tableau de pointeurs contenant les adresses des images
+        //                      chargées en mémoire.
         void updateBuffer (QVector<QVector<PageManager*> > buffer) ;
     
     public:

@@ -1,4 +1,11 @@
+#include <QtSvg>
+#include <QVector>
 #include "CBWindow.h"
+#include "PagesContainer.h"
+#include "ComicBook.h"
+#include "CBScrollArea.h"
+#include "UncheckableActionGroup.h"
+
 
 CBWindow::CBWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -69,9 +76,9 @@ CBWindow::CBWindow(QWidget *parent) :
     displayArea->setWidgetResizable(true); //Permet au PagesContainer de s'étendre
 
     QPixmap* wolverinePixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
-    QPixmap* wolverinePixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
+    //QPixmap* wolverinePixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
     QPixmap* wolverineBisPixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
-    QPixmap* wolverineBisPixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
+    //QPixmap* wolverineBisPixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
     QVector<QPixmap*> vct_pixmap ;
     vct_pixmap.push_back(wolverinePixmap);
     vct_pixmap.push_back(wolverineBisPixmap);
@@ -106,6 +113,12 @@ CBWindow::CBWindow(QWidget *parent) :
     statusBar->insertPermanentWidget(0, valZoom);
     setStatusBar(statusBar);
 
+    /// Creation du comic book.
+    //  Le chemin vers le comic book doit OBLIGATOIREMENT terminer par '/'.
+    ComicBook comic_book ("E:/documents/CodeBlocks/ComicBookReader/App/images/ComicBookTest/") ;
+    comic_book.initialise () ;
+
+    /// Connection des différents éléments.
     connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
     connect(pagesContainerDouble, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
     connect(slider, SIGNAL(sliderMoved(int)), dimActGroup, SLOT(uncheckActions()));
@@ -116,8 +129,8 @@ CBWindow::CBWindow(QWidget *parent) :
     connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitScreen()));
 
     connect(displayArea, SIGNAL(resized()), pagesContainerDouble, SLOT(applyResizePolicy()));
-
 }
+
 
 CBWindow::~CBWindow()
 {
