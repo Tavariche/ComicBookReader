@@ -1,7 +1,10 @@
 #ifndef NAVIGATION_MANAGER_H
 #define NAVIGATION_MANAGER_H
 
+
+#include <QObject>
 #include "PagesBuffer.h"
+
 
 /********************************************************
 *   NavigationManager
@@ -10,18 +13,26 @@
 *   ComicBook.
 ********************************************************/
 
-class NavigationManager
+class NavigationManager:
+        public QObject
 {
     Q_OBJECT
     
-    //  Nombre total de pages du comic book (duplication des données, problématique ?).
+    //  Descr: Nombre total de pages du comic book (duplication des données, problématique ?).
     unsigned int m_number_pages ;
     
-    //  Index de la page actuellement affichée.
-    unsigned int current_page ;
+    //  Descr: Index de la page actuellement affichée.
+    unsigned int m_current_page ;
 
-    //  Buffer contenant les références des images chargées en mémoire.
+    //  Descr: Buffer contenant les références des images chargées en mémoire.
     PagesBuffer m_pages_buffer ;
+
+    signals:
+        // Descr: Demande au comic book associé de charger la page 'page'.
+        // Param:
+        //      * page: page que le comic book doit charger.
+        // Connection: Connecté au comic book associé.
+        void SG_goToPage (unsigned int page) ;
     
     public slots:
         void goToLastPage () ;
@@ -32,6 +43,7 @@ class NavigationManager
     
     public:
         NavigationManager () ;
+        explicit NavigationManager (unsigned int number_pages) ;
         ~NavigationManager () ;
 };
 

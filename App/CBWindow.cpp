@@ -9,24 +9,24 @@ CBWindow::CBWindow(QWidget *parent) :
     ///Les actions
     //Quitter
     QAction *actQuitter = new QAction("&Quitter", this);
-    actQuitter->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/blackCross.svg"));
+    actQuitter->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/blackCross.svg"));
     connect(actQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 
     //Groupe des actions de dimensionnement
     UncheckableActionGroup* dimActGroup = new UncheckableActionGroup(this);
     QAction *actFitHeight = new QAction("Ajuster à la &Hauteur", this);
     actFitHeight->setCheckable(true);
-    actFitHeight->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/fitHeight.svg"));
+    actFitHeight->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/fitHeight.svg"));
     dimActGroup->addAction(actFitHeight);
 
     QAction *actFitWidth = new QAction("Ajuster à la largeur", this);
     actFitWidth->setCheckable(true);
-    actFitWidth->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/fitWidth.svg"));
+    actFitWidth->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/fitWidth.svg"));
     dimActGroup->addAction(actFitWidth);
 
     QAction *actFitScreen = new QAction("actFitWidth", this);
     actFitScreen->setCheckable(true);
-    actFitScreen->setIcon(QIcon("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/fitScreen.svg"));
+    actFitScreen->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/fitScreen.svg"));
     actFitScreen->setChecked(true);
     dimActGroup->addAction(actFitScreen);
 
@@ -58,7 +58,7 @@ CBWindow::CBWindow(QWidget *parent) :
     QLabel *wolverineMiniature = new QLabel("Wolverine", this);
     wolverineMiniature->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-    wolverineMiniature->setPixmap(QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(120, Qt::SmoothTransformation));
+    wolverineMiniature->setPixmap(QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(120, Qt::SmoothTransformation));
 
     dockMiniatures->setWidget(wolverineMiniature);
     addDockWidget(Qt::LeftDockWidgetArea, dockMiniatures);
@@ -68,15 +68,18 @@ CBWindow::CBWindow(QWidget *parent) :
     displayArea->setBackgroundRole(QPalette::Dark);
     displayArea->setWidgetResizable(true); //Permet au PagesContainer de s'étendre
 
-    QPixmap* wolverinePixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg");
-    *wolverinePixmap = wolverinePixmap->scaledToWidth(400, Qt::SmoothTransformation);
-    QPixmap* wolverineBisPixmap = new QPixmap("D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverineBis.jpg");
-    *wolverineBisPixmap = wolverineBisPixmap->scaledToWidth(400, Qt::SmoothTransformation);
-    PagesContainerDouble* pagesContainerDouble = new PagesContainerDouble(wolverinePixmap, wolverineBisPixmap, displayArea);
+    QPixmap* wolverinePixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
+    QPixmap* wolverinePixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
+    QPixmap* wolverineBisPixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
+    QPixmap* wolverineBisPixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
+    QVector<QPixmap*> vct_pixmap ;
+    vct_pixmap.push_back(wolverinePixmap);
+    vct_pixmap.push_back(wolverineBisPixmap);
+    PagesContainer* pagesContainerDouble = new PagesContainer(vct_pixmap, displayArea);
     displayArea->setWidget(pagesContainerDouble);
 
     /*
-    pageLabel *wolverine = new pageLabel("Wolverine", "D:/Documents/Gabriel/Documents/ENSTA/IN204/ComicBookReader/App/images/wolverine.jpg", displayArea);
+    pageLabel *wolverine = new pageLabel("Wolverine", "E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg", displayArea);
     wolverine->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter	);
     wolverine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     //wolverine->setPixmap(QPixmap("D:/Documents/Gabriel/Documents/ENSTA/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(400, Qt::SmoothTransformation));
@@ -104,10 +107,10 @@ CBWindow::CBWindow(QWidget *parent) :
     setStatusBar(statusBar);
 
     connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
-    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerDouble, SLOT(setPolicyPersonnal(int)));
     connect(pagesContainerDouble, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
     connect(slider, SIGNAL(sliderMoved(int)), dimActGroup, SLOT(uncheckActions()));
 
+    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerDouble, SLOT(setPolicyPersonnal(int)));
     connect(actFitHeight, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitHeight()));
     connect(actFitWidth, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitWidth()));
     connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitScreen()));

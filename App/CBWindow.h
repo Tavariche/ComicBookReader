@@ -3,8 +3,10 @@
 
 #include <QtWidgets>
 #include <QtSvg>
-#include "PagesContainerSingle.h"
-#include "PagesContainerDouble.h"
+#include <vector>
+//#include "PagesContainerSingle.h"
+//#include "PagesContainerDouble.h"
+#include "PagesContainer.h"
 #include "CBScrollArea.h"
 #include "UncheckableActionGroup.h"
 
