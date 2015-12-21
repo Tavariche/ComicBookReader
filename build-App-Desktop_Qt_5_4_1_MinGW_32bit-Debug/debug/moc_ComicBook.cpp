@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ComicBook_t {
-    QByteArrayData data[8];
-    char stringdata[108];
+    QByteArrayData data[11];
+    char stringdata[170];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,14 +35,19 @@ QT_MOC_LITERAL(1, 10, 14), // "SG_pagesLoaded"
 QT_MOC_LITERAL(2, 25, 0), // ""
 QT_MOC_LITERAL(3, 26, 31), // "QVector<QVector<PageManager*> >"
 QT_MOC_LITERAL(4, 58, 6), // "buffer"
-QT_MOC_LITERAL(5, 65, 9), // "loadPages"
-QT_MOC_LITERAL(6, 75, 10), // "index_page"
-QT_MOC_LITERAL(7, 86, 21) // "reload_first_and_last"
+QT_MOC_LITERAL(5, 65, 22), // "SG_numberPagesComputed"
+QT_MOC_LITERAL(6, 88, 12), // "number_pages"
+QT_MOC_LITERAL(7, 101, 9), // "loadPages"
+QT_MOC_LITERAL(8, 111, 10), // "index_page"
+QT_MOC_LITERAL(9, 122, 25), // "number_of_pages_displayed"
+QT_MOC_LITERAL(10, 148, 21) // "reload_first_and_last"
 
     },
     "ComicBook\0SG_pagesLoaded\0\0"
     "QVector<QVector<PageManager*> >\0buffer\0"
-    "loadPages\0index_page\0reload_first_and_last"
+    "SG_numberPagesComputed\0number_pages\0"
+    "loadPages\0index_page\0number_of_pages_displayed\0"
+    "reload_first_and_last"
 };
 #undef QT_MOC_LITERAL
 
@@ -52,24 +57,26 @@ static const uint qt_meta_data_ComicBook[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   24,    2, 0x06 /* Public */,
+       1,    1,   29,    2, 0x06 /* Public */,
+       5,    1,   32,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    2,   27,    2, 0x0a /* Public */,
+       7,    3,   35,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
+    QMetaType::Void, QMetaType::UInt,    6,
 
  // slots: parameters
-    QMetaType::Void, QMetaType::UInt, QMetaType::Bool,    6,    7,
+    QMetaType::Void, QMetaType::UInt, QMetaType::UInt, QMetaType::Bool,    8,    9,   10,
 
        0        // eod
 };
@@ -80,7 +87,8 @@ void ComicBook::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         ComicBook *_t = static_cast<ComicBook *>(_o);
         switch (_id) {
         case 0: _t->SG_pagesLoaded((*reinterpret_cast< QVector<QVector<PageManager*> >(*)>(_a[1]))); break;
-        case 1: _t->loadPages((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 1: _t->SG_numberPagesComputed((*reinterpret_cast< uint(*)>(_a[1]))); break;
+        case 2: _t->loadPages((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -101,6 +109,12 @@ void ComicBook::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
             typedef void (ComicBook::*_t)(QVector<QVector<PageManager*> > );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ComicBook::SG_pagesLoaded)) {
                 *result = 0;
+            }
+        }
+        {
+            typedef void (ComicBook::*_t)(unsigned int );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&ComicBook::SG_numberPagesComputed)) {
+                *result = 1;
             }
         }
     }
@@ -131,13 +145,13 @@ int ComicBook::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }
@@ -147,5 +161,12 @@ void ComicBook::SG_pagesLoaded(QVector<QVector<PageManager*> > _t1)
 {
     void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void ComicBook::SG_numberPagesComputed(unsigned int _t1)
+{
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

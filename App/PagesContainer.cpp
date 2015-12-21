@@ -2,61 +2,88 @@
 #include <functional>
 #include "PagesContainer.h"
 
-// Constructeur par défaut.
+//Constructeur par défaut
 PagesContainer::PagesContainer(QWidget* parent) : QWidget(parent)
 {
-    setResizePolicy(FIT_SCREEN);
+    m_numberOfPages = 0;
+    m_globalPagesRatio = 1; //Arbitraire, évite une éventuelle division par 0
+    m_layout = new QHBoxLayout(this);
+    m_parentScrollArea = dynamic_cast<QScrollArea*>(parentWidget());
+
+    setResizePolicy(ResizePolicy::fitScreen);
 }
 
-
-// Constructeur.
+//Constructeur avec initialisation des pages
 PagesContainer::PagesContainer(const QVector<QPixmap*> pages, QWidget* parent) : QWidget(parent)
 {
-    m_originalPages = pages;
-    m_numberOfPages = (int) pages.size();
-    m_globalEquivalentWidth = 0;
+    m_numberOfPages = 0; //Evite le bug de refresh lors de l'appel à setResizePolicy
 
-    for(int i = 0 ; i < m_numberOfPages ; i++){
-        m_equivalentWidth.push_back((((double)m_originalPages[0]->height()) / m_originalPages[i]->height()) * m_originalPages[i]->width() );
-        m_globalEquivalentWidth += m_equivalentWidth[i];
-    }
-    m_globalPagesRatio = (double) m_originalPages[0]->height() / m_globalEquivalentWidth;
+    //Récupération de la scrollArea parente
+    m_parentScrollArea = dynamic_cast<QScrollArea*>(parentWidget());
+    if(! m_parentScrollArea) exit(-1);
 
+    //Politique de redimentionnement par défaut arbitraire
+    setResizePolicy(ResizePolicy::fitScreen);
+
+    //Remplissage du pagesContainer
+    setPages(pages);
+}
+
+//Fonction de remplissage du page container avec de nouvelles pages
+void PagesContainer::setPages(const QVector<QPixmap*> newPages)
+{
+    m_originalPages = newPages;
+    m_numberOfPages = (int) m_originalPages.size();
+
+    //Calcule du ratio équivalent global des pages
+    int globalEquivalentWidth = 0;
+    for(int i = 0 ; i < m_numberOfPages ; i++)
+        globalEquivalentWidth += (double)m_originalPages[0]->height() / m_originalPages[i]->height() * m_originalPages[i]->width();
+    m_globalPagesRatio = (double) m_originalPages[0]->height() / globalEquivalentWidth;
+
+    //Remplissage initial des QLabels par les originaux ; Un redimensionnement aura lieu juste après.
     for(int i = 0 ; i < m_numberOfPages  ; i++){
         QLabel* temp = new QLabel;
         temp->setPixmap(*m_originalPages[i]);
         m_pagesLabel.push_back(temp);
     }
 
-
-    m_layout = new QHBoxLayout(this);
+    delete layout(); //Obligatoire si un layout est déjà en place (pas d'écrasement possible)
+    m_layout = new QHBoxLayout(this); //Disposition horizontale
     m_layout->addWidget(m_pagesLabel[0]);
+    //Page de gauche centrée si seule est à droite de son emplacement si suivie
     m_layout->setAlignment(m_pagesLabel[0], m_numberOfPages == 1 ? Qt::AlignCenter : Qt::AlignHCenter | Qt::AlignRight);
+    //Pages intérmédiaires centrées
     for(int i = 1 ; i < m_numberOfPages - 1 ; i++){
         m_layout->addWidget(m_pagesLabel[i]);
         m_layout->setAlignment(m_pagesLabel[i], Qt::AlignCenter);
     }
+    //Dernière page alignée à gauche
     if(m_numberOfPages >= 2){
         m_layout->addWidget(m_pagesLabel[m_numberOfPages - 1]);
         m_layout->setAlignment(m_pagesLabel[m_numberOfPages - 1], Qt::AlignHCenter | Qt::AlignLeft);
     }
+    //Définit les marges autour des pages puis l'écart entre deux pages
     m_layout->setContentsMargins(0, 0, 0, 0);
     m_layout->setSpacing(15);
-    setLayout(m_layout);
 
-    setResizePolicy(FIT_SCREEN);
+    applyResizePolicy(); //Application de la politique de redimentionnement aux pages
+
+    setLayout(m_layout); //Application du layout
 }
 
+//Futur constructeur
 /** PagesContainer(const QVector<PageManager*> pages, const QWidget* parent) : QWidget(parent)
  ** {
  **     m_pages = pages;
- **     setResizePolicy(FIT_SCREEN);
+ **     setResizePolicy(ResizePolicy::fitScreen);
  ** }
  **/
 
+//Redimentionnement de toutes les pages à la hauteur newHeight
 void PagesContainer::scaleToHeight(const int newHeight)
 {
-    //Sélection des Pixmap nécessitant un redimentionnement et désactivation des màj
+    //Sélection des Pixmap nécessitant un redimentionnement et désactivation des màj des QLabels
     QVector<QPixmap*> selectedPages;
     QVector<int> indirTable; //Mémorise à quel pixmap affecter le futur résultat
     for(int i = 0 ; i < m_numberOfPages ; i++){
@@ -70,17 +97,19 @@ void PagesContainer::scaleToHeight(const int newHeight)
     //Si rien à modifier
     if(indirTable.empty()){refresh(); return;}
 
+    //Le parallélisme sera plutôt dans le buffer et la fonction de redimentionement dans le pageManager à l'avenir
     QFuture<QPixmap> result = QtConcurrent::mapped(selectedPages, std::bind(&QPixmap::scaledToHeight, std::placeholders::_1, newHeight, Qt::FastTransformation));
-    for(int i = 0 ; i < indirTable.size() ; i++){
+    for(int i = 0 ; i < indirTable.size() ; i++){ //Mise à jour des QLabels modifiés
         m_pagesLabel[indirTable[i]]->setPixmap(result.results()[i]);
     }
 
-    refresh();
-    emit pagesSizeChanged(m_pagesLabel[0]->pixmap()->width());
+    refresh(); //Mise à jour de l'affichage
+    emit pagesSizeChanged(m_pagesLabel[0]->pixmap()->width()); //Indique notamment au curseur de zoom la nouvelle largeur des pages (indexée sur celle de la première)
 
 }
 
-
+//Redimentionnement de toutes les pages à la largeur newWidth
+//Fonctionne comme scaleToHeight
 void PagesContainer::scaleToWidth(const int newWidth)
 {
     //Sélection des Pixmap nécessitant un redimentionnement et désactivation des màj
@@ -107,14 +136,21 @@ void PagesContainer::scaleToWidth(const int newWidth)
 
 }
 
+//Redimentionnement de toutes les pages dans les limites newMaxWidth et newMaxHeight
+//Fonctionnement presque identique à scaleToHeight
 void PagesContainer::scale(const int newMaxWidth, const int newMaxHeight)
 {
     //Sélection des Pixmap nécessitant un redimentionnement et désactivation des màj
     QVector<QPixmap*> selectedPages;
     QVector<int> indirTable; //Mémorise à quel pixmap affecter le futur résultat
+    double screenRatio((double) newMaxHeight / newMaxWidth);
     for(int i = 0 ; i < m_numberOfPages ; i++){
         m_pagesLabel[i]->setUpdatesEnabled(false);
-        if(! alreadyScaled(i, newMaxWidth, newMaxHeight)){
+
+        double pageRatio((double) m_originalPages[i]->height() / m_originalPages[i]->width());
+        //Le test contient les deux façons qu'une image peut avoir d'être bien dimensionnée et une négation au début
+        if(! (((pageRatio >= screenRatio) && m_pagesLabel[i]->pixmap()->height() == newMaxHeight) ||
+          ((pageRatio <= screenRatio) && m_pagesLabel[i]->pixmap()->width() == newMaxWidth))){
             selectedPages.push_back(m_originalPages[i]);
             indirTable.push_back(i);
         }
@@ -123,7 +159,7 @@ void PagesContainer::scale(const int newMaxWidth, const int newMaxHeight)
     //Si rien à modifier
     if(indirTable.empty()){refresh(); return;}
 
-    QPixmap(QPixmap::*function)(int, int, Qt::AspectRatioMode, Qt::TransformationMode) const = &QPixmap::scaled;
+    auto function = static_cast<QPixmap(QPixmap::*)(int, int, Qt::AspectRatioMode, Qt::TransformationMode) const> (&QPixmap::scaled);
     QFuture<QPixmap> result = QtConcurrent::mapped(selectedPages, std::bind(function, std::placeholders::_1, newMaxWidth, newMaxHeight, Qt::KeepAspectRatio, Qt::FastTransformation));
     for(int i = 0 ; i < indirTable.size() ; i++){
         m_pagesLabel[indirTable[i]]->setPixmap(result.results()[i]);
@@ -131,31 +167,19 @@ void PagesContainer::scale(const int newMaxWidth, const int newMaxHeight)
 
     refresh();
     emit pagesSizeChanged(m_pagesLabel[0]->pixmap()->width());
-
-
 }
 
-bool PagesContainer::alreadyScaled(const int index, const int newMaxWidth, const int newMaxHeight)
-{
-    double pageRatio((double) m_originalPages[index]->height() / m_originalPages[index]->width()),
-           screenRatio((double) newMaxHeight / newMaxWidth);
-
-    if((pageRatio >= screenRatio) && m_pagesLabel[index]->pixmap()->height() == newMaxHeight) return true;
-    else if((pageRatio <= screenRatio) && m_pagesLabel[index]->pixmap()->width() == newMaxWidth) return true;
-    else return false;
-}
-
+//Ajustement des pages à la hauteur de l'écran
 void PagesContainer::fitHeight()
 {
-    QScrollArea* parentScrollArea = dynamic_cast<QScrollArea*>(parentWidget()->parentWidget());
-    if (parentScrollArea==0) exit(1);
+    if(m_numberOfPages == 0) return; //Si pas de pages
 
-    int spacing(m_layout->spacing() * (m_numberOfPages - 1)),
-        H(parentScrollArea->maximumViewportSize().height()),
-        h(H - parentScrollArea->horizontalScrollBar()->height()),
-        W(parentScrollArea->maximumViewportSize().width() - spacing);
+    int spacing(m_layout->spacing() * (m_numberOfPages - 1)), //Ecart inter-pages
+        H(m_parentScrollArea->maximumViewportSize().height()), //Hauteur écran sans scrollbar
+        h(H - m_parentScrollArea->horizontalScrollBar()->height()), //Hauteur écran avec scrollbar
+        W(m_parentScrollArea->maximumViewportSize().width() - spacing); //Largeur de l'écran sans scrollbar
 
-    //Traitement des problèmes de présence de scrollBar
+    //Calcul du redimentionnent à appliquer
     if (W < h / m_globalPagesRatio){
         scaleToHeight(h);
     }else{
@@ -163,15 +187,16 @@ void PagesContainer::fitHeight()
     }
 }
 
+//Ajustement des pges à la largeur de l'écran
+//Fonctionnement identique à fitHeight
 void PagesContainer::fitWidth()
 {
-    QScrollArea* parentScrollArea = dynamic_cast<QScrollArea*>(parentWidget()->parentWidget());
-    if (parentScrollArea==0) exit(1);
+    if(m_numberOfPages == 0) return;
 
     int spacing(m_layout->spacing() * (m_numberOfPages - 1)),
-        H(parentScrollArea->maximumViewportSize().height()),
-        W(parentScrollArea->maximumViewportSize().width() - spacing),
-        w(W - parentScrollArea->verticalScrollBar()->width());
+        H(m_parentScrollArea->maximumViewportSize().height()),
+        W(m_parentScrollArea->maximumViewportSize().width() - spacing),
+        w(W - m_parentScrollArea->verticalScrollBar()->width());
 
     //Traitement des problèmes de présence de scrollBar
     if (H < w * m_globalPagesRatio){
@@ -181,79 +206,72 @@ void PagesContainer::fitWidth()
     }
 }
 
+//Ajustement à l'écran
 void PagesContainer::fitScreen()
 {
-    QScrollArea* parentScrollArea = dynamic_cast<QScrollArea*>(parentWidget()->parentWidget());
-    if (parentScrollArea==0) exit(1);
+    if(m_numberOfPages == 0) return;
 
-    int spacing(m_layout->spacing() * (m_numberOfPages - 1));
-    double screenRatio = (double)parentScrollArea->maximumViewportSize().height() / parentScrollArea->maximumViewportSize().width();
+    //Ratio hauteur / largeur de l'écran
+    double screenRatio = (double)m_parentScrollArea->maximumViewportSize().height() / m_parentScrollArea->maximumViewportSize().width();
 
-    if (m_globalPagesRatio < screenRatio)
-        fitWidth();
+    //Déterminer si l'ajustement à l'écran correspond à un ajustement à la largeur ou à la hauteur
+    if (m_globalPagesRatio < screenRatio) fitWidth();
     else fitHeight();
 }
 
+//Rafraichissement de l'affichage
 void PagesContainer::refresh()
 {
     for(int i = 0 ; i < m_numberOfPages ; i ++){
-        m_pagesLabel[i]->setUpdatesEnabled(true);
-        m_pagesLabel[i]->update();
+        m_pagesLabel[i]->setUpdatesEnabled(true); //Réactivation des modifs
+        m_pagesLabel[i]->update(); //Mise à jour des QLabels
+        //Cacher afficher est le seul moyen que j'ai trouvé pour corriger les problèmes d'affichage quend le QLabel n'était pas redimensionné
         m_pagesLabel[i]->hide();
         m_pagesLabel[i]->show();
     }
 }
 
-void PagesContainer::setResizePolicy(const ResizePolicy resizePolicy)
-{
-    m_resizePolicy = resizePolicy;
-}
-
-ResizePolicy PagesContainer::getResizePolicy() const
-{
-    return m_resizePolicy;
-}
-
+//Application de la politique de redimentionnement
 void PagesContainer::applyResizePolicy()
 {
-    if (m_resizePolicy & FIT_WIDTH)
+    if (m_resizePolicy & ResizePolicy::fitWidth)
         fitWidth();
-    else if (m_resizePolicy & FIT_HEIGHT)
+    else if (m_resizePolicy & ResizePolicy::fitHeight)
         fitHeight();
-    else if (m_resizePolicy & FIT_SCREEN)
+    else if (m_resizePolicy & ResizePolicy::fitScreen)
         fitScreen();
     else
         refresh();
 }
 
-void PagesContainer::setPolicyPersonnal(const int newWidth)
+//Foncitons de changement de la politique
+//Il aurait été possible den'en utiliser qu'une avec paramètre mais leur utilisation entant que slot aurait été très compliquée
+void PagesContainer::setResizePolicy(const ResizePolicy newPolicy)
 {
-    setResizePolicy(PERSONAL);
+    m_resizePolicy = newPolicy;
+    applyResizePolicy();
+}
 
-    if (newWidth <= 0) return;
+void PagesContainer::setPersonalPolicy(int newWidth)
+{
+    setResizePolicy(ResizePolicy::personal);
     scaleToWidth(newWidth);
 }
 
-void PagesContainer::setPolicyFitWidth()
+void PagesContainer::setFitWidthPolicy()
 {
-    setResizePolicy(FIT_WIDTH);
+    setResizePolicy(ResizePolicy::fitWidth);
     applyResizePolicy();
 }
 
-void PagesContainer::setPolicyFitHeight()
+void PagesContainer::setFitHeightPolicy()
 {
-    setResizePolicy(FIT_HEIGHT);
+    setResizePolicy(ResizePolicy::fitHeight);
     applyResizePolicy();
 }
 
-void PagesContainer::setPolicyFitScreen()
+void PagesContainer::setFitScreenPolicy()
 {
-    setResizePolicy(FIT_SCREEN);
+    setResizePolicy(ResizePolicy::fitScreen);
     applyResizePolicy();
 }
-
-//void PagesContainer::changePages(const QVector<PagesManager*> newPages)
-//{
-//    m_originalPages = newPages;
-//    applyResizePolicy();
-//}

@@ -84,7 +84,8 @@ DIST          =  ..\App\CBWindow.h \
 		..\App\ComicBook.h \
 		..\App\NavigationManager.h \
 		..\App\PageManager.h \
-		..\App\PagesBuffer.h ..\App\main.cpp \
+		..\App\PagesBuffer.h \
+		..\App\e_page_role.h ..\App\main.cpp \
 		..\App\CBWindow.cpp \
 		..\App\PagesContainer.cpp \
 		..\App\CBScrollArea.cpp \
@@ -600,6 +601,15 @@ release/moc_CBWindow.cpp: ../../../../Qt/5.4/mingw491_32/include/QtWidgets/QtWid
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbox.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbutton.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtwidgetsversion.h \
+		../App/ComicBook.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../App/PageManager.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../App/NavigationManager.h \
+		../App/PagesBuffer.h \
+		../App/e_page_role.h \
 		../App/CBWindow.h
 	E:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IE:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IE:/documents/CodeBlocks/ComicBookReader/App -IE:/Qt/5.4/mingw491_32/include -IE:/Qt/5.4/mingw491_32/include/QtSvg -IE:/Qt/5.4/mingw491_32/include/QtWidgets -IE:/Qt/5.4/mingw491_32/include/QtGui -IE:/Qt/5.4/mingw491_32/include/QtConcurrent -IE:/Qt/5.4/mingw491_32/include/QtCore -I. ..\App\CBWindow.h -o release\moc_CBWindow.cpp
 
@@ -2046,6 +2056,32 @@ release/moc_ComicBook.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore/QObject
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h \
 		../App/ComicBook.h
 	E:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IE:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IE:/documents/CodeBlocks/ComicBookReader/App -IE:/Qt/5.4/mingw491_32/include -IE:/Qt/5.4/mingw491_32/include/QtSvg -IE:/Qt/5.4/mingw491_32/include/QtWidgets -IE:/Qt/5.4/mingw491_32/include/QtGui -IE:/Qt/5.4/mingw491_32/include/QtConcurrent -IE:/Qt/5.4/mingw491_32/include/QtCore -I. ..\App\ComicBook.h -o release\moc_ComicBook.cpp
 
@@ -2103,6 +2139,7 @@ release/moc_NavigationManager.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../App/e_page_role.h \
 		../App/PageManager.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
@@ -2133,6 +2170,32 @@ release/moc_NavigationManager.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h \
 		../App/NavigationManager.h
 	E:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IE:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IE:/documents/CodeBlocks/ComicBookReader/App -IE:/Qt/5.4/mingw491_32/include -IE:/Qt/5.4/mingw491_32/include/QtSvg -IE:/Qt/5.4/mingw491_32/include/QtWidgets -IE:/Qt/5.4/mingw491_32/include/QtGui -IE:/Qt/5.4/mingw491_32/include/QtConcurrent -IE:/Qt/5.4/mingw491_32/include/QtCore -I. ..\App\NavigationManager.h -o release\moc_NavigationManager.cpp
 
@@ -2217,6 +2280,32 @@ release/moc_PageManager.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore/QObje
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h \
 		../App/PageManager.h
 	E:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IE:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IE:/documents/CodeBlocks/ComicBookReader/App -IE:/Qt/5.4/mingw491_32/include -IE:/Qt/5.4/mingw491_32/include/QtSvg -IE:/Qt/5.4/mingw491_32/include/QtWidgets -IE:/Qt/5.4/mingw491_32/include/QtGui -IE:/Qt/5.4/mingw491_32/include/QtConcurrent -IE:/Qt/5.4/mingw491_32/include/QtCore -I. ..\App\PageManager.h -o release\moc_PageManager.cpp
 
@@ -2273,6 +2362,7 @@ release/moc_PagesBuffer.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore/QObje
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../App/e_page_role.h \
 		../App/PageManager.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
@@ -2303,6 +2393,32 @@ release/moc_PagesBuffer.cpp: ../../../../Qt/5.4/mingw491_32/include/QtCore/QObje
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h \
 		../App/PagesBuffer.h
 	E:\Qt\5.4\mingw491_32\bin\moc.exe $(DEFINES) -D__GNUC__ -DWIN32 -IE:/Qt/5.4/mingw491_32/mkspecs/win32-g++ -IE:/documents/CodeBlocks/ComicBookReader/App -IE:/Qt/5.4/mingw491_32/include -IE:/Qt/5.4/mingw491_32/include/QtSvg -IE:/Qt/5.4/mingw491_32/include/QtWidgets -IE:/Qt/5.4/mingw491_32/include/QtGui -IE:/Qt/5.4/mingw491_32/include/QtConcurrent -IE:/Qt/5.4/mingw491_32/include/QtCore -I. ..\App\PagesBuffer.h -o release\moc_PagesBuffer.cpp
 
@@ -2773,6 +2889,15 @@ release/main.o: ../App/main.cpp ../App/CBWindow.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbox.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtoolbutton.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qtwidgetsversion.h \
+		../App/ComicBook.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
+		../App/PageManager.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../App/NavigationManager.h \
+		../App/PagesBuffer.h \
+		../App/e_page_role.h \
 		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\App\main.cpp
 
@@ -3236,11 +3361,15 @@ release/CBWindow.o: ../App/CBWindow.cpp ../../../../Qt/5.4/mingw491_32/include/Q
 		../../../../Qt/5.4/mingw491_32/include/QtSvg/qtsvgversion.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
 		../App/CBWindow.h \
-		../App/PagesContainer.h \
 		../App/ComicBook.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../App/PageManager.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../App/NavigationManager.h \
+		../App/PagesBuffer.h \
+		../App/e_page_role.h \
+		../App/PagesContainer.h \
 		../App/CBScrollArea.h \
 		../App/UncheckableActionGroup.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\CBWindow.o ..\App\CBWindow.cpp
@@ -4731,12 +4860,16 @@ release/ComicBook.o: ../App/ComicBook.cpp ../../../../Qt/5.4/mingw491_32/include
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h \
+		../App/e_page_role.h \
 		../App/ComicBook.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QObject \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../App/PageManager.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap
+		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\ComicBook.o ..\App\ComicBook.cpp
 
 release/NavigationManager.o: ../App/NavigationManager.cpp ../App/NavigationManager.h \
@@ -4794,6 +4927,7 @@ release/NavigationManager.o: ../App/NavigationManager.cpp ../App/NavigationManag
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../App/e_page_role.h \
 		../App/PageManager.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
@@ -4823,7 +4957,33 @@ release/NavigationManager.o: ../App/NavigationManager.cpp ../App/NavigationManag
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qregion.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\NavigationManager.o ..\App\NavigationManager.cpp
 
 release/PageManager.o: ../App/PageManager.cpp ../App/PageManager.h \
@@ -4907,7 +5067,33 @@ release/PageManager.o: ../App/PageManager.cpp ../App/PageManager.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qregion.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\PageManager.o ..\App\PageManager.cpp
 
 release/PagesBuffer.o: ../App/PagesBuffer.cpp ../App/PagesBuffer.h \
@@ -4964,6 +5150,7 @@ release/PagesBuffer.o: ../App/PagesBuffer.cpp ../App/PagesBuffer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QVector \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qvector.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qpoint.h \
+		../App/e_page_role.h \
 		../App/PageManager.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/QString \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/QPixmap \
@@ -4993,7 +5180,33 @@ release/PagesBuffer.o: ../App/PagesBuffer.cpp ../App/PagesBuffer.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qregion.h \
 		../../../../Qt/5.4/mingw491_32/include/QtCore/qline.h \
 		../../../../Qt/5.4/mingw491_32/include/QtGui/qpainterpath.h \
-		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpixelformat.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/QLabel \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qlabel.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qframe.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qwidget.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qpalette.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qbrush.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfont.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontmetrics.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qfontinfo.h \
+		../../../../Qt/5.4/mingw491_32/include/QtWidgets/qsizepolicy.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qcursor.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qkeysequence.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qevent.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qvariant.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qmap.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qdebug.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qtextstream.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qlocale.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qset.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qcontiguouscache.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurl.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qurlquery.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfile.h \
+		../../../../Qt/5.4/mingw491_32/include/QtCore/qfiledevice.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qvector2d.h \
+		../../../../Qt/5.4/mingw491_32/include/QtGui/qtouchdevice.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\PagesBuffer.o ..\App\PagesBuffer.cpp
 
 release/moc_CBWindow.o: release/moc_CBWindow.cpp 

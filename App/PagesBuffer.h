@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include <QVector>
+#include "e_page_role.h"
 #include "PageManager.h"
 
 
@@ -20,21 +21,23 @@ class PagesBuffer:
     Q_OBJECT
     
     //  Tableau contenant les références des pages chargées en mémoire.
-    //      [0]:    page(s) suivante(s).
-    //      [1]:    page(s) précédente(s).
-    //      [2]:    page(s) du début.
-    //      [3]:    page(s) de la fin.
-    //      [4]:    page(s) actuellement visionnée(s).
+    //      [NEXT]:    page(s) suivante(s).
+    //      [PREVIOUS]:    page(s) précédente(s).
+    //      [FIRST]:    page(s) du début.
+    //      [LAST]:    page(s) de la fin.
+    //      [CURRENT]:    page(s) actuellement visionnée(s).
+    //  Les constantes entre crochets sont définies dans le fichier e_page_role.h.
     QVector<QVector<PageManager*> > m_buffer ;
     
     signals:
         //  Descr:  émis lorsque le PageBuffer a mis à jour sont tableau de pointeurs vers
         //          les nouvelles images chargées en mémoire.
-        //  Connection: connecté au PagesContainer associé.
+        //  Conex:  connecté au PagesContainer associé.
         void bufferUpdated () ;
         
     public slots:
-        //  Descr:  met à jour le tableau de pointeurs du PagesBuffer.
+        //  Descr:  Décharge les images qui ne sont plus utiles et met à jour le tableau de
+        //          pointeurs du PagesBuffer.
         //  Param:  * buffer:   tableau de pointeurs contenant les adresses des images
         //                      chargées en mémoire.
         void updateBuffer (QVector<QVector<PageManager*> > buffer) ;
@@ -43,7 +46,7 @@ class PagesBuffer:
         PagesBuffer () ;
         ~PagesBuffer () ;
 
-        //  Descr:  met à jour la taille des tableaux de référence (nécessaire quand le
+        //  Descr:  Met à jour la taille des tableaux de référence (nécessaire quand le
         //          nombre de pages à afficher simultanément est modifié).
         //  Param:  * number_pages_displayed:   nombre de pages affichées simultanément.
         void setNumberPagesDisplayed (unsigned int number_pages_displayed) ;

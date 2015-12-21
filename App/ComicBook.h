@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QVector>
 #include <QString>
+#include <QMessageBox>  //  Pour debugging.
 #include "PageManager.h"
 
 /********************************************************
@@ -25,25 +26,29 @@ class ComicBook:
     //  chargées/déchargées au besoin).
     QVector<PageManager> m_table_pages ;
 
-    //  Nombre de page à afficher simultanément.
-    unsigned int m_number_of_pages_displayed ;
-
     //  Liste contenant les extensions des images ouvrables par le comic book.
     QStringList m_extension_filter ;
+
+    signals:
+        //  Descr:  Signale la fin du chargement des pages demandées et transmet leurs références sous
+        //          forme de tableau.
+        //  Param:  * buffer:   tableau contenant les adresses des images chargées en mémoire par le
+        //                      comic book.
+        //  Conex:  Connecté au PagesBuffer associé.
+        void SG_pagesLoaded (QVector<QVector<PageManager*> > buffer) ;
+
+        //  Descr:  Signale que le calcule du nombre total de pages contenues dans le comic book a été
+        //          effectué.
+        //  Param:  * number_pages: nombre total de pages contenues dans le comic book.
+        //  Conex:  Connecté au NavigationManager associé.
+        void SG_numberPagesComputed (unsigned int number_pages) ;
     
     public slots:
         //  Descr:  charge la page index_page ainsi que les adjacentes.
         //  Param:  * index_page:   index de la page à charger.
-        void loadPages (unsigned int index_page, bool reload_first_and_last) ;
-
-        
-    signals:
-        // Descr:   Signale la fin du chargement des pages demandées et transmet leurs références sous
-        //          forme de tableau.
-        // Param:   * buffer:   tableau contenant les adresses des images chargées en mémoire par le
-        //                      comic book.
-        // Connection:  Connecté au PagesBuffer associé.
-        void SG_pagesLoaded (QVector<QVector<PageManager*> > buffer) ;
+        //          * reload_first_and_last:    précise si les premières et dernières pages doivent être
+        //                                      rechargée.
+        void loadPages (unsigned int index_page, unsigned int number_of_pages_displayed, bool reload_first_and_last) ;
     
     public:
         ComicBook () ;
@@ -57,10 +62,6 @@ class ComicBook:
         //  Descr:  Spécifie le chemin vers le dossier contenant les images du comic book.
         //  Param:  * path: chemin vers le dossier contenant l'ensemble des images du comic book.
         void setPathToComicBook (QString path) { m_path_to_cb = path ; }
-
-        //  Descr:  met à jour le nombre de pages à afficher simultanément.
-        //  Param:  * number:   nombre de pages à afficher simultanément.
-        void setNumberOfPagesDisplayed (unsigned int number) { m_number_of_pages_displayed = number ; }
         
         //  Descr:  Demande le calcul des miniatures de l'ensemble des pages du comic book.
         void computeThumbnail () ;

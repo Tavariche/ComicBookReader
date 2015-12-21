@@ -11,7 +11,8 @@ HEADERS += \
     ComicBook.h \
     NavigationManager.h \
     PageManager.h \
-    PagesBuffer.h
+    PagesBuffer.h \
+    e_page_role.h
 
 SOURCES += \
     main.cpp \

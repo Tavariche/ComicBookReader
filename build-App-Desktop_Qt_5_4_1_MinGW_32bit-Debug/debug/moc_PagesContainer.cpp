@@ -9,6 +9,7 @@
 #include "../../App/PagesContainer.h"
 #include <QtCore/qbytearray.h>
 #include <QtCore/qmetatype.h>
+#include <QtCore/QVector>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'PagesContainer.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
@@ -19,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_PagesContainer_t {
-    QByteArrayData data[14];
-    char stringdata[178];
+    QByteArrayData data[20];
+    char stringdata[252];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -37,19 +38,27 @@ QT_MOC_LITERAL(4, 39, 9), // "fitHeight"
 QT_MOC_LITERAL(5, 49, 8), // "fitWidth"
 QT_MOC_LITERAL(6, 58, 9), // "fitScreen"
 QT_MOC_LITERAL(7, 68, 7), // "refresh"
-QT_MOC_LITERAL(8, 76, 18), // "setPolicyPersonnal"
-QT_MOC_LITERAL(9, 95, 8), // "newWidth"
-QT_MOC_LITERAL(10, 104, 17), // "setPolicyFitWidth"
-QT_MOC_LITERAL(11, 122, 18), // "setPolicyFitHeight"
-QT_MOC_LITERAL(12, 141, 18), // "setPolicyFitScreen"
-QT_MOC_LITERAL(13, 160, 17) // "applyResizePolicy"
+QT_MOC_LITERAL(8, 76, 8), // "setPages"
+QT_MOC_LITERAL(9, 85, 17), // "QVector<QPixmap*>"
+QT_MOC_LITERAL(10, 103, 8), // "newPages"
+QT_MOC_LITERAL(11, 112, 17), // "setPersonalPolicy"
+QT_MOC_LITERAL(12, 130, 8), // "newWidth"
+QT_MOC_LITERAL(13, 139, 17), // "setFitWidthPolicy"
+QT_MOC_LITERAL(14, 157, 18), // "setFitHeightPolicy"
+QT_MOC_LITERAL(15, 176, 18), // "setFitScreenPolicy"
+QT_MOC_LITERAL(16, 195, 15), // "setResizePolicy"
+QT_MOC_LITERAL(17, 211, 12), // "ResizePolicy"
+QT_MOC_LITERAL(18, 224, 9), // "newPolicy"
+QT_MOC_LITERAL(19, 234, 17) // "applyResizePolicy"
 
     },
     "PagesContainer\0pagesSizeChanged\0\0width\0"
     "fitHeight\0fitWidth\0fitScreen\0refresh\0"
-    "setPolicyPersonnal\0newWidth\0"
-    "setPolicyFitWidth\0setPolicyFitHeight\0"
-    "setPolicyFitScreen\0applyResizePolicy"
+    "setPages\0QVector<QPixmap*>\0newPages\0"
+    "setPersonalPolicy\0newWidth\0setFitWidthPolicy\0"
+    "setFitHeightPolicy\0setFitScreenPolicy\0"
+    "setResizePolicy\0ResizePolicy\0newPolicy\0"
+    "applyResizePolicy"
 };
 #undef QT_MOC_LITERAL
 
@@ -59,7 +68,7 @@ static const uint qt_meta_data_PagesContainer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -67,18 +76,20 @@ static const uint qt_meta_data_PagesContainer[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   64,    2, 0x06 /* Public */,
+       1,    1,   74,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   67,    2, 0x0a /* Public */,
-       5,    0,   68,    2, 0x0a /* Public */,
-       6,    0,   69,    2, 0x0a /* Public */,
-       7,    0,   70,    2, 0x0a /* Public */,
-       8,    1,   71,    2, 0x0a /* Public */,
-      10,    0,   74,    2, 0x0a /* Public */,
-      11,    0,   75,    2, 0x0a /* Public */,
-      12,    0,   76,    2, 0x0a /* Public */,
-      13,    0,   77,    2, 0x0a /* Public */,
+       4,    0,   77,    2, 0x0a /* Public */,
+       5,    0,   78,    2, 0x0a /* Public */,
+       6,    0,   79,    2, 0x0a /* Public */,
+       7,    0,   80,    2, 0x0a /* Public */,
+       8,    1,   81,    2, 0x0a /* Public */,
+      11,    1,   84,    2, 0x0a /* Public */,
+      13,    0,   87,    2, 0x0a /* Public */,
+      14,    0,   88,    2, 0x0a /* Public */,
+      15,    0,   89,    2, 0x0a /* Public */,
+      16,    1,   90,    2, 0x0a /* Public */,
+      19,    0,   93,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -88,10 +99,12 @@ static const uint qt_meta_data_PagesContainer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,    9,
+    QMetaType::Void, 0x80000000 | 9,   10,
+    QMetaType::Void, QMetaType::Int,   12,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 17,   18,
     QMetaType::Void,
 
        0        // eod
@@ -107,11 +120,13 @@ void PagesContainer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 2: _t->fitWidth(); break;
         case 3: _t->fitScreen(); break;
         case 4: _t->refresh(); break;
-        case 5: _t->setPolicyPersonnal((*reinterpret_cast< const int(*)>(_a[1]))); break;
-        case 6: _t->setPolicyFitWidth(); break;
-        case 7: _t->setPolicyFitHeight(); break;
-        case 8: _t->setPolicyFitScreen(); break;
-        case 9: _t->applyResizePolicy(); break;
+        case 5: _t->setPages((*reinterpret_cast< const QVector<QPixmap*>(*)>(_a[1]))); break;
+        case 6: _t->setPersonalPolicy((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->setFitWidthPolicy(); break;
+        case 8: _t->setFitHeightPolicy(); break;
+        case 9: _t->setFitScreenPolicy(); break;
+        case 10: _t->setResizePolicy((*reinterpret_cast< const ResizePolicy(*)>(_a[1]))); break;
+        case 11: _t->applyResizePolicy(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -151,13 +166,13 @@ int PagesContainer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 10)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 10;
+        _id -= 12;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 10)
+        if (_id < 12)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 10;
+        _id -= 12;
     }
     return _id;
 }

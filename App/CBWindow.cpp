@@ -1,8 +1,8 @@
 #include <QtSvg>
 #include <QVector>
+#include <QMessageBox>  //  Pour debugging.
 #include "CBWindow.h"
 #include "PagesContainer.h"
-#include "ComicBook.h"
 #include "CBScrollArea.h"
 #include "UncheckableActionGroup.h"
 
@@ -76,23 +76,12 @@ CBWindow::CBWindow(QWidget *parent) :
     displayArea->setWidgetResizable(true); //Permet au PagesContainer de s'étendre
 
     QPixmap* wolverinePixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
-    //QPixmap* wolverinePixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
     QPixmap* wolverineBisPixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
-    //QPixmap* wolverineBisPixmap1 = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
-    QVector<QPixmap*> vct_pixmap ;
-    vct_pixmap.push_back(wolverinePixmap);
-    vct_pixmap.push_back(wolverineBisPixmap);
-    PagesContainer* pagesContainerDouble = new PagesContainer(vct_pixmap, displayArea);
-    displayArea->setWidget(pagesContainerDouble);
+    PagesContainer* pagesContainer = new PagesContainer(QVector<QPixmap*>({wolverinePixmap, wolverineBisPixmap}), displayArea);
+    pagesContainer->setPages(QVector<QPixmap*>({wolverineBisPixmap, wolverinePixmap}));
+    displayArea->setWidget(pagesContainer);
 
-    /*
-    pageLabel *wolverine = new pageLabel("Wolverine", "E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg", displayArea);
-    wolverine->setAlignment(Qt::AlignHCenter | Qt::AlignVCenter	);
-    wolverine->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    //wolverine->setPixmap(QPixmap("D:/Documents/Gabriel/Documents/ENSTA/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(400, Qt::SmoothTransformation));
 
-    displayArea->setWidget(wolverine);
-    */
     QTabWidget* tab = new QTabWidget(this);
     tab->addTab(displayArea, "Wolverine");
     setCentralWidget(tab);
@@ -107,28 +96,58 @@ CBWindow::CBWindow(QWidget *parent) :
 
     valZoom->setSegmentStyle(QLCDNumber::Outline);
 
-    //QPushButton *test2 = new QPushButton("Test2",statusBar);
+    QPushButton *next = new QPushButton("Suivante",this) ;
+    QPushButton *previous = new QPushButton("Précédente",this) ;
 
     statusBar->addPermanentWidget(slider);
     statusBar->insertPermanentWidget(0, valZoom);
+
+    //  /// ////
+    // TEST
+    //
+    statusBar->insertPermanentWidget(1,previous);
+    statusBar->insertPermanentWidget(2,next);
+    connect(next, SIGNAL(clicked()),&navigation_manager, SLOT(goToNextPage()));
+    connect(previous, SIGNAL(clicked()),&navigation_manager, SLOT(goToPreviousPage()));
+    //
+    //  //  //
+
     setStatusBar(statusBar);
 
-    /// Creation du comic book.
-    //  Le chemin vers le comic book doit OBLIGATOIREMENT terminer par '/'.
-    ComicBook comic_book ("E:/documents/CodeBlocks/ComicBookReader/App/images/ComicBookTest/") ;
-    comic_book.initialise () ;
-
-    /// Connection des différents éléments.
+    /// Connections.
     connect(slider, SIGNAL(valueChanged(int)), valZoom, SLOT(display(int)));
-    connect(pagesContainerDouble, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
+    connect(pagesContainer, SIGNAL(pagesSizeChanged(int)), slider, SLOT(setValue(int)));
+
     connect(slider, SIGNAL(sliderMoved(int)), dimActGroup, SLOT(uncheckActions()));
+    connect(slider, SIGNAL(sliderMoved(int)), pagesContainer, SLOT(setPersonalPolicy(int)));
+    connect(actFitHeight, SIGNAL(triggered(bool)), pagesContainer, SLOT(setFitHeightPolicy()));
+    connect(actFitWidth, SIGNAL(triggered(bool)), pagesContainer, SLOT(setFitWidthPolicy()));
+    connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainer, SLOT(setFitScreenPolicy()));
 
-    connect(slider, SIGNAL(sliderMoved(int)), pagesContainerDouble, SLOT(setPolicyPersonnal(int)));
-    connect(actFitHeight, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitHeight()));
-    connect(actFitWidth, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitWidth()));
-    connect(actFitScreen, SIGNAL(triggered(bool)), pagesContainerDouble, SLOT(setPolicyFitScreen()));
+    connect(displayArea, SIGNAL(resized()), pagesContainer, SLOT(applyResizePolicy()));
 
-    connect(displayArea, SIGNAL(resized()), pagesContainerDouble, SLOT(applyResizePolicy()));
+    //  Le ComicBook préviens le NavigationManager lorsque celui-ci à calculer le nombre total de pages
+    //  contenues dans le ComicBook.
+    connect (&comic_book, SIGNAL(SG_numberPagesComputed(uint)),
+             &navigation_manager, SLOT(setNumberPagesInComicBook(uint))) ;
+
+    //  Le NavigationManager demande au ComicBook de charger les pages demandées.
+    connect (&navigation_manager, SIGNAL(SG_goToPage(uint,uint,bool)),
+             &comic_book, SLOT(loadPages(uint,uint,bool))) ;
+
+    //  Le ComicBook préviens le PagesBuffer lorsqu'il a finit de charger les pages dans la mémoire.
+    connect (&comic_book, SIGNAL(SG_pagesLoaded(QVector<QVector<PageManager*> >)),
+             navigation_manager.getPagesBuffer(), SLOT(updateBuffer(QVector<QVector<PageManager*> >))) ;
+
+    // ///////////////
+    //  Ce code doit être executé après la connection des éléments entre eux parce que certaines opérations
+    //  mettent à jour d'autres objets aux moyens des signaux et des slots.
+    // ///////////////
+
+    //  Le chemin vers le comic book doit OBLIGATOIREMENT terminer par '/'.
+    comic_book.setPathToComicBook ("E:/documents/CodeBlocks/ComicBookReader/App/images/ComicBookTest/") ;
+    comic_book.initialise () ;
+    navigation_manager.setNumberPagesDisplayed (2) ;
 }
 
 
