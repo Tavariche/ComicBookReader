@@ -17,6 +17,10 @@ class ComicBook:
         public QObject
 {
     Q_OBJECT
+
+    //  Chemin vers l'archive du comic book qui contient toutes les images compressées. Il doit IMPERATIVEMENT
+    //  terminer par un slash '/'.
+    QString m_path_to_archive ;
     
     //  Chemin vers le dossier du comic book qui contient toutes les images. Il doit IMPERATIVEMENT
     //  terminer par un slash '/'.
@@ -44,20 +48,39 @@ class ComicBook:
         void SG_numberPagesComputed (unsigned int number_pages) ;
     
     public slots:
-        //  Descr:  charge la page index_page ainsi que les adjacentes.
+        //  Descr:  Charge la page index_page ainsi que les adjacentes.
         //  Param:  * index_page:   index de la page à charger.
         //          * reload_first_and_last:    précise si les premières et dernières pages doivent être
         //                                      rechargée.
-        void loadPages (unsigned int index_page, unsigned int number_of_pages_displayed, bool reload_first_and_last) ;
+        void loadPages (unsigned int index_page, unsigned int number_of_pages_displayed) ;
+
+        //  Descr:  Affiche l'état des PageManager dans une message box.
+        //          Util pour le debugging.
+//        void displayPageManagerState ()
+//        {
+//            QString s = "Etats des PageManager:\n" ;
+//            for (int i=0 ; i<m_table_pages.size() ; i++)
+//            {
+//                if (m_table_pages[i].isLoaded()) s += "[X]\n" ;
+//                else s += "[ ]\n" ;
+//            }
+//            QMessageBox::information(0, "DEBUGGING", s) ;
+//        }
     
     public:
         ComicBook () ;
-        explicit ComicBook (QString path_to_cb) ;
         ~ComicBook () ;
+
+        //  Descr:  Décompresse l'archive contenant les images du comic book et met à jour la variable m_path_to_cb.
+        void uncompressArchive () ;
 
         //  Descr:  Initialise les PageManager en leur indiquant leur nom. Nécessite que m_path_to_cb
         //          soit spécifié.
         void initialise () ;
+
+        //  Descr:  Spécifie le chemin vers l'archive contenant les images compressées du comic book.
+        //  Param:  * path: chemin vers le dossier contenant l'ensemble des images du comic book.
+        void setPathToArchive (QString path) { m_path_to_archive = path ; }
         
         //  Descr:  Spécifie le chemin vers le dossier contenant les images du comic book.
         //  Param:  * path: chemin vers le dossier contenant l'ensemble des images du comic book.

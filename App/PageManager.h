@@ -20,7 +20,7 @@ class PageManager:
     Q_OBJECT
 
     //  Nom (avec l'extension) de l'image à laquelle est associée le PageManager.
-    QString m_image_name ;
+    QString m_path_to_image ;
     
     //  Image originale servant de base pour les calculs de redimensionnement.
     QPixmap m_original ;
@@ -43,16 +43,16 @@ class PageManager:
 
         //  Descr:  Constructeur explicite du PageManager.
         //  Param : * image_name:   nom (avec l'extension) de l'image associée au PageManager.
-        explicit PageManager (QString image_name) ;
+        explicit PageManager (QString path_to_image) ;
         ~PageManager () ;
         
         //  Descr:  Spécifie le nom de l'image associée au PageManager.
         //  Param : * image_name:   nom (avec l'extension) de l'image associée au PageManager.
-        void setImageName (QString image_name) { m_image_name = image_name ;  }
+        void setPathToImage (QString path_to_image) { m_path_to_image = path_to_image ;  }
         
         //  Descr:  Charge la page associée au PageManager.
         //  Param : * path_to_image:    chemin vers le dossier dans lequel se trouve l'image image_name à charger.
-        void load (QString path_to_image) ;
+        void load () ;
         
         //  Descr:  Décharge la page.
         //  Param : * keep_thumbnail:   true:   décharge m_original et m_resized mais conserve m_thumbnail.
@@ -66,7 +66,7 @@ class PageManager:
         void computeThumbnail () ; 
 
         //  Descr:  Retourne le nom de l'image associée.
-        QString getImageName () const { return m_image_name ; }
+        QString getPathToImage () const { return m_path_to_image ; }
         
         //  Descr:  Retourne une référence vers l'image originale.
         QPixmap* getOriginal () { return &m_original ; }

@@ -109,6 +109,11 @@ CBWindow::CBWindow(QWidget *parent) :
     statusBar->insertPermanentWidget(2,next);
     connect(next, SIGNAL(clicked()),&navigation_manager, SLOT(goToNextPage()));
     connect(previous, SIGNAL(clicked()),&navigation_manager, SLOT(goToPreviousPage()));
+///   DEBUGGING
+//    connect(next, SIGNAL(clicked()),
+//            &comic_book, SLOT(displayPageManagerState()));
+//    connect(previous, SIGNAL(clicked()),
+//            &comic_book, SLOT(displayPageManagerState()));
     //
     //  //  //
 
@@ -132,8 +137,8 @@ CBWindow::CBWindow(QWidget *parent) :
              &navigation_manager, SLOT(setNumberPagesInComicBook(uint))) ;
 
     //  Le NavigationManager demande au ComicBook de charger les pages demandées.
-    connect (&navigation_manager, SIGNAL(SG_goToPage(uint,uint,bool)),
-             &comic_book, SLOT(loadPages(uint,uint,bool))) ;
+    connect (&navigation_manager, SIGNAL(SG_goToPage(uint,uint)),
+             &comic_book, SLOT(loadPages(uint,uint))) ;
 
     //  Le ComicBook préviens le PagesBuffer lorsqu'il a finit de charger les pages dans la mémoire.
     connect (&comic_book, SIGNAL(SG_pagesLoaded(QVector<QVector<PageManager*> >)),
@@ -145,9 +150,11 @@ CBWindow::CBWindow(QWidget *parent) :
     // ///////////////
 
     //  Le chemin vers le comic book doit OBLIGATOIREMENT terminer par '/'.
-    comic_book.setPathToComicBook ("E:/documents/CodeBlocks/ComicBookReader/App/images/ComicBookTest/") ;
+    //comic_book.setPathToArchive ("E:/documents/CodeBlocks/ComicBookReader/App/images/ComicBookTest.zip") ;
+    //comic_book.uncompressArchive () ;
+    comic_book.setPathToComicBook ("E:/documents/CodeBlocks/ComicBookReader/App/images/Titans Hunt/") ;
     comic_book.initialise () ;
-    navigation_manager.setNumberPagesDisplayed (2) ;
+    navigation_manager.setNumberPagesDisplayed (1) ;
 }
 
 

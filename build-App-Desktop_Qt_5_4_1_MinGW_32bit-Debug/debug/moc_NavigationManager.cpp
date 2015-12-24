@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_NavigationManager_t {
-    QByteArrayData data[14];
-    char stringdata[213];
+    QByteArrayData data[13];
+    char stringdata[191];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,20 +34,18 @@ QT_MOC_LITERAL(1, 18, 11), // "SG_goToPage"
 QT_MOC_LITERAL(2, 30, 0), // ""
 QT_MOC_LITERAL(3, 31, 4), // "page"
 QT_MOC_LITERAL(4, 36, 25), // "number_of_pages_displayed"
-QT_MOC_LITERAL(5, 62, 21), // "reload_first_and_last"
-QT_MOC_LITERAL(6, 84, 12), // "goToLastPage"
-QT_MOC_LITERAL(7, 97, 13), // "goToFirstPage"
-QT_MOC_LITERAL(8, 111, 8), // "goToPage"
-QT_MOC_LITERAL(9, 120, 12), // "goToNextPage"
-QT_MOC_LITERAL(10, 133, 16), // "goToPreviousPage"
-QT_MOC_LITERAL(11, 150, 25), // "setNumberPagesInComicBook"
-QT_MOC_LITERAL(12, 176, 12), // "number_pages"
-QT_MOC_LITERAL(13, 189, 23) // "setNumberPagesDisplayed"
+QT_MOC_LITERAL(5, 62, 12), // "goToLastPage"
+QT_MOC_LITERAL(6, 75, 13), // "goToFirstPage"
+QT_MOC_LITERAL(7, 89, 8), // "goToPage"
+QT_MOC_LITERAL(8, 98, 12), // "goToNextPage"
+QT_MOC_LITERAL(9, 111, 16), // "goToPreviousPage"
+QT_MOC_LITERAL(10, 128, 25), // "setNumberPagesInComicBook"
+QT_MOC_LITERAL(11, 154, 12), // "number_pages"
+QT_MOC_LITERAL(12, 167, 23) // "setNumberPagesDisplayed"
 
     },
     "NavigationManager\0SG_goToPage\0\0page\0"
-    "number_of_pages_displayed\0"
-    "reload_first_and_last\0goToLastPage\0"
+    "number_of_pages_displayed\0goToLastPage\0"
     "goToFirstPage\0goToPage\0goToNextPage\0"
     "goToPreviousPage\0setNumberPagesInComicBook\0"
     "number_pages\0setNumberPagesDisplayed"
@@ -68,19 +66,19 @@ static const uint qt_meta_data_NavigationManager[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    3,   54,    2, 0x06 /* Public */,
+       1,    2,   54,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       6,    0,   61,    2, 0x0a /* Public */,
-       7,    0,   62,    2, 0x0a /* Public */,
-       8,    1,   63,    2, 0x0a /* Public */,
-       9,    0,   66,    2, 0x0a /* Public */,
-      10,    0,   67,    2, 0x0a /* Public */,
-      11,    1,   68,    2, 0x0a /* Public */,
-      13,    1,   71,    2, 0x0a /* Public */,
+       5,    0,   59,    2, 0x0a /* Public */,
+       6,    0,   60,    2, 0x0a /* Public */,
+       7,    1,   61,    2, 0x0a /* Public */,
+       8,    0,   64,    2, 0x0a /* Public */,
+       9,    0,   65,    2, 0x0a /* Public */,
+      10,    1,   66,    2, 0x0a /* Public */,
+      12,    1,   69,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::UInt, QMetaType::UInt, QMetaType::Bool,    3,    4,    5,
+    QMetaType::Void, QMetaType::UInt, QMetaType::UInt,    3,    4,
 
  // slots: parameters
     QMetaType::Void,
@@ -88,8 +86,8 @@ static const uint qt_meta_data_NavigationManager[] = {
     QMetaType::Void, QMetaType::UInt,    3,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::UInt,   12,
-    QMetaType::Void, QMetaType::UInt,   12,
+    QMetaType::Void, QMetaType::UInt,   11,
+    QMetaType::Void, QMetaType::UInt,   11,
 
        0        // eod
 };
@@ -99,7 +97,7 @@ void NavigationManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
     if (_c == QMetaObject::InvokeMetaMethod) {
         NavigationManager *_t = static_cast<NavigationManager *>(_o);
         switch (_id) {
-        case 0: _t->SG_goToPage((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
+        case 0: _t->SG_goToPage((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2]))); break;
         case 1: _t->goToLastPage(); break;
         case 2: _t->goToFirstPage(); break;
         case 3: _t->goToPage((*reinterpret_cast< uint(*)>(_a[1]))); break;
@@ -113,7 +111,7 @@ void NavigationManager::qt_static_metacall(QObject *_o, QMetaObject::Call _c, in
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (NavigationManager::*_t)(unsigned int , unsigned int , bool );
+            typedef void (NavigationManager::*_t)(unsigned int , unsigned int );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&NavigationManager::SG_goToPage)) {
                 *result = 0;
             }
@@ -158,9 +156,9 @@ int NavigationManager::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void NavigationManager::SG_goToPage(unsigned int _t1, unsigned int _t2, bool _t3)
+void NavigationManager::SG_goToPage(unsigned int _t1, unsigned int _t2)
 {
-    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    void *_a[] = { Q_NULLPTR, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

@@ -36,7 +36,7 @@ class NavigationManager:
         //          * reload_first_and_last:    précise si les premières et dernières pages doivent être
         //                                      rechargée.
         // Conex:   Connecté au comic book associé.
-        void SG_goToPage (unsigned int page, unsigned int number_of_pages_displayed, bool reload_first_and_last) ;
+        void SG_goToPage (unsigned int page, unsigned int number_of_pages_displayed) ;
     
     public slots:
         void goToLastPage () ;

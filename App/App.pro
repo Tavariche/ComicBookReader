@@ -26,3 +26,8 @@ SOURCES += \
     PagesBuffer.cpp
 
 CONFIG += c++11
+
+INCLUDEPATH += E:/documents/Librairies/zlib-1.2.8
+LIBS += -LE:/documents/Librairies/zlib-1.2.8 -lz
+INCLUDEPATH += E:/documents/Librairies/quazip-0.7/quazip
+LIBS += -LE:/documents/Librairies/quazip-0.7/quazip/release -lquazip

@@ -32,7 +32,6 @@ class PagesContainer : public QWidget
 {
     Q_OBJECT
 
-private:
     //Vecteur de pointeurs sur les pageManager
     ///vector<PageManager*> m_pages;
     //Pages au format natif puis redimensionné et QLabel ; provisoire

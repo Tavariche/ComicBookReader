@@ -69,7 +69,7 @@ void PagesContainer::setPages(const QVector<QPixmap*> newPages)
 
     applyResizePolicy(); //Application de la politique de redimentionnement aux pages
 
-    setLayout(m_layout); //Application du layout
+    setLayout(m_layout); //App+lication du layout
 }
 
 //Futur constructeur
