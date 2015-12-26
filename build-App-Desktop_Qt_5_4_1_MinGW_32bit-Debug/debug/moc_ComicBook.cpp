@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_ComicBook_t {
-    QByteArrayData data[11];
-    char stringdata[172];
+    QByteArrayData data[10];
+    char stringdata[148];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,15 +39,13 @@ QT_MOC_LITERAL(5, 65, 22), // "SG_numberPagesComputed"
 QT_MOC_LITERAL(6, 88, 12), // "number_pages"
 QT_MOC_LITERAL(7, 101, 9), // "loadPages"
 QT_MOC_LITERAL(8, 111, 10), // "index_page"
-QT_MOC_LITERAL(9, 122, 25), // "number_of_pages_displayed"
-QT_MOC_LITERAL(10, 148, 23) // "displayPageManagerState"
+QT_MOC_LITERAL(9, 122, 25) // "number_of_pages_displayed"
 
     },
     "ComicBook\0SG_pagesLoaded\0\0"
     "QVector<QVector<PageManager*> >\0buffer\0"
     "SG_numberPagesComputed\0number_pages\0"
-    "loadPages\0index_page\0number_of_pages_displayed\0"
-    "displayPageManagerState"
+    "loadPages\0index_page\0number_of_pages_displayed"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,7 +55,7 @@ static const uint qt_meta_data_ComicBook[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,12 +63,11 @@ static const uint qt_meta_data_ComicBook[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x06 /* Public */,
-       5,    1,   37,    2, 0x06 /* Public */,
+       1,    1,   29,    2, 0x06 /* Public */,
+       5,    1,   32,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       7,    2,   40,    2, 0x0a /* Public */,
-      10,    0,   45,    2, 0x0a /* Public */,
+       7,    2,   35,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -78,7 +75,6 @@ static const uint qt_meta_data_ComicBook[] = {
 
  // slots: parameters
     QMetaType::Void, QMetaType::UInt, QMetaType::UInt,    8,    9,
-    QMetaType::Void,
 
        0        // eod
 };
@@ -91,7 +87,6 @@ void ComicBook::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 0: _t->SG_pagesLoaded((*reinterpret_cast< QVector<QVector<PageManager*> >(*)>(_a[1]))); break;
         case 1: _t->SG_numberPagesComputed((*reinterpret_cast< uint(*)>(_a[1]))); break;
         case 2: _t->loadPages((*reinterpret_cast< uint(*)>(_a[1])),(*reinterpret_cast< uint(*)>(_a[2]))); break;
-        case 3: _t->displayPageManagerState(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -148,13 +143,13 @@ int ComicBook::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 3;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 3;
     }
     return _id;
 }

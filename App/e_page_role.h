@@ -5,7 +5,7 @@
 /********************************************************
 *   e_pages_roles
 * -------------------------------------------------------
-*   Énumération définissant le statut des PageManager dans
+*   Énumération définissant le rôle des PageManager dans
 *   le PagesBuffer.
 ********************************************************/
 

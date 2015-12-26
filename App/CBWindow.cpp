@@ -102,20 +102,21 @@ CBWindow::CBWindow(QWidget *parent) :
     statusBar->addPermanentWidget(slider);
     statusBar->insertPermanentWidget(0, valZoom);
 
-    //  /// ////
-    // TEST
-    //
+// /////////////////////////////////////////////////////////////////
+// TEST   //
+//
     statusBar->insertPermanentWidget(1,previous);
     statusBar->insertPermanentWidget(2,next);
     connect(next, SIGNAL(clicked()),&navigation_manager, SLOT(goToNextPage()));
     connect(previous, SIGNAL(clicked()),&navigation_manager, SLOT(goToPreviousPage()));
-///   DEBUGGING
+
+//  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
 //    connect(next, SIGNAL(clicked()),
 //            &comic_book, SLOT(displayPageManagerState()));
 //    connect(previous, SIGNAL(clicked()),
 //            &comic_book, SLOT(displayPageManagerState()));
-    //
-    //  //  //
+//  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
+// /////////////////////////////////////////////////////////////////
 
     setStatusBar(statusBar);
 
@@ -149,10 +150,9 @@ CBWindow::CBWindow(QWidget *parent) :
     //  mettent à jour d'autres objets aux moyens des signaux et des slots.
     // ///////////////
 
-    //  Le chemin vers le comic book doit OBLIGATOIREMENT terminer par '/'.
-    //comic_book.setPathToArchive ("E:/documents/CodeBlocks/ComicBookReader/App/images/ComicBookTest.zip") ;
-    //comic_book.uncompressArchive () ;
-    comic_book.setPathToComicBook ("E:/documents/CodeBlocks/ComicBookReader/App/images/Titans Hunt/") ;
+    comic_book.setPathToArchive ("E:/documents/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
+    comic_book.uncompressArchive () ;
+    //comic_book.setPathToComicBook ("E:/documents/CodeBlocks/ComicBookReader/App/images/Titans Hunt/") ;
     comic_book.initialise () ;
     navigation_manager.setNumberPagesDisplayed (1) ;
 }

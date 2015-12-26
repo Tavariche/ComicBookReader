@@ -18,13 +18,14 @@ class ComicBook:
 {
     Q_OBJECT
 
-    //  Chemin vers l'archive du comic book qui contient toutes les images compressées. Il doit IMPERATIVEMENT
-    //  terminer par un slash '/'.
+    //  Chemin vers l'archive du comic book qui contient toutes les images compressées.
     QString m_path_to_archive ;
     
-    //  Chemin vers le dossier du comic book qui contient toutes les images. Il doit IMPERATIVEMENT
-    //  terminer par un slash '/'.
+    //  Chemin vers le dossier du comic book qui contient toutes les images.
     QString m_path_to_cb ;
+
+    //  Indique si le ComicBook a été initialisé correctement.
+    bool m_initialised ;
     
     //  Tableau contenant toutes les pages du comic book (par soucis d'optimisation elles sont
     //  chargées/déchargées au besoin).
@@ -54,6 +55,7 @@ class ComicBook:
         //                                      rechargée.
         void loadPages (unsigned int index_page, unsigned int number_of_pages_displayed) ;
 
+        //  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
         //  Descr:  Affiche l'état des PageManager dans une message box.
         //          Util pour le debugging.
 //        void displayPageManagerState ()
@@ -66,6 +68,7 @@ class ComicBook:
 //            }
 //            QMessageBox::information(0, "DEBUGGING", s) ;
 //        }
+        //  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
     
     public:
         ComicBook () ;
