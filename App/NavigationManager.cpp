@@ -68,3 +68,11 @@ void NavigationManager::setNumberPagesDisplayed (unsigned int number_pages)
     m_current_page = (m_current_page / number_pages) * number_pages ;
     emit SG_goToPage(m_current_page, m_number_of_pages_displayed);
 }
+
+
+void NavigationManager::saveSettings (ComicBookSettings &cbs)
+{
+    //  Sauvegarder les paramètres dans le ComicBookSettings.
+
+    //  Demander la sauvegarde des options au ComicBookSettings.
+}

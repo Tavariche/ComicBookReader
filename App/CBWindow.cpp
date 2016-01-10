@@ -16,24 +16,24 @@ CBWindow::CBWindow(QWidget *parent) :
     ///Les actions
     //Quitter
     QAction *actQuitter = new QAction("&Quitter", this);
-    actQuitter->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/blackCross.svg"));
+    actQuitter->setIcon(QIcon("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/blackCross.svg"));
     connect(actQuitter, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
 
     //Groupe des actions de dimensionnement
     UncheckableActionGroup* dimActGroup = new UncheckableActionGroup(this);
     QAction *actFitHeight = new QAction("Ajuster à la &Hauteur", this);
     actFitHeight->setCheckable(true);
-    actFitHeight->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/fitHeight.svg"));
+    actFitHeight->setIcon(QIcon("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/fitHeight.svg"));
     dimActGroup->addAction(actFitHeight);
 
     QAction *actFitWidth = new QAction("Ajuster à la largeur", this);
     actFitWidth->setCheckable(true);
-    actFitWidth->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/fitWidth.svg"));
+    actFitWidth->setIcon(QIcon("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/fitWidth.svg"));
     dimActGroup->addAction(actFitWidth);
 
     QAction *actFitScreen = new QAction("actFitWidth", this);
     actFitScreen->setCheckable(true);
-    actFitScreen->setIcon(QIcon("E:/documents/CodeBlocks/ComicBookReader/App/images/fitScreen.svg"));
+    actFitScreen->setIcon(QIcon("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/fitScreen.svg"));
     actFitScreen->setChecked(true);
     dimActGroup->addAction(actFitScreen);
 
@@ -65,7 +65,7 @@ CBWindow::CBWindow(QWidget *parent) :
     QLabel *wolverineMiniature = new QLabel("Wolverine", this);
     wolverineMiniature->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
 
-    wolverineMiniature->setPixmap(QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(120, Qt::SmoothTransformation));
+    wolverineMiniature->setPixmap(QPixmap("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/wolverine.jpg").scaledToWidth(120, Qt::SmoothTransformation));
 
     dockMiniatures->setWidget(wolverineMiniature);
     addDockWidget(Qt::LeftDockWidgetArea, dockMiniatures);
@@ -75,8 +75,8 @@ CBWindow::CBWindow(QWidget *parent) :
     displayArea->setBackgroundRole(QPalette::Dark);
     displayArea->setWidgetResizable(true); //Permet au PagesContainer de s'étendre
 
-    QPixmap* wolverinePixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
-    QPixmap* wolverineBisPixmap = new QPixmap("E:/documents/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
+    QPixmap* wolverinePixmap = new QPixmap("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/wolverine.jpg");
+    QPixmap* wolverineBisPixmap = new QPixmap("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/wolverineBis.jpg");
     PagesContainer* pagesContainer = new PagesContainer(QVector<QPixmap*>({wolverinePixmap, wolverineBisPixmap}), displayArea);
     pagesContainer->setPages(QVector<QPixmap*>({wolverineBisPixmap, wolverinePixmap}));
     displayArea->setWidget(pagesContainer);
@@ -145,14 +145,18 @@ CBWindow::CBWindow(QWidget *parent) :
     connect (&comic_book, SIGNAL(SG_pagesLoaded(QVector<QVector<PageManager*> >)),
              navigation_manager.getPagesBuffer(), SLOT(updateBuffer(QVector<QVector<PageManager*> >))) ;
 
+    //  Une fois que le ComicBook a fini de sauvegardé ses propriétés dans le ComicBookSettings, il demande
+    //  au NavigationManager de faire de même.
+    connect (&comic_book, SIGNAL(SG_saveSettings(ComicBookSettings&)),
+             &navigation_manager, SLOT(saveSettings(ComicBookSettings&))) ;
+
     // ///////////////
     //  Ce code doit être executé après la connection des éléments entre eux parce que certaines opérations
     //  mettent à jour d'autres objets aux moyens des signaux et des slots.
     // ///////////////
 
-    comic_book.setPathToArchive ("E:/documents/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
-    comic_book.uncompressArchive () ;
-    //comic_book.setPathToComicBook ("E:/documents/CodeBlocks/ComicBookReader/App/images/Titans Hunt/") ;
+    comic_book.setPathToArchive ("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
+    comic_book.uncompressComicBook () ;
     comic_book.initialise () ;
     navigation_manager.setNumberPagesDisplayed (1) ;
 }

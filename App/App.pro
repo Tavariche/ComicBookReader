@@ -1,3 +1,5 @@
+CONFIG += c++11
+
 QT += \
     widgets \
     svg \
@@ -12,7 +14,10 @@ HEADERS += \
     NavigationManager.h \
     PageManager.h \
     PagesBuffer.h \
-    e_page_role.h
+    e_page_role.h \
+    e_reading_style.h \
+    ComicBookSettings.h \
+    Uncompression.h
 
 SOURCES += \
     main.cpp \
@@ -23,11 +28,10 @@ SOURCES += \
     ComicBook.cpp \
     NavigationManager.cpp \
     PageManager.cpp \
-    PagesBuffer.cpp
+    PagesBuffer.cpp \
+    ComicBookSettings.cpp \
+    Uncompression.cpp
 
-CONFIG += c++11
+INCLUDEPATH += E:/documents/Librairies/libarchive-3.1.2
 
-INCLUDEPATH += E:/documents/Librairies/zlib-1.2.8
-LIBS += -LE:/documents/Librairies/zlib-1.2.8 -lz
-INCLUDEPATH += E:/documents/Librairies/quazip-0.7/quazip
-LIBS += -LE:/documents/Librairies/quazip-0.7/quazip/release -lquazip
+LIBS += -LE:/documents/Librairies/libarchive-3.1.2 -llibarchive

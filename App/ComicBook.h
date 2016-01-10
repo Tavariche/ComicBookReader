@@ -6,6 +6,7 @@
 #include <QString>
 #include <QMessageBox>  //  Pour debugging.
 #include "PageManager.h"
+#include "ComicBookSettings.h"
 
 /********************************************************
 *   ComicBook
@@ -32,7 +33,7 @@ class ComicBook:
     QVector<PageManager> m_table_pages ;
 
     //  Liste contenant les extensions des images ouvrables par le comic book.
-    QStringList m_extension_filter ;
+    static QStringList m_extension_filter ;
 
     signals:
         //  Descr:  Signale la fin du chargement des pages demandées et transmet leurs références sous
@@ -47,6 +48,10 @@ class ComicBook:
         //  Param:  * number_pages: nombre total de pages contenues dans le comic book.
         //  Conex:  Connecté au NavigationManager associé.
         void SG_numberPagesComputed (unsigned int number_pages) ;
+
+        //  Descr:  Demande la sauvegarde des options liées à la lecture du comic book.
+        //  Conex:  Connecté au PageManager associé.
+        void SG_saveSettings (ComicBookSettings &cbs) ;
     
     public slots:
         //  Descr:  Charge la page index_page ainsi que les adjacentes.
@@ -75,7 +80,7 @@ class ComicBook:
         ~ComicBook () ;
 
         //  Descr:  Décompresse l'archive contenant les images du comic book et met à jour la variable m_path_to_cb.
-        void uncompressArchive () ;
+        void uncompressComicBook () ;
 
         //  Descr:  Initialise les PageManager en leur indiquant leur nom. Nécessite que m_path_to_cb
         //          soit spécifié.

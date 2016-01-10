@@ -1,12 +1,16 @@
 #include <QDir>
 #include <QFileInfo>
-#include <QMessageBox>  //  Pour debugging.
+#include <QMessageBox>
 #include "e_page_role.h"
 #include "ComicBook.h"
-#include <JlCompress.h>
 #include <QtConcurrent/QtConcurrent>
 #include <functional>
+#include <cstdlib>
+#include "Uncompression.h"
 
+using namespace std ;
+
+QStringList ComicBook::m_extension_filter {"*.jpg" , "*.jpeg" , "*.png" , "*.bmp" , "*.tiff"} ;
 
 ComicBook::ComicBook (): QObject()
 {
@@ -14,12 +18,16 @@ ComicBook::ComicBook (): QObject()
     m_path_to_cb = "" ;
     m_initialised = false ;
     m_table_pages.resize(0);
-    m_extension_filter << "*.jpg" << "*.jpeg" << "*.png" << "*.bmp" ;
 }
 
 
 ComicBook::~ComicBook ()
 {
+    ///  A la place de la suppression de l'archive, enregistrer les options de lecture et
+    ///  les propriétés du comic book.
+    ///ComicBookSettings cbs ;
+    ///emit SG_saveSettings (cbs) ;
+
     //  Suppression du dossier contenant les fichiers de l'archive décompressée.
     if (!m_path_to_cb.isEmpty())
     {
@@ -35,11 +43,8 @@ ComicBook::~ComicBook ()
 }
 
 
-void ComicBook::uncompressArchive ()
+void ComicBook::uncompressComicBook ()
 {
-    //  Aller voir sur //  http://www.antonioborondo.com/2014/10/22/zipping-and-unzipping-files-with-qt/
-    //  pour compiler les librairies externes de décompression et les pouvoir utiliser dans le projet.
-
     if (m_path_to_archive.isEmpty())
     {
         QMessageBox::critical(0,
@@ -48,59 +53,27 @@ void ComicBook::uncompressArchive ()
     }
     else
     {
-        QFileInfo file_info (m_path_to_archive) ;
-        QDir extraction_dir = file_info.absoluteDir () ;    //  On récupère le chemin du dossier dans lequel se trouve l'archive
-                                                            //  qui sera le dossier de décompression.
-        QFileInfoList list_dir_before_extraction = extraction_dir.entryInfoList (QDir::Dirs | QDir::NoDotAndDotDot,     //  On garde en mémoire les dossiers existants avant
-                                                                                 QDir::Name) ;                          //  l'extraction de l'archive.
-
-        //  On décompresse l'archive.
-        QString extension = file_info.suffix () ;
-        if (extension == "cbz")    //  Archive .zip.
+        //  On récupère le chemin du dossier temporaire.
+        string temp_folder = "" ;
+        const char* var_env_temp = getenv("TEMP") ;
+        if (!var_env_temp)  //  Si la variable d'environnement TEMP n'existe pas, on décompresse l'archive dans le dossier où elle se situe.
         {
-            JlCompress::extractDir (m_path_to_archive, extraction_dir.absolutePath()) ;
+            QFileInfo file_info (m_path_to_archive) ;
+            temp_folder = file_info.absolutePath().toStdString() ;
+        }
+        else
+            temp_folder = string(var_env_temp) ;
+
+        for (unsigned int i=0 ; i<temp_folder.size() ; i++)
+        {
+            if (temp_folder[i] == '\\') temp_folder[i] = '/' ;
         }
 
-        //  On trouve le dossier issue de la décompression.
-        QFileInfoList list_dir_after_extraction = extraction_dir.entryInfoList (QDir::Dirs | QDir::NoDotAndDotDot,
-                                                                                QDir::Name) ;
+        if (temp_folder[temp_folder.size()-1] != '\\')
+            temp_folder += "/" ;
 
-        //  On regarde si le dossier contenant l'archive contient au moins un dossier après la décompression.
-        if (list_dir_after_extraction.empty ()) //  Si aucun dossier n'a été crée après la décompression c'est qu'il y a eu un problème.
-        {
-            QMessageBox::critical(0,
-                                  "Erreur - Décompression Comic Book",
-                                  "La décompression de l'archive ne s'est pas déroulée correctement. L'ouverture du comic book a échouée.") ;
-        }
-        else    //  Sinon on tente de trouver le dossier décompressé.
-        {
-            m_path_to_cb = list_dir_after_extraction.at(0).absoluteFilePath () ;
-            bool b_dir_existed = false ;
-            foreach (QFileInfo dir_info_after, list_dir_after_extraction)
-            {
-                b_dir_existed = false ;
-                foreach (QFileInfo dir_info_before, list_dir_before_extraction)
-                {
-                    if (dir_info_before.absoluteFilePath() == dir_info_after.absoluteFilePath())
-                    {
-                        b_dir_existed = true ;
-                        break ;
-                    }
-                }
-                if (!b_dir_existed)
-                {
-                    m_path_to_cb = dir_info_after.absoluteFilePath () ;
-                    break ;
-                }
-            }
-
-            if (m_path_to_cb.isEmpty())
-            {
-                QMessageBox::critical(0,
-                                      "Erreur - Dossier Décompressé Comic Book",
-                                      "Le dossier contenant les images du comic book décompressé est introuvable. Le comic book ne peut pas être lu") ;
-            }
-        }
+        //  On décompresse l'archive dans le dossier souhaité.
+        m_path_to_cb = QString::fromStdString(uncompressArchive(m_path_to_archive.toStdString(), temp_folder)) ;
     }
 }
 
@@ -237,7 +210,7 @@ void ComicBook::loadPages (unsigned int page, unsigned int number_of_pages_displ
         }
 
         //  On charge les pages dont les références sont contenues dans le buffer temporaire. Chargement parallélisé.
-        QtConcurrent::blockingMap (loading_buffer, [](PageManager* pm) { pm->load () ; }) ;
+        //  QtConcurrent::blockingMap (loading_buffer, [](PageManager* pm) { pm->load () ; }) ;
 
         emit SG_pagesLoaded (buffer) ;
     }

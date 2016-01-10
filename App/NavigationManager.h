@@ -4,6 +4,7 @@
 
 #include <QObject>
 #include "PagesBuffer.h"
+#include "ComicBookSettings.h"
 
 
 /********************************************************
@@ -52,6 +53,9 @@ class NavigationManager:
         //  Descr:  Met à jour le nombre de pages affichées simultanément.
         //  Param:  * number_pages: nombre de pages à afficher simultanément.
         void setNumberPagesDisplayed (unsigned int number_pages) ;
+
+        //  Descr:  Enregistre les options de lecture et prorpiétés liées au comic book.
+        void saveSettings (ComicBookSettings &cbs) ;
     
     public:
         NavigationManager () ;
