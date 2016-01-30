@@ -107,16 +107,8 @@ CBWindow::CBWindow(QWidget *parent) :
 //
     statusBar->insertPermanentWidget(1,previous);
     statusBar->insertPermanentWidget(2,next);
-    connect(next, SIGNAL(clicked()),&navigation_manager, SLOT(goToNextPage()));
-    connect(previous, SIGNAL(clicked()),&navigation_manager, SLOT(goToPreviousPage()));
-
-//  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
-//    connect(next, SIGNAL(clicked()),
-//            &comic_book, SLOT(displayPageManagerState()));
-//    connect(previous, SIGNAL(clicked()),
-//            &comic_book, SLOT(displayPageManagerState()));
-//  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
-// /////////////////////////////////////////////////////////////////
+    connect(next, SIGNAL(clicked()),&m_navigation_manager, SLOT(goToNextPage()));
+    connect(previous, SIGNAL(clicked()),&m_navigation_manager, SLOT(goToPreviousPage()));
 
     setStatusBar(statusBar);
 
@@ -134,31 +126,31 @@ CBWindow::CBWindow(QWidget *parent) :
 
     //  Le ComicBook préviens le NavigationManager lorsque celui-ci à calculer le nombre total de pages
     //  contenues dans le ComicBook.
-    connect (&comic_book, SIGNAL(SG_numberPagesComputed(uint)),
-             &navigation_manager, SLOT(setNumberPagesInComicBook(uint))) ;
+    connect (&m_comic_book, SIGNAL(SG_numberPagesComputed(uint)),
+             &m_navigation_manager, SLOT(setNumberPagesInComicBook(uint))) ;
 
     //  Le NavigationManager demande au ComicBook de charger les pages demandées.
-    connect (&navigation_manager, SIGNAL(SG_goToPage(uint,uint)),
-             &comic_book, SLOT(loadPages(uint,uint))) ;
+    connect (&m_navigation_manager, SIGNAL(SG_goToPage(uint,uint)),
+             &m_comic_book, SLOT(loadPages(uint,uint))) ;
 
     //  Le ComicBook préviens le PagesBuffer lorsqu'il a finit de charger les pages dans la mémoire.
-    connect (&comic_book, SIGNAL(SG_pagesLoaded(QVector<QVector<PageManager*> >)),
-             navigation_manager.getPagesBuffer(), SLOT(updateBuffer(QVector<QVector<PageManager*> >))) ;
+    connect (&m_comic_book, SIGNAL(SG_pagesLoaded(QVector<QVector<PageManager*> >)),
+             m_navigation_manager.getPagesBuffer(), SLOT(updateBuffer(QVector<QVector<PageManager*> >))) ;
 
     //  Une fois que le ComicBook a fini de sauvegardé ses propriétés dans le ComicBookSettings, il demande
     //  au NavigationManager de faire de même.
-    connect (&comic_book, SIGNAL(SG_saveSettings(ComicBookSettings&)),
-             &navigation_manager, SLOT(saveSettings(ComicBookSettings&))) ;
+    connect (&m_comic_book, SIGNAL(SG_saveSettings(ComicBookSettings*)),
+             &m_navigation_manager, SLOT(saveSettings(ComicBookSettings*))) ;
 
     // ///////////////
     //  Ce code doit être executé après la connection des éléments entre eux parce que certaines opérations
     //  mettent à jour d'autres objets aux moyens des signaux et des slots.
     // ///////////////
 
-    comic_book.setPathToArchive ("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
-    comic_book.uncompressComicBook () ;
-    comic_book.initialise () ;
-    navigation_manager.setNumberPagesDisplayed (1) ;
+    m_comic_book.setPathToArchive ("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
+    m_comic_book.uncompressComicBook () ;
+    m_comic_book.initialise () ;
+    m_navigation_manager.setNumberPagesDisplayed (1) ;
 }
 
 

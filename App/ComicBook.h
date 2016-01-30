@@ -51,7 +51,7 @@ class ComicBook:
 
         //  Descr:  Demande la sauvegarde des options liées à la lecture du comic book.
         //  Conex:  Connecté au PageManager associé.
-        void SG_saveSettings (ComicBookSettings &cbs) ;
+        void SG_saveSettings (ComicBookSettings *cbs) ;
     
     public slots:
         //  Descr:  Charge la page index_page ainsi que les adjacentes.
@@ -59,31 +59,19 @@ class ComicBook:
         //          * reload_first_and_last:    précise si les premières et dernières pages doivent être
         //                                      rechargée.
         void loadPages (unsigned int index_page, unsigned int number_of_pages_displayed) ;
-
-        //  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
-        //  Descr:  Affiche l'état des PageManager dans une message box.
-        //          Util pour le debugging.
-//        void displayPageManagerState ()
-//        {
-//            QString s = "Etats des PageManager:\n" ;
-//            for (int i=0 ; i<m_table_pages.size() ; i++)
-//            {
-//                if (m_table_pages[i].isLoaded()) s += "[X]\n" ;
-//                else s += "[ ]\n" ;
-//            }
-//            QMessageBox::information(0, "DEBUGGING", s) ;
-//        }
-        //  DEBUG   DEBUG   DEBUG   DEBUG   DEBUG   //
     
     public:
         ComicBook () ;
+
+        //  Descr:  Destructeur de l'objet ComicBook. On en profite pour sauvegarder les options de lecture
+        //          dans un fichier.
         ~ComicBook () ;
 
         //  Descr:  Décompresse l'archive contenant les images du comic book et met à jour la variable m_path_to_cb.
         void uncompressComicBook () ;
 
-        //  Descr:  Initialise les PageManager en leur indiquant leur nom. Nécessite que m_path_to_cb
-        //          soit spécifié.
+        //  Descr:  Initialise les PageManager en leur indiquant le nom de leur image associée.
+        //          Nécessite que m_path_to_cb soit spécifié.
         void initialise () ;
 
         //  Descr:  Spécifie le chemin vers l'archive contenant les images compressées du comic book.

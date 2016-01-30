@@ -23,13 +23,8 @@ ComicBook::ComicBook (): QObject()
 
 ComicBook::~ComicBook ()
 {
-    ///  A la place de la suppression de l'archive, enregistrer les options de lecture et
-    ///  les propriétés du comic book.
-    ///ComicBookSettings cbs ;
-    ///emit SG_saveSettings (cbs) ;
-
     //  Suppression du dossier contenant les fichiers de l'archive décompressée.
-    if (!m_path_to_cb.isEmpty())
+    /*if (!m_path_to_cb.isEmpty())
     {
         QDir dir (m_path_to_cb) ;
         bool successely_removed = dir.removeRecursively () ;
@@ -39,7 +34,15 @@ ComicBook::~ComicBook ()
                                   "Erreur - Suppression Dossier Décompressé",
                                   "Le dossier décompressé contenant les images du comic book n'a pas été supprimé correctement. Cela peut provoquer des erreurs lors de la prochaine ouverture du comicc book.\nVeuillez supprimer le dossier décompressé en passant par votre explorateur situé ici:\n"+m_path_to_cb) ;
         }
-    }
+    }*/
+
+    /*/// DEBUG
+    QMessageBox::information(0,"DEBUG","Sauvegarde ComicBook") ;
+
+    ComicBookSettings *cbs = new ComicBookSettings() ;
+    cbs->setPathToArchive(m_path_to_archive) ;
+    cbs->setPathToComicBook(m_path_to_cb) ;
+    emit SG_saveSettings(cbs);*/
 }
 
 
@@ -72,13 +75,13 @@ void ComicBook::uncompressComicBook ()
         if (temp_folder[temp_folder.size()-1] != '\\')
             temp_folder += "/" ;
 
-        //  On décompresse l'archive dans le dossier souhaité.
+        //  On décompresse l'archive dans le dossier déterminé plus haut.
         m_path_to_cb = QString::fromStdString(uncompressArchive(m_path_to_archive.toStdString(), temp_folder)) ;
     }
 }
 
 
-void ComicBook::initialise ()   //  Testée --> Fonctionnelle.
+void ComicBook::initialise ()
 {
     if (m_path_to_cb.isEmpty())
     {
@@ -122,7 +125,7 @@ void ComicBook::initialise ()   //  Testée --> Fonctionnelle.
 }
 
 
-void ComicBook::loadPages (unsigned int page, unsigned int number_of_pages_displayed)   //  Testée --> Fonctionnelle.
+void ComicBook::loadPages (unsigned int page, unsigned int number_of_pages_displayed)
 {
     /*unsigned int index_first_current_page = (page/number_of_pages_displayed)*number_of_pages_displayed ;
     //  On charge les pages à visionner, les précédentes et les suivantes.

@@ -5,6 +5,7 @@
 #include <QObject>
 #include "PagesBuffer.h"
 #include "ComicBookSettings.h"
+#include "e_reading_style.h"
 
 
 /********************************************************
@@ -31,6 +32,9 @@ class NavigationManager:
     //  Descr:  Buffer contenant les références des images chargées en mémoire.
     PagesBuffer m_pages_buffer ;
 
+    //  Descr:  Indique le sens de lecture du Comic Book.
+    e_reading_style m_reading_style ;
+
     signals:
         // Descr:   Demande au comic book associé de charger la page 'page'.
         // Param:   * page: page que le comic book doit charger.
@@ -55,7 +59,7 @@ class NavigationManager:
         void setNumberPagesDisplayed (unsigned int number_pages) ;
 
         //  Descr:  Enregistre les options de lecture et prorpiétés liées au comic book.
-        void saveSettings (ComicBookSettings &cbs) ;
+        void saveSettings (ComicBookSettings *cbs) ;
     
     public:
         NavigationManager () ;

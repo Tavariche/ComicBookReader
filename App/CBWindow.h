@@ -11,9 +11,9 @@ class CBWindow : public QMainWindow
 {
     Q_OBJECT
 
-    ComicBook comic_book ;
+    ComicBook m_comic_book ;
 
-    NavigationManager navigation_manager ;
+    NavigationManager m_navigation_manager ;
 
 public:
     explicit CBWindow(QWidget *parent = 0);

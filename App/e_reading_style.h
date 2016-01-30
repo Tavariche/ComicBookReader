@@ -9,8 +9,8 @@
 
 enum e_reading_style
 {
-    OCCIDENTAL, //  Lecture de gauche à droite.
-    ORIENTAL    //  Lecture de droite à gauche.
+    OCCIDENTAL = 0, //  Lecture de gauche à droite.
+    ORIENTAL = 1    //  Lecture de droite à gauche.
 };
 
 #endif // E_READING_STYLE
