@@ -12,10 +12,10 @@
 enum e_pages_roles
 {
     NEXT = 0,
-    PREVIOUS,
-    FIRST,
-    LAST,
-    CURRENT
+    PREVIOUS = 1,
+    FIRST = 2,
+    LAST = 3,
+    CURRENT = 4
 };
 
 #endif // E_PAGE_ROLE

@@ -39,11 +39,8 @@ string uncompressArchive (string path_to_archive, string destination_folder)
     struct archive *a;
     struct archive *ext;
     struct archive_entry *entry;
-    int flags;
+    int flags = 0;
     int r;
-
-    // Spécifier le dossier d'extraction de l'archive:
-    // http://stackoverflow.com/questions/8384266/libarchive-extract-to-specified-directory
 
     flags |= ARCHIVE_EXTRACT_PERM;
     flags |= ARCHIVE_EXTRACT_ACL;

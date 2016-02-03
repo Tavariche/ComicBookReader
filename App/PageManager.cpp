@@ -6,8 +6,6 @@ PageManager::PageManager (): QObject()
 {
     m_path_to_image = "" ;
     m_loaded = false ;
-
-    //  Initialiser les images à null.
 }
 
 
@@ -15,8 +13,6 @@ PageManager::PageManager (QString path_to_image): QObject()
 {    
     m_path_to_image = path_to_image ;
     m_loaded = false ;
-
-    //  Initialiser les images à null.
 }
 
 

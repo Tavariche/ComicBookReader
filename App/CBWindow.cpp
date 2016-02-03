@@ -150,7 +150,7 @@ CBWindow::CBWindow(QWidget *parent) :
     m_comic_book.setPathToArchive ("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
     m_comic_book.uncompressComicBook () ;
     m_comic_book.initialise () ;
-    m_navigation_manager.setNumberPagesDisplayed (1) ;
+    m_navigation_manager.setNumberPagesDisplayed (3) ;
 }
 
 

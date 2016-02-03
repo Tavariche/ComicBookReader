@@ -74,16 +74,10 @@ void NavigationManager::setNumberPagesDisplayed (unsigned int number_pages)
 
 void NavigationManager::saveSettings (ComicBookSettings *cbs)
 {
-    /// DEBUG
-    QMessageBox::information(0,"DEBUG","Sauvegarde NavigationManager") ;
-
     //  Sauvegarde des options de lecture.
     cbs->setNumberPagesDisplayed(m_number_of_pages_displayed) ;
     cbs->setCurrentPage(m_current_page) ;
     cbs->setReadingStyle(m_reading_style);
-
-    /// DEBUG
-    QMessageBox::information(0,"DEBUG","Écriture options") ;
 
     //  Écriture des données dans le fichier d'options.
     cbs->saveComicBookSettings();
