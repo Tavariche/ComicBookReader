@@ -48,10 +48,6 @@ class ComicBook:
         //  Param:  * number_pages: nombre total de pages contenues dans le comic book.
         //  Conex:  Connecté au NavigationManager associé.
         void SG_numberPagesComputed (unsigned int number_pages) ;
-
-        //  Descr:  Demande la sauvegarde des options liées à la lecture du comic book.
-        //  Conex:  Connecté au PageManager associé.
-        void SG_saveSettings (ComicBookSettings *cbs) ;
     
     public slots:
         //  Descr:  Charge la page index_page ainsi que les adjacentes.
@@ -77,7 +73,7 @@ class ComicBook:
         //  Descr:  Spécifie le chemin vers l'archive contenant les images compressées du comic book.
         //  Param:  * path: chemin vers le dossier contenant l'ensemble des images du comic book.
         void setPathToArchive (QString path) { m_path_to_archive = path ; }
-        
+
         //  Descr:  Spécifie le chemin vers le dossier contenant les images du comic book.
         //  Param:  * path: chemin vers le dossier contenant l'ensemble des images du comic book.
         void setPathToComicBook (QString path) { m_path_to_cb = path ; }
@@ -85,8 +81,8 @@ class ComicBook:
         //  Descr:  Demande le calcul des miniatures de l'ensemble des pages du comic book.
         void computeThumbnail () ;
         
-        //  Descr:  Retourne le nombre total de pages du comic book.
         unsigned int getNumberOfPages () const { return m_table_pages.size() ; }
+        QString getPathToArchive() const { return m_path_to_archive ; }
 };
 
 #endif // COMICBOOK_H

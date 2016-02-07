@@ -23,26 +23,7 @@ ComicBook::ComicBook (): QObject()
 
 ComicBook::~ComicBook ()
 {
-    //  Suppression du dossier contenant les fichiers de l'archive décompressée.
-    /*if (!m_path_to_cb.isEmpty())
-    {
-        QDir dir (m_path_to_cb) ;
-        bool successely_removed = dir.removeRecursively () ;
-        if (!successely_removed)
-        {
-            QMessageBox::critical(0,
-                                  "Erreur - Suppression Dossier Décompressé",
-                                  "Le dossier décompressé contenant les images du comic book n'a pas été supprimé correctement. Cela peut provoquer des erreurs lors de la prochaine ouverture du comicc book.\nVeuillez supprimer le dossier décompressé en passant par votre explorateur situé ici:\n"+m_path_to_cb) ;
-        }
-    }*/
 
-    /*/// DEBUG
-    QMessageBox::information(0,"DEBUG","Sauvegarde ComicBook") ;
-
-    ComicBookSettings *cbs = new ComicBookSettings() ;
-    cbs->setPathToArchive(m_path_to_archive) ;
-    cbs->setPathToComicBook(m_path_to_cb) ;
-    emit SG_saveSettings(cbs);*/
 }
 
 
@@ -56,7 +37,7 @@ void ComicBook::uncompressComicBook ()
     }
     else
     {
-        //  On récupère le chemin du dossier temporaire.
+        //  On récupère le chemin vers le dossier temporaire.
         string temp_folder = "" ;
         const char* var_env_temp = getenv("TEMP") ;
         if (!var_env_temp)  //  Si la variable d'environnement TEMP n'existe pas, on décompresse l'archive dans le dossier où elle se situe.

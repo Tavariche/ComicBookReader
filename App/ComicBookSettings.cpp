@@ -5,13 +5,13 @@
 #include <QTextStream>
 #include <QSettings>
 
-/// Chemin à ajuster.
-QString ComicBookSettings::m_cbstp_folder = "E:/documents/Code/CodeBlocks/ComicBookReader/App/Setup/" ;
 
 ComicBookSettings::ComicBookSettings ()
 {
+    /// Chemin à ajuster.
+    m_cbstp_folder = "E:/documents/Code/CodeBlocks/ComicBookReader/App/Setup/" ;
+
     m_path_to_archive = "" ;
-    m_path_to_cb = "" ;
     m_number_pages_displayed = 1 ;
     m_current_page = 0 ;
     m_reading_style = e_reading_style::OCCIDENTAL ;
@@ -24,84 +24,147 @@ ComicBookSettings::~ComicBookSettings()
 }
 
 
-enum e_code_cbstp ComicBookSettings::parseCBSTP (QString name)
+e_loading_status ComicBookSettings::loadSettings (QString name)
 {
+    //  Test de l'existence du fichier .cbstp associé.
     QString path = m_cbstp_folder + name + ".cbstp" ;
-
     QFile file ;
-    if (!file.exists(path))
-        return CBSTP_NO_EXISTS ;
-
     file.setFileName(path) ;
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-        return CBSTP_OPEN_FAIL ;
+        return CBSTP_INVALID ;
 
     //
     //  Analyse du fichier ligne par ligne.
     //
-
     QTextStream stream (&file) ;
 
-    //  Création du tableau des attributs devant être présents dans le fichier.
-    QVector<QString> awaited_att ;
-    awaited_att.push_back("Archive");
-    awaited_att.push_back("Folder");
-    awaited_att.push_back("CurrentPage");
-    awaited_att.push_back("NumberPagesDisplayed");
-    awaited_att.push_back("ReadingStyle");
-    int current_att = 0 ;
-    while (!stream.atEnd())
+    //  Attribut "Archive".
+    QString line = stream.readLine() ;
+    if (line.section(':',0,0) != "Archive")
     {
-        QString line = stream.readLine() ;
-        QStringList list = line.split(':', QString::SkipEmptyParts) ;
-        if (list.size() != 2)
-        {
-            file.close();
-            return CBSTP_INVALID ;
-        }
-
-        if (list[0] != awaited_att[current_att])
-        {
-            file.close();
-            return CBSTP_INVALID ;
-        }
-
-        //  On teste le caractère convertible des paramètres entiers.
-        if (current_att == 2 or current_att == 3 or current_att == 4)
-        {
-            bool ok = false ;
-            list[1].toInt(&ok) ;
-            if (!ok)
-            {
-                file.close();
-                return CBSTP_INVALID ;
-            }
-        }
-
-        current_att++ ;
-        if (current_att == awaited_att.size())
-        {
-            file.close();
-            return CBSTP_OK ;
-        }
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_INVALID ;
     }
+    //  Test de l'existence de l'archive à l'endroit spécifié.
+    if(!QFile::exists(line.section(':',1)))
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_INVALID ;
+    }
+    m_path_to_archive = line.section(':',1) ;
 
-    //  Si on arrive ici c'est que le fichier est incomplet.
+
+
+    //  Attribut "ReadingStyle".
+    line = stream.readLine() ;
+    QStringList list = line.split(':', QString::SkipEmptyParts) ;
+    if (list.size() != 2)
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    else if (list[0] != "ReadingStyle")
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    //  Test de la convertibilité en entier du paramètre.
+    bool ok = false ;
+    list[1].toInt(&ok) ;
+    if (!ok)
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    m_reading_style = (e_reading_style) abs(list[1].toInt()) ;
+    //  Vérification de la validité de la valeur récupérée.
+    if (m_reading_style != ORIENTAL and m_reading_style != OCCIDENTAL)
+        m_reading_style = OCCIDENTAL ;
+
+
+
+    //  Attribut "NumberPagesDisplayed".
+    line = stream.readLine() ;
+    list = line.split(':', QString::SkipEmptyParts) ;
+    if (list.size() != 2)
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    else if (list[0] != "NumberPagesDisplayed")
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    //  Test de la convertibilité en entier du paramètre.
+    ok = false ;
+    list[1].toInt(&ok) ;
+    if (!ok)
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    m_number_pages_displayed = abs(list[1].toInt()) ;
+    //  Vérification de la validité de la valeur récupérée.
+    if (m_number_pages_displayed > 2 or m_number_pages_displayed == 0)
+        m_number_pages_displayed = 1 ;
+
+
+
+    //  Attribut "CurrentPage".
+    line = stream.readLine() ;
+    list = line.split(':', QString::SkipEmptyParts) ;
+    if (list.size() != 2)
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    else if (list[0] != "CurrentPage")
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    //  Test de la convertibilité en entier du paramètre.
+    ok = false ;
+    list[1].toInt(&ok) ;
+    if (!ok)
+    {
+        file.close();
+        QFile::remove(path) ;
+        return CBSTP_ARCHIVE_OK ;
+    }
+    m_current_page = abs(list[1].toInt(&ok)) ;
+    //  Vérification de la validité de la valeur récupérée.
+    if (m_current_page%m_number_pages_displayed != 0)
+        m_current_page = m_current_page - m_current_page%m_number_pages_displayed ;
+
+
+
+    //  Si on arrive ici c'est que le chargement s'est effectué correctement.
     file.close();
-    return CBSTP_INVALID ;
+    return CBSTP_OK ;
 }
 
 
-void ComicBookSettings::saveComicBookSettings ()
+void ComicBookSettings::saveSettings ()
 {
-    //  On ne sauvegarde les données que si les chemins vers l'archive et le dossier
-    //  décompressé sont spécifiés.
-    if (m_path_to_archive == "" or m_path_to_cb == "")
+    //  On ne sauvegarde les données que si le chemin vers l'archive est spécifié.
+    if (m_path_to_archive.isEmpty())
         return ;
 
     //  Récupération du nom du Comic Book.
-    QDir comic_book_dir(m_path_to_cb) ;
-    QString cb_name = comic_book_dir.dirName () ;
+    QFileInfo comic_book_archive(m_path_to_archive) ;
+    QString cb_name = comic_book_archive.baseName() ;
 
     //  Écriture des options.
     QString path = m_cbstp_folder + cb_name + ".cbstp" ;
@@ -113,82 +176,17 @@ void ComicBookSettings::saveComicBookSettings ()
     line = "Archive:" + m_path_to_archive + "\n" ;
     file.write(line.toStdString().c_str()) ;
 
-    //  Écriture de l'attribut "Folder".
-    line = "Folder:" + m_path_to_cb + "\n" ;
-    file.write(line.toStdString().c_str()) ;
-
-    //  Écriture de l'attribut "CurrentPage".
-    line = "CurrentPage:" + QString::number(m_current_page) + "\n" ;
+    //  Écriture de l'attribut "ReadingStyle".
+    line = "ReadingStyle:" + QString::number((int) m_reading_style) + "\n" ;
     file.write(line.toStdString().c_str()) ;
 
     //  Écriture de l'attribut "NumberPagesDisplayed".
     line = "NumberPagesDisplayed:" + QString::number(m_number_pages_displayed) + "\n" ;
     file.write(line.toStdString().c_str()) ;
 
-    //  Écriture de l'attribut "ReadingStyle".
-    line = "ReadingStyle:" + QString::number((int) m_reading_style) + "\n" ;
+    //  Écriture de l'attribut "CurrentPage".
+    line = "CurrentPage:" + QString::number(m_current_page) + "\n" ;
     file.write(line.toStdString().c_str()) ;
 
     file.close() ;
-}
-
-
-bool ComicBookSettings::loadComicBookSettings (QString comic_book_name)
-{
-    //
-    //  Analyse du fichier.
-    //
-    e_code_cbstp code ;
-    code = parseCBSTP(comic_book_name) ;
-    switch (code)
-    {
-    case CBSTP_NO_EXISTS:
-        return false ;
-        break ;
-    case CBSTP_INVALID:
-        QMessageBox::information(0,"Erreur - Réouverture Comic Book",
-                                 "Le fichier d'options du Comic Book " + comic_book_name + " est erroné. Suppression de ce dernier.") ;
-        QFile::remove(m_cbstp_folder + comic_book_name + ".cbstp") ;
-        return false ;
-        break ;
-    default:
-        break ;
-    }
-
-    //
-    //  Récupération des données du fichier.
-    //
-    QFile file(m_cbstp_folder + comic_book_name + ".cbstp") ;
-    file.open(QIODevice::ReadOnly | QIODevice::Text) ;
-    QTextStream stream (&file) ;
-
-    QString line = "" ;
-    QStringList list ;
-    //  Attribut "Archive".
-    line = stream.readLine() ;
-    list = line.split(':', QString::SkipEmptyParts) ;
-    m_path_to_archive = list[1] ;
-
-    //  Attribut "Folder".
-    line = stream.readLine() ;
-    list = line.split(':', QString::SkipEmptyParts) ;
-    m_path_to_cb = list[1] ;
-
-    //  Attribut "CurrentPage".
-    line = stream.readLine() ;
-    list = line.split(':', QString::SkipEmptyParts) ;
-    m_current_page = abs(list[1].toInt()) ;
-
-    //  Attribut "NumberPagesDisplayed".
-    line = stream.readLine() ;
-    list = line.split(':', QString::SkipEmptyParts) ;
-    m_number_pages_displayed = abs(list[1].toInt()) ;
-
-    //  Attribut "ReadingStyle".
-    line = stream.readLine() ;
-    list = line.split(':', QString::SkipEmptyParts) ;
-    m_reading_style = (e_reading_style) abs(list[1].toInt()) ;
-
-    file.close() ;
-    return true ;
 }

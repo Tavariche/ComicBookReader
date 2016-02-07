@@ -52,21 +52,24 @@ class NavigationManager:
 
         //  Descr:  Met à jour le nombre de pages total contenues dans le comic book.
         //  Param:  * number_pages: nombre total de pages contenues dans le comic book.
-        void setNumberPagesInComicBook (unsigned int number_pages) { m_number_pages = number_pages ; }
+        void setNumberPagesInComicBook (unsigned int number_pages) ;
 
         //  Descr:  Met à jour le nombre de pages affichées simultanément.
         //  Param:  * number_pages: nombre de pages à afficher simultanément.
         void setNumberPagesDisplayed (unsigned int number_pages) ;
-
-        //  Descr:  Enregistre les options de lecture et prorpiétés liées au comic book.
-        void saveSettings (ComicBookSettings *cbs) ;
     
     public:
         NavigationManager () ;
         explicit NavigationManager (unsigned int number_pages) ;
         ~NavigationManager () ;
 
+        void setCurrentPage(unsigned int current_page) { m_current_page = current_page ; }
+        void setReadingStyle(e_reading_style rs) { m_reading_style = rs ; }
+
         PagesBuffer* getPagesBuffer () { return &m_pages_buffer ; }
+        unsigned int getNumberOfPagesDisplayed() const { return m_number_of_pages_displayed ; }
+        unsigned int getCurrentPage() const { return m_current_page ; }
+        e_reading_style getReadingStyle() const { return m_reading_style ; }
 };
 
 #endif // NAVIGATION_MANAGER_H

@@ -1,10 +1,12 @@
 #include <QtSvg>
 #include <QVector>
-#include <QMessageBox>  //  Pour debugging.
+#include <QMessageBox>
+#include <string>
 #include "CBWindow.h"
 #include "PagesContainer.h"
 #include "CBScrollArea.h"
 #include "UncheckableActionGroup.h"
+#include "ComicBookSettings.h"
 
 
 CBWindow::CBWindow(QWidget *parent) :
@@ -137,20 +139,104 @@ CBWindow::CBWindow(QWidget *parent) :
     connect (&m_comic_book, SIGNAL(SG_pagesLoaded(QVector<QVector<PageManager*> >)),
              m_navigation_manager.getPagesBuffer(), SLOT(updateBuffer(QVector<QVector<PageManager*> >))) ;
 
-    //  Une fois que le ComicBook a fini de sauvegardé ses propriétés dans le ComicBookSettings, il demande
-    //  au NavigationManager de faire de même.
-    connect (&m_comic_book, SIGNAL(SG_saveSettings(ComicBookSettings*)),
-             &m_navigation_manager, SLOT(saveSettings(ComicBookSettings*))) ;
-
     // ///////////////
     //  Ce code doit être executé après la connection des éléments entre eux parce que certaines opérations
     //  mettent à jour d'autres objets aux moyens des signaux et des slots.
     // ///////////////
 
-    m_comic_book.setPathToArchive ("E:/documents/Code/CodeBlocks/ComicBookReader/App/images/Titans Hunt.cbz") ;
-    m_comic_book.uncompressComicBook () ;
-    m_comic_book.initialise () ;
-    m_navigation_manager.setNumberPagesDisplayed (3) ;
+    openRecentCB("Titans Hunt") ;
+
+    closeCB();
+}
+
+
+void CBWindow::openCB()
+{
+    /// Chercher une archive avec l'explorateur de fichiers.
+}
+
+
+void CBWindow::openRecentCB(QString cb_name)
+{
+    //  Tentative de chargement des options de lecture associées au Comic Book.
+    ComicBookSettings cbs ;
+    e_loading_status ls = cbs.loadSettings(cb_name) ;
+
+    if(ls < CBSTP_INVALID)
+    {
+        //  Initialisation du Comic Book et du Navigation Manager.
+        m_comic_book.setPathToArchive(cbs.getPathToArchive()) ;
+
+        //  On initialise le reste des paramèters que si le chargement a été effectué entièrement.
+        if(ls == CBSTP_OK)
+        {
+            m_navigation_manager.setCurrentPage(cbs.getCurrentPage()) ;
+            m_navigation_manager.setNumberPagesDisplayed(cbs.getNumberPagesDisplayed()) ;
+            m_navigation_manager.setReadingStyle(cbs.getReadingStyle()) ;
+        }
+
+        //
+        //  On teste l'existence du dossier décompressé dans le dossier des fichiers temporaires (si ce dernier
+        //  existe).
+        //
+
+        //  Récupération du chemin vers le dossier des fichiers temporaires s'il existe.
+        std::string temp_folder = "" ;
+        const char* var_env_temp = getenv("TEMP") ;
+        if (var_env_temp)
+            temp_folder = std::string(var_env_temp) ;
+        //  Sinon on récupère le dossier où se trouve l'archive.
+        else
+        {
+            QFileInfo file_info (cbs.getPathToArchive()) ;
+            temp_folder = file_info.absolutePath().toStdString() ;
+        }
+
+        for (unsigned int i=0 ; i<temp_folder.size() ; i++)
+        {
+            if (temp_folder[i] == '\\') temp_folder[i] = '/' ;
+        }
+
+        if (temp_folder[temp_folder.size()-1] != '\\')
+            temp_folder += "/" ;
+
+        //  Test de l'existence du dossier décompressé.
+        QString uncompressed_folder ;
+        uncompressed_folder.fromStdString(temp_folder) ;
+        uncompressed_folder += cb_name ;
+        if (QFile::exists(uncompressed_folder))
+            m_comic_book.setPathToComicBook(uncompressed_folder) ;
+        else
+            m_comic_book.uncompressComicBook() ;
+
+        //  Initialisation du Comic Book qui le rend prêt pour la lecture.
+        m_comic_book.initialise() ;
+
+        return ;
+    }
+
+    /// Supprimer le Comic Book de la liste des Comic Book récemment consultés.
+
+    //  Si on arrive jusqu'ici, c'est que le chargement a échoué. On prévient l'utilisateur.
+    QMessageBox::information(0,"Erreur - Réouverture d'un Comic Book",
+                             "Le Comic Book n'a pas pu être chargé correctement. Il est introuvable et a probablement été déplacé de son dossier original.") ;
+
+    //  On charge un Comic Book avec l'explorateur de fichiers.
+    openCB() ;
+}
+
+
+void CBWindow::closeCB()
+{
+    //  Récupération des options de lecture.
+    ComicBookSettings cbs ;
+    cbs.setPathToArchive(m_comic_book.getPathToArchive()) ;
+    cbs.setReadingStyle(m_navigation_manager.getReadingStyle()) ;
+    cbs.setNumberPagesDisplayed(m_navigation_manager.getNumberOfPagesDisplayed()) ;
+    cbs.setCurrentPage(m_navigation_manager.getCurrentPage()) ;
+
+    //  Sauvegarde des options de lecture dans un fichier.
+    cbs.saveSettings() ;
 }
 
 

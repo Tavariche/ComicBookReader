@@ -63,6 +63,15 @@ void NavigationManager::goToPreviousPage ()
 }
 
 
+void NavigationManager::setNumberPagesInComicBook (unsigned int number_pages)
+{
+    m_number_pages = number_pages ;
+
+    if(m_current_page>m_number_pages)
+        m_current_page = 0 ;
+}
+
+
 void NavigationManager::setNumberPagesDisplayed (unsigned int number_pages)
 {
     m_number_of_pages_displayed = number_pages ;
@@ -71,15 +80,3 @@ void NavigationManager::setNumberPagesDisplayed (unsigned int number_pages)
     emit SG_goToPage(m_current_page, m_number_of_pages_displayed);
 }
 
-
-void NavigationManager::saveSettings (ComicBookSettings *cbs)
-{
-    //  Sauvegarde des options de lecture.
-    cbs->setNumberPagesDisplayed(m_number_of_pages_displayed) ;
-    cbs->setCurrentPage(m_current_page) ;
-    cbs->setReadingStyle(m_reading_style);
-
-    //  Écriture des données dans le fichier d'options.
-    cbs->saveComicBookSettings();
-    delete cbs ;
-}
