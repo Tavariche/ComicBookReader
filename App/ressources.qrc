@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/new/Icons">
+        <file>images/blackCross.svg</file>
+        <file>images/fitHeight.svg</file>
+        <file>images/fitScreen.svg</file>
+        <file>images/fitWidth.svg</file>
+        <file>images/fullScreen.svg</file>
+        <file>images/leftDouble.svg</file>
+        <file>images/leftSingle.svg</file>
+        <file>images/rightDouble.svg</file>
+        <file>images/rightSingle.svg</file>
+        <file>images/miniatures.svg</file>
+    </qresource>
+    <qresource prefix="/new/ComicBook"/>
+</RCC>
