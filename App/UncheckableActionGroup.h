@@ -12,6 +12,7 @@ public:
     UncheckableActionGroup(QWidget *parent);
 
 public slots:
+    //Décocher toutes les actions
     void uncheckActions();
 };
 

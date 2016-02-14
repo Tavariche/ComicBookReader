@@ -3,89 +3,125 @@
 
 #include <QtWidgets>
 #include <QVector>
+#include <QtConcurrent/QtConcurrent>
+#include <functional>
+#include "ComicBook.h"
+#include "PageManager.h"
+#include "PagesBuffer.h"
+#include "CBScrollArea.h"
+//#include "CBWindow.h"
+
+//---------------------------------------------------------------------------//
+//  PagesContainer - hérité de CBScrollArea                                  //
+//---------------------------------------------------------------------------//
+//  Widget chargé de gérer l'affichage des pages à l'écran.                  //
+//  Il redimensionne le buffer quand c'est nécessaire                        //
+//---------------------------------------------------------------------------//
 
 
-///Revoir les histoires de resize policy...
-
-
-/* Widget chargé de gérer l'affichage des pages.
- * Il contient entre autre le layout et les pointeurs sur les PageManager's des pages à afficher.
- * Il doit aussi se charger de donner l'ordre de redimensionner tout le buffer lorsque ceci est nécessaire.
- *
- * Ce widget n'a besoin que des pointeurs vers les pagesManager à afficher pour fonctionner.
- *
- * Temporairement, il fonctionne avec des pointeurs vers des pixmap seuls.
- */
-
-
-// Un enum des options d'affichage pouvant être activées
+// Options d'affichage pouvant être activées (séparément)
 enum ResizePolicy{
-    personal = 1 << 0, //Au curseur de zoom
-    fitWidth = 1 << 1, //Ajusté à la largeur
-    fitHeight = 1 << 2,//Ajusté à la hauteur
-    fitScreen = 1 << 3 //Ajusté à l'écran
+    PERSONAL = 1 << 0, //A la largeur voulue pour l'ensemble des pages
+    FIT_WIDTH = 1 << 1, //Ajusté à la largeur
+    FIT_HEIGHT = 1 << 2,//Ajusté à la hauteur
+    FIT_SCREEN = 1 << 3 //Ajusté à l'écran
 };
 
-
-
-class PagesContainer : public QWidget
+class PagesContainer : public CBScrollArea
 {
     Q_OBJECT
 
-    //Vecteur de pointeurs sur les pageManager
-    ///vector<PageManager*> m_pages;
-    //Pages au format natif puis redimensionné et QLabel ; provisoire
-    QVector<QPixmap*> m_originalPages;
-    QVector<QLabel*> m_pagesLabel;
-    //Répétition de la taille des vecteurs ci-dessus (de la taille de m_pages à l'avenir)
-    //Petite réprétition d'impact mémoire presque nul mais bien pratique
-    int m_numberOfPages;
-    //Ratio hauteur sur largeur de l'ensemble des pages normalisées en hauteur
-    double m_globalPagesRatio;
+private:
+    //Pointeur sur le buffer des pages
+    PagesBuffer* m_buffer;
 
-    //Redimensionnement sans vrifications à la dimension souhaitée toutes les pages ; situé dans le pageManager à l'avenir
-    void scaleToHeight(const int newHeight);
-    void scaleToWidth(const int newWidth);
-    void scale(const int newMaxWidth, const int newMaxHeight);
+    //Stocke les threads de redimentionnement pour permettre leur contrôle
+    QVector<QFuture<void> > m_resizingThread;
 
-    //Layout d'affichage côte à côte ; mosaïque si le coeur m'en dit à la fin
+    //Pointeur sur l'objet lui-même (la scrollArea)
+    CBScrollArea* m_scrollArea;
+    //Widget contenant tout le reste
+    QWidget* m_widget;
+    //Layout d'affichage côte à côte
     QHBoxLayout* m_layout;
-    //Pointeur sur la scrollArea parent
-    QScrollArea* m_parentScrollArea;
+
+    //Pointeur sur le parent pour le conserver lors du plein écran
+    QWidget* m_parent;
 
     //Politique de redimensionnement (cf flags plus haut)
     ResizePolicy m_resizePolicy;
+    int m_customWidth;
+
+    //Action de retour du plein écran
+    bool fullScreenEnabled;
+
+    //Retourne un pointeur sur l'image originale de la page "index" du bloc de rôle "role"
+    QPixmap* getOriginalPage(const int index, const e_pages_roles role = CURRENT){
+        return (*m_buffer->getPages(role))[index]->getOriginal();
+    }
+    //Retourne un pointeur sur le QLabel redimensionné de la page i du bloc de role spécifié
+    QLabel* getResizedPage(const int index, const e_pages_roles role = CURRENT){
+        return (*m_buffer->getPages(role))[index]->getResized();
+    }
+
+    //Attend la fin des threads ou du thread spécifié
+    // cancelThreads:   true -> threads stoppés si inachevés
+    //                  false -> threads laissés jusqu'à ce qu'ils terminent
+    // index:   spécifie le thread concerné lors de l'appel
+    //          si non spécifié, tous les threads sont concernés
+    void finishThreads(bool cancelThreads = true, int index = -1);
+
 
 public:
     //Constructeurs
     PagesContainer(QWidget* parent = 0);
-    PagesContainer(const QVector<QPixmap*> pages, QWidget* parent = 0);
-    ///PagesContainer(const QVector<PageManager*> pages, const QWidget* parent);
+    PagesContainer(PagesBuffer* buffer, QWidget* parent = 0);
+    //Réalise les opérations communes aux constructeurs
+    void basicInit();
+
+    //Destructeur
+    ~PagesContainer();
+
+    void setBuffer(PagesBuffer *pb) { m_buffer = pb ; }
 
 public slots:
-    //Les 4 slots de redimentionnement
-    void fitHeight();
-    void fitWidth();
+    //Slots de calcul des nouvelles dimensions des pages
+    //Possibilité de n'appliquer cela qu'au bloc de page "index"
+    void fitHeight(const int index = NONE);
+    //Possibilité de spécifier la largeur
+    void fitWidth(const int index = NONE, const int specifiedWidth = 0);
+    //S'applique toujours à toutes les pages dans la pratique
     void fitScreen();
-    //Rafraîchissement manuel de l'affichage parfois nécessaire
-    void refresh();
 
-    //remplace les pages par les newPages fournies ; c'est le coeur du constructeur en fait.
-    void setPages(const QVector<QPixmap*> newPages);
+    //Rafraîchissement manuel de l'affichage pour restreindre aux pages affichées
+    void refresh(const int index = 0);
+
+    //Réinitialisation du PagesContainer avec le nouveau buffer de pages "newBuffer
+    void updateDisplay();
 
     //Slot permettant de définir les politiques de redimentionnement
-    void setPersonalPolicy(int newWidth);
+    void setPersonalPolicy(const int newWidth);
     void setFitWidthPolicy();
     void setFitHeightPolicy();
     void setFitScreenPolicy();
     void setResizePolicy(const ResizePolicy newPolicy);
-    //Slot (finira sûrement en méthode) d'application de la politique de redimensionnement
+
+    //Application de la politique de redimensionnement
     void applyResizePolicy();
+
+    //Activation et désactivation du mode fullScreen
+    void toggleFullScreen();
+
+    //Fermeture du logiciel entier si fermeture du pagesContainer
+    virtual void closeEvent(QCloseEvent* e);
 
 
 signals:
-    void pagesSizeChanged(const int width); //Informe le curseur de zoom
+    //Emis lors du redimentionnement des pages
+    //Transmet la largeur en pixels de la première page affichée (indicateur)
+    void pagesSizeChanged(const int width);
 };
 
+void clearLayout(QLayout *layout);
 
 #endif // PAGESCONTAINER_H

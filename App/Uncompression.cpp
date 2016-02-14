@@ -57,6 +57,11 @@ string uncompressArchive (string path_to_archive, string destination_folder)
         QMessageBox::critical(0,
                               "Erreur - Décompression du Comic Book",
                               "La décompression ne s'est pas effectuée car le Comic Book spécifié est introuvable.") ;
+
+        archive_read_close(a);
+        archive_read_free(a);
+        archive_write_close(ext);
+        archive_write_free(ext);
         return "" ;
     }
 
@@ -73,14 +78,24 @@ string uncompressArchive (string path_to_archive, string destination_folder)
             QMessageBox::critical(0,
                                   "Erreur - Décompression du Comic Book",
                                   "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-            break ;
+
+            archive_read_close(a);
+            archive_read_free(a);
+            archive_write_close(ext);
+            archive_write_free(ext);
+            return "" ;
         }
         if (r < ARCHIVE_WARN)
         {
             QMessageBox::critical(0,
                                   "Erreur - Décompression du Comic Book",
                                   "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-            break ;
+
+            archive_read_close(a);
+            archive_read_free(a);
+            archive_write_close(ext);
+            archive_write_free(ext);
+            return "" ;
         }
 
         //  Écriture des fichier décompressés sur le disque.
@@ -99,7 +114,12 @@ string uncompressArchive (string path_to_archive, string destination_folder)
             QMessageBox::critical(0,
                                   "Erreur - Décompression du Comic Book",
                                   "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-            break ;
+
+            archive_read_close(a);
+            archive_read_free(a);
+            archive_write_close(ext);
+            archive_write_free(ext);
+            return "" ;
         }
         else if (archive_entry_size(entry) > 0)
         {
@@ -109,14 +129,24 @@ string uncompressArchive (string path_to_archive, string destination_folder)
                 QMessageBox::critical(0,
                                       "Erreur - Décompression du Comic Book",
                                       "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-                break ;
+
+                archive_read_close(a);
+                archive_read_free(a);
+                archive_write_close(ext);
+                archive_write_free(ext);
+                return "" ;
             }
             if (r < ARCHIVE_WARN)
             {
                 QMessageBox::critical(0,
                                       "Erreur - Décompression du Comic Book",
                                       "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-                break ;
+
+                archive_read_close(a);
+                archive_read_free(a);
+                archive_write_close(ext);
+                archive_write_free(ext);
+                return "" ;
             }
         }
 
@@ -126,14 +156,24 @@ string uncompressArchive (string path_to_archive, string destination_folder)
             QMessageBox::critical(0,
                                   "Erreur - Décompression du Comic Book",
                                   "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-            break ;
+
+            archive_read_close(a);
+            archive_read_free(a);
+            archive_write_close(ext);
+            archive_write_free(ext);
+            return "" ;
         }
         if (r < ARCHIVE_WARN)
         {
             QMessageBox::critical(0,
                                   "Erreur - Décompression du Comic Book",
                                   "La décompression ne s'est pas effectuée correctement.\nMessage d'erreur: " + QString(archive_error_string(a))) ;
-            break ;
+
+            archive_read_close(a);
+            archive_read_free(a);
+            archive_write_close(ext);
+            archive_write_free(ext);
+            return "" ;
         }
     }
     archive_read_close(a);

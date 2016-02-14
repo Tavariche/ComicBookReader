@@ -27,13 +27,16 @@ class ComicBook:
 
     //  Indique si le ComicBook a été initialisé correctement.
     bool m_initialised ;
+
+    //  Indique si le CB a été décompressé à côté de l'archive.
+    bool m_next_to_archive ;
     
     //  Tableau contenant toutes les pages du comic book (par soucis d'optimisation elles sont
     //  chargées/déchargées au besoin).
     QVector<PageManager> m_table_pages ;
 
     //  Liste contenant les extensions des images ouvrables par le comic book.
-    static QStringList m_extension_filter ;
+    QStringList m_extension_filter ;
 
     signals:
         //  Descr:  Signale la fin du chargement des pages demandées et transmet leurs références sous
@@ -48,20 +51,21 @@ class ComicBook:
         //  Param:  * number_pages: nombre total de pages contenues dans le comic book.
         //  Conex:  Connecté au NavigationManager associé.
         void SG_numberPagesComputed (unsigned int number_pages) ;
+		
+		void SG_initialised();
     
     public slots:
         //  Descr:  Charge la page index_page ainsi que les adjacentes.
         //  Param:  * index_page:   index de la page à charger.
         //          * reload_first_and_last:    précise si les premières et dernières pages doivent être
         //                                      rechargée.
-        void loadPages (unsigned int index_page, unsigned int number_of_pages_displayed) ;
+        void loadPages (int index_page, int number_of_pages_displayed) ;
     
     public:
         ComicBook () ;
 
-        //  Descr:  Destructeur de l'objet ComicBook. On en profite pour sauvegarder les options de lecture
-        //          dans un fichier.
-        ~ComicBook () ;
+        //  Descr:  Réinitialise les attributs du comic book.
+        void flush() ;
 
         //  Descr:  Décompresse l'archive contenant les images du comic book et met à jour la variable m_path_to_cb.
         void uncompressComicBook () ;
@@ -79,10 +83,19 @@ class ComicBook:
         void setPathToComicBook (QString path) { m_path_to_cb = path ; }
         
         //  Descr:  Demande le calcul des miniatures de l'ensemble des pages du comic book.
-        void computeThumbnail () ;
+        void computeThumbnail (int width, int height = -1) ;
+
+        QString getPathAbsInnerDirectory (QString path) ;
         
         unsigned int getNumberOfPages () const { return m_table_pages.size() ; }
         QString getPathToArchive() const { return m_path_to_archive ; }
+        bool isOpened() const { return m_initialised ; }
+		
+		//  Descr: Retourne un pointeur sur le pageManager voulu
+        QLabel* getThumbnail(int i){
+            if(i < 0 || i >= (int) m_table_pages.size()) return 0;
+            else return m_table_pages[i].getThumbnail();
+        }
 };
 
 #endif // COMICBOOK_H

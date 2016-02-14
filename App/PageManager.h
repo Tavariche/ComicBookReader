@@ -6,6 +6,7 @@
 #include <QString>
 #include <QPixmap>
 #include <QLabel>
+#include <QtCore>
 
 
 /********************************************************
@@ -34,6 +35,17 @@ class PageManager:
     //  Indique si la page est chargée.
     bool m_loaded ;
     
+    //  Indique si une page a déjà été redimentionnée au cours d'une opération de redimentionnement
+    //  Permet de traiter le cas des doublons dans le buffer (1e page = page courrante, ...)
+    bool m_alreadyResized ;
+
+    QMutex m_mutex ;
+
+    // Caractéristiques de la page
+    int height;
+    int width;
+    void setCarac();
+
     public:
         PageManager () ;
 
@@ -46,24 +58,41 @@ class PageManager:
         explicit PageManager (QString path_to_image) ;
         ~PageManager () ;
         
-        //  Descr:  Spécifie le nom de l'image associée au PageManager.
+        //  Descr:  Spécifie le nom de l'image associée au PageManager et calcul les caractéristiques correspondantes
         //  Param : * image_name:   nom (avec l'extension) de l'image associée au PageManager.
-        void setPathToImage (QString path_to_image) { m_path_to_image = path_to_image ;  }
+        void setPathToImage (QString path_to_image) { m_path_to_image = path_to_image ;  setCarac();}
         
         //  Descr:  Charge la page associée au PageManager.
-        //  Param : * path_to_image:    chemin vers le dossier dans lequel se trouve l'image image_name à charger.
         void load () ;
+
+        //  Descr : Redimentionne m_original à la hauteur demandée et stocke le résultat dans m_resized
+        //  Param : * newHeight:    nouvelle hauteur de l'image en pixels
+        void scaleToHeight(const int newHeight);
+
+        //  Descr : Redimentionne m_original à la largeur demandée et stocke le résultat dans m_resized
+        //  Param : * newHeight:    nouvelle largeur de l'image en pixels
+        void scaleToWidth(const int newWidth);
+
+        //  Descr : Redimentionne m_original au plus grand dans le limites données et sans déformation.
+        //          Stocke le résultat dans m_resized.
+        //  Param : * newMaxHeight:     hauteur maximale du cadre de redimentionnement
+        //          * newMaxWidth:      largeur maximale du cadre de redimentionnement
+        void scale(const int newMaxWidth, const int newMaxHeight);
+
+        //  Descr : Rafraichit l'affichage de m_resized
+        void refresh();
+
+        //  Descr : fixe la valeur de m_alreadyResized comme voulu
+        void setAlreadyResized(bool newValue){QMutex mutex; mutex.lock(); m_alreadyResized = newValue; mutex.unlock();}
         
         //  Descr:  Décharge la page.
         //  Param : * keep_thumbnail:   true:   décharge m_original et m_resized mais conserve m_thumbnail.
         //                              false:  décharge toutes les images y compris m_thumbnail.
-        void unload (bool keep_thumbnail) ;
+        void unload (bool keep_thumbnail = true, bool keep_resized = false) ;
         
-        //  Redimensionne l'image originale et stocke le résultat dans m_resized.
-        void computeResized () ; 
         
         //  Calcule la miniature associée à l'image originale et la stocke dans m_thumbnail.
-        void computeThumbnail () ; 
+        void computeThumbnail (const int newWidth, const int newHeight) ;
 
         //  Descr:  Retourne le nom de l'image associée.
         QString getPathToImage () const { return m_path_to_image ; }
@@ -79,6 +108,10 @@ class PageManager:
 
         //  Descr:  Indique si la page est chargée.
         bool isLoaded () const { return m_loaded ; }
+
+        //  Desc: Retourne la largeur ou la hauteur de l'image associée
+        int getWidth(){return width;}
+        int getHeight(){return height;}
 };
 
 #endif // PAGEMANAGER_H

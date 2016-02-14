@@ -15,7 +15,8 @@ enum e_pages_roles
     PREVIOUS = 1,
     FIRST = 2,
     LAST = 3,
-    CURRENT = 4
+    CURRENT = 4,
+    NONE = 5
 };
 
 #endif // E_PAGE_ROLE

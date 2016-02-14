@@ -41,12 +41,12 @@ class NavigationManager:
         //          * reload_first_and_last:    précise si les premières et dernières pages doivent être
         //                                      rechargée.
         // Conex:   Connecté au comic book associé.
-        void SG_goToPage (unsigned int page, unsigned int number_of_pages_displayed) ;
+        void SG_goToPage (int page, int number_of_pages_displayed) ;
     
     public slots:
         void goToLastPage () ;
         void goToFirstPage () ;
-        void goToPage (unsigned int page) ;
+        void goToPage (int page) ;
         void goToNextPage () ;
         void goToPreviousPage () ;
 
@@ -57,11 +57,19 @@ class NavigationManager:
         //  Descr:  Met à jour le nombre de pages affichées simultanément.
         //  Param:  * number_pages: nombre de pages à afficher simultanément.
         void setNumberPagesDisplayed (unsigned int number_pages) ;
+
+        //  Descr:  slots adaptés à l'utilisation des actions
+        void setNumberPagesDisplayed1 () {setNumberPagesDisplayed(1);}
+        void setNumberPagesDisplayed2 () {setNumberPagesDisplayed(2);}
+        void setNumberPagesDisplayed3 () {setNumberPagesDisplayed(3);}
+        void setNumberPagesDisplayed4 () {setNumberPagesDisplayed(4);}
     
     public:
         NavigationManager () ;
         explicit NavigationManager (unsigned int number_pages) ;
         ~NavigationManager () ;
+
+        void flush () ;
 
         void setCurrentPage(unsigned int current_page) { m_current_page = current_page ; }
         void setReadingStyle(e_reading_style rs) { m_reading_style = rs ; }

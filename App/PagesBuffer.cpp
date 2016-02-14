@@ -5,12 +5,18 @@
 PagesBuffer::PagesBuffer (): QObject()
 {
     m_buffer.resize (5) ;
+    m_pagesData.resize(5) ;
+    m_indexToRole = QVector<e_pages_roles>(INDEX_TO_ROLE);
 }
 
 
-PagesBuffer::~PagesBuffer ()
+void PagesBuffer::flush ()
 {
+    m_buffer.clear() ;
+    m_pagesData.clear() ;
 
+    m_buffer.resize (5) ;
+    m_pagesData.resize(5) ;
 }
 
 
@@ -26,6 +32,7 @@ void PagesBuffer::updateBuffer (QVector<QVector<PageManager*> > buffer)
      */
 
     //  On commence par soulager la mémoire des pages dont on n'a plus besoin.
+
     for (int i=0, buffer_m_size = m_buffer.size () ; i<buffer_m_size ; i++)
     {
         for (int j=0, sub_buffer_m_size = m_buffer[i].size() ; j<sub_buffer_m_size ; j++)
@@ -45,7 +52,7 @@ void PagesBuffer::updateBuffer (QVector<QVector<PageManager*> > buffer)
                 if (found) break ;
             }
             //  Si l'image n'a pas été trouvée c'est qu'on n'en a plus besoin donc on la décharge.
-            if (!found) m_buffer[i][j]->unload (false) ;
+            if (!found) m_buffer[i][j]->unload () ;
         }
     }
 
@@ -57,6 +64,28 @@ void PagesBuffer::updateBuffer (QVector<QVector<PageManager*> > buffer)
             m_buffer[i][j] = buffer[i][j] ;
         }
     }
+
+    computeInfo();
+
+    emit bufferUpdated();
+}
+
+
+//Calcul des infos sur les pages
+void PagesBuffer::computeInfo(){
+    for (int i = 0 ; i < m_buffer.size() ; i++){
+        m_pagesData[i].numberOfPages = m_buffer[i].size();
+
+        if(m_buffer[i].size() == 0){m_pagesData[i].pagesRatio = 1; continue ;}
+
+        double equivalentWidth = m_buffer[i][0]->getWidth();
+
+        for(int j = 1 ; j < m_buffer[i].size() ; j++){
+            equivalentWidth += m_buffer[i][j]->getWidth() * ((double) m_buffer[i][0]->getHeight() / m_buffer[i][j]->getHeight());
+        }
+
+        m_pagesData[i].pagesRatio = m_buffer[i][0]->getHeight() / equivalentWidth;
+    }
 }
 
 
@@ -66,5 +95,23 @@ void PagesBuffer::setNumberPagesDisplayed (unsigned int number_pages_displayed)
     {
         m_buffer[i].resize(number_pages_displayed) ;
         for (uint j=0 ; j<number_pages_displayed ; j++) m_buffer[i][j] = NULL ;
+    }
+}
+
+
+QVector<PageManager*>* PagesBuffer::getPages(int pages_index)
+{
+    e_pages_roles role(m_indexToRole[pages_index]);
+    return getPages(role);
+}
+
+
+void PagesBuffer::resetAlreadyResized(bool newValue){
+    for(int i = 0 ; i < getNumberOfBlocs() ; i++){
+        QVector<PageManager*> pages = *getPages(i);
+
+        for(int j = 0 ; j < getNumberOfPages(i) ; j++){
+            pages[j]->setAlreadyResized(newValue);
+        }
     }
 }

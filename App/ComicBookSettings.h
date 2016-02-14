@@ -5,20 +5,6 @@
 #include <QString>
 #include "e_reading_style.h"
 
-/*******************************************************
-*   e_loading_status
-* ------------------------------------------------------
-*   Énumération recensant les différents messages que
-*   peut générer le chargement d'un fichier .cbstp.
-********************************************************/
-
-enum e_loading_status
-{
-    CBSTP_OK,           //  Chargement Ok.
-    CBSTP_ARCHIVE_OK,   //  Chargement échoué mais le chemin vers l'archive du CB est valide.
-    CBSTP_INVALID       //  Chargement échoué.
-};
-
 
 /********************************************************
 *   ComicBookSettings
@@ -36,10 +22,7 @@ enum e_loading_status
 class ComicBookSettings
 {
     //  Chemin vers le dossier contenant les fichiers d'options .cbstp.
-    QString m_cbstp_folder ;
-
-    //  Chemin absolu vers l'archive du comic book.
-    QString m_path_to_archive ;
+    static QString m_cbstp_folder ;
 
     //  Nombre de pages affichées simultanément.
     unsigned int m_number_pages_displayed ;
@@ -52,25 +35,21 @@ class ComicBookSettings
 
     public:
         ComicBookSettings();
-        ~ComicBookSettings();
 
-        //  Descr:  Sauvegarde les options de lecture dans un fichier .ini.
-        void saveSettings () ;
+        //  Descr:  Sauvegarde les options de lecture dans un fichier .cbstp.
+        //  Param:  * path_to_archive:  chemin vers l'archive du Comic Book.
+        void saveSettings (QString path_to_archive) ;
 
         //  Descr:  Charge les options relatives à un comic book depuis un fichier .ini.
         //  Param:  * comic_book_name:  nom du comic book dont il faut charger les options.
-        //          * path_archive:     chemin vers l'archive modifié en place. Variable permettant
-        //                              de sauver le chemin vers archive même si le fichier
-        //                              cbstp contient des erreurs.
         //  Return: Retourne true si le chargement s'est effectué correctement, false sinon.
-        e_loading_status loadSettings (QString comic_book_name) ;
+        bool loadSettings (QString comic_book_name) ;
 
-        void setPathToArchive(QString path) { m_path_to_archive = path ; }
         void setCurrentPage(unsigned int n) { m_current_page = n ; }
         void setNumberPagesDisplayed(unsigned int n) { m_number_pages_displayed = n ; }
         void setReadingStyle(e_reading_style rs) { m_reading_style = rs ; }
+        static void setCBSTPFolder(QString path) { m_cbstp_folder = path ; }
 
-        QString getPathToArchive() const { return m_path_to_archive ; }
         unsigned int getCurrentPage() const { return m_current_page ; }
         unsigned int getNumberPagesDisplayed() const { return m_number_pages_displayed ; }
         e_reading_style getReadingStyle() const { return m_reading_style ; }

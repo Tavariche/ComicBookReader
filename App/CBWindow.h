@@ -3,30 +3,35 @@
 
 
 #include <QtWidgets>
-#include <QString>
 #include "ComicBook.h"
+#include "PagesContainer.h"
+#include "ThumbnailsPanel.h"
 #include "NavigationManager.h"
 
+
+#define DEFAULT_PAGE_NUMBER 1
+#define THUMBNAILS_PANEL_MIN_WIDTH 130
 
 class CBWindow : public QMainWindow
 {
     Q_OBJECT
 
-    ComicBook m_comic_book ;
+private :
+    PagesContainer* pagesContainer;
+    ComicBook* m_comic_book ;
+    NavigationManager* m_navigation_manager ;
+    QDockWidget* m_dockMiniatures;
 
-    NavigationManager m_navigation_manager ;
+
+public slots:
+    void displayDockMiniatures(bool display = true);
+
+    //  Descr:  Ouvre un Comic Book à l'aide de l'explorateur de fichiers.
+    void openCB() ;
 
 public:
     explicit CBWindow(QWidget *parent = 0);
     ~CBWindow();
-
-    //  Descr:  Ouvre un Comic Book à l'aide de l'explorateur de fichiers.
-    //  Param:  * cb_name:  nom du Comic Book à charger.
-    void openCB() ;
-
-    //  Descr:  Ouvre un Comic Book depuis la liste des Comic Books récemment consultés.
-    //  Param:  * cb_name:  nom du Comic Book à charger.
-    void openRecentCB(QString cb_name) ;
 
     //  Descr:  Ferme un Comic Book en enregistrant ses paramètres de lecture.
     void closeCB() ;
